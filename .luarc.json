@@ -1,0 +1,13 @@
+{
+    "diagnostics.globals": [
+        "G",
+        "play_sound",
+        "find_joker",
+        "CardArea",
+        "Event"
+    ],
+    "workspace.library": [
+        "${3rd}/love2d/library"
+    ],
+    "workspace.checkThirdParty": "Disable"
+}
