@@ -20,7 +20,7 @@ the only dependency is the `lovely` code injector, which is also a dependency of
 - toggling hand cards with `asdfgh...` keys
 - support for `qwerty` and `dvorak` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
-- any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started with the `space` button only
+- any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
 - cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for 
   - consumables, accessed by holding `'`
   - jokers, accessed by holding `[`
