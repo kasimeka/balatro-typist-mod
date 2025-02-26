@@ -15,6 +15,10 @@ the only dependency is the `lovely` code injector, which is also a dependency of
 - mac: `~/Library/Application Support/Balatro/Mods`
 - linux+wine/proton: `~/.local/share/Steam/steamapps/compatdata/2379780/pfx/drive_c/users/steamuser/AppData/Roaming/Balatro/Mods`
 
+## compatibility
+
+the only game versions the mod was tested with are `1.0.1n` and `1.0.1o`.
+
 ## feature overview
 
 - toggling hand cards with `asdfgh...` keys
