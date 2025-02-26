@@ -62,7 +62,6 @@ return function(area, key, held_keys)
   then
     e.config.id = "buy_and_use"
     G.FUNCS.buy_from_shop(e)
-    return true
 
   -- or
   elseif target then
