@@ -47,14 +47,15 @@ the only game versions the mod was tested with are `1.0.1n` and `1.0.1o`.
     - sells consumable or joker cards
     - skips the current booster pack
     - closes any overlay menu
+    - exits to main menu from the game over screen
   - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
-  - the bottom row of the keyboard as the "control panel", with 
-  - in rounds: `c` & `v` to sort hand cards 
-  - in the shop: `c` to buy an item or a pack or a voucher & `v` to buy and use an item or buy a pack or a voucher
-  - `b` to invert card selection in rounds and `n` to deselect all cards in a cardarea 
-  - `x` to view run info whenever it's available
-  - `.` to open the options overlay menu (the same as `escape`)
-  - & others (see `./layout.lua`) for dvorak and the full keymap
+  - the bottom row of the keyboard as the "control panel", where 
+    - in rounds: `c` & `v` to sort hand cards 
+    - in the shop: `c` to buy an item or a pack or a voucher & `v` to buy and use an item or buy a pack or a voucher
+    - `b` to invert card selection in rounds and `n` to deselect all cards in a cardarea 
+    - `x` to view run info whenever it's available
+    - `.` to open the options overlay menu (the same as `escape`)
+    - & others (see [`./layout.lua`](./layout.lua)) for dvorak and the full keymap
 
 ## TODOs
 
