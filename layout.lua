@@ -72,6 +72,11 @@ M.cardarea_map = stitch({
 }, layout)
 M.select_multiple = "rshift"
 
+M.deck_preview = ({
+  dvorak = ";",
+  qwerty = "z",
+})[layout]
+
 M.proceed = "space"
 M.dismiss = "tab"
 M.reroll = "r"

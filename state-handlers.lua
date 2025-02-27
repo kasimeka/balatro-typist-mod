@@ -10,6 +10,24 @@ local M = {}
 
 local cheat_layer
 M[G.STATES.SELECTING_HAND] = function(key, held_keys)
+  if held_keys[layout.deck_preview] and not G.deck_preview then
+    G.deck_preview = UIBox {
+      definition = G.UIDEF.deck_preview(),
+      config = { align = "tm", offset = { x = 0, y = -0.8 }, major = G.hand, bond = "Weak" },
+    }
+    G.E_MANAGER:add_event(Event {
+      blocking = false,
+      blockable = false,
+      func = function()
+        if not (tu.dig(G, { "CONTROLLER", "held_keys", layout.deck_preview })) then
+          G.deck_preview:remove()
+          G.deck_preview = nil
+          return true
+        end
+      end,
+    })
+  end
+
   if held_keys[layout.cheat.leader_right] or held_keys[layout.cheat.leader_left] then
     cheat_layer(key)
 
