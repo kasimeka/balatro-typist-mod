@@ -4,7 +4,8 @@
         "play_sound",
         "find_joker",
         "CardArea",
-        "Event"
+        "Event",
+        "UIBox"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"
