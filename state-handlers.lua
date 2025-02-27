@@ -10,7 +10,7 @@ local M = {}
 
 local cheat_layer
 M[G.STATES.SELECTING_HAND] = function(key, held_keys)
-  if held_keys[layout.deck_preview] and not G.deck_preview then
+  if held_keys[layout.preview_deck] and not G.deck_preview then
     G.deck_preview = UIBox {
       definition = G.UIDEF.deck_preview(),
       config = { align = "tm", offset = { x = 0, y = -0.8 }, major = G.hand, bond = "Weak" },

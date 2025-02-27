@@ -73,7 +73,7 @@ M.cardarea_map = stitch({
 M.select_multiple_right = "rshift"
 M.select_multiple_left = "lshift"
 
-M.deck_preview = ({
+M.preview_deck = ({
   dvorak = ";",
   qwerty = "z",
 })[layout]
