@@ -79,7 +79,8 @@ return function(area, key, held_keys)
     -- if ctrl is held, select the target card as well but only in booster hands
     elseif
       area == G.hand
-      and held_keys[layout.select_multiple]
+      and held_keys[layout.select_multiple_right]
+      and held_keys[layout.select_multiple_left]
       and (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK)
     then
       CardArea.toggle_card_by_index(area, target)

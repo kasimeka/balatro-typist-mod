@@ -70,7 +70,8 @@ M.cardarea_map = stitch({
   [cardarea.JOKERS] = function() return G.jokers end,
   [cardarea.CONSUMEABLES] = function() return G.consumeables end,
 }, layout)
-M.select_multiple = "rshift"
+M.select_multiple_right = "rshift"
+M.select_multiple_left = "lshift"
 
 M.deck_preview = ({
   dvorak = ";",
