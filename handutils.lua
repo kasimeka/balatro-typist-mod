@@ -8,7 +8,7 @@ M.Action = tu.enum({ "PLAY", "DISCARD" }, {
   end,
 })
 
-M.CardNullReason = { STONE = "Stone Card", MYSTERY = "back", WILD = "Wild Card" }
+M.CardNullReason = tu.enum { "STONE", "MYSTERY", "WILD" }
 
 -- weights for how urgently a card should be played or discarded given its enhancements
 local enhancement_weights = {
@@ -36,16 +36,21 @@ local enhancement_weights = {
   },
 }
 
-local card_null_reason_values = tu.valueset(M.CardNullReason)
 M.get_visible_suit = function(card)
-  for _, c in ipairs { card.ability.effect, card.ability.name, card.facing } do
-    if card_null_reason_values[c] and not card.debuff then return c end
+  if card.ability.name == "Wild Card" then
+    return M.CardNullReason.WILD
+  elseif card.ability.name == "Stone Card" then
+    return M.CardNullReason.STONE
+  elseif card.facing == "back" then
+    return M.CardNullReason.MYSTERY
   end
   return card.base.suit
 end
 M.get_visible_rank = function(card)
-  for _, v in ipairs { card.ability.effect, card.facing } do
-    if card_null_reason_values[v] then return v end
+  if card.ability.name == "Stone Card" then
+    return M.CardNullReason.STONE
+  elseif card.facing == "back" then
+    return M.CardNullReason.MYSTERY
   end
   return card.base.id
 end
