@@ -149,4 +149,16 @@ M.dump_to_string = function(object)
   return result
 end
 
+M.enum_add_metavalues = function(enum, additions)
+  local metavalues = (getmetatable(enum) or {}).__index or {}
+  for k, v in pairs(additions) do
+    metavalues[k] = v
+  end
+  return setmetatable(enum, { __index = metavalues })
+end
+
+M.enum_attach_valueset = function(enum)
+  return M.enum_add_metavalues(enum, { valueset = M.valueset(enum) })
+end
+
 return M

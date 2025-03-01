@@ -8,17 +8,29 @@ M.Action = tu.enum({ "PLAY", "DISCARD" }, {
   end,
 })
 
-M.CardNullReason = tu.enum({ "STONE", "MYSTERY", "WILD" }, {
-  check = function(card)
+M.SuitNullReason = tu.enum({ "STONE", "MYSTERY", "WILD" }, {
+  lookup = function(card)
     if card.ability.name == "Wild Card" then
-      return M.CardNullReason.WILD
+      return M.SuitNullReason.WILD
     elseif card.ability.name == "Stone Card" then
-      return M.CardNullReason.STONE
+      return M.SuitNullReason.STONE
     elseif card.facing == "back" then
-      return M.CardNullReason.MYSTERY
+      return M.SuitNullReason.MYSTERY
     end
   end,
 })
+tu.enum_attach_valueset(M.SuitNullReason)
+
+M.RankNullReason = tu.enum({ [99] = "STONE", [101] = "MYSTERY" }, {
+  lookup = function(card)
+    if card.ability.name == "Stone Card" then
+      return M.RankNullReason.STONE
+    elseif card.facing == "back" then
+      return M.RankNullReason.MYSTERY
+    end
+  end,
+})
+tu.enum_attach_valueset(M.RankNullReason)
 
 -- weights for how urgently a card should be played or discarded given its enhancements
 local enhancement_weights = {
@@ -47,11 +59,10 @@ local enhancement_weights = {
 }
 
 M.get_visible_suit = function(card)
-  return M.CardNullReason.check(card) or card.base.suit
+  return M.SuitNullReason.lookup(card) or card.base.suit
 end
 M.get_visible_rank = function(card)
-  local null_reason = M.CardNullReason.check(card)
-  return null_reason ~= M.CardNullReason.WILD and null_reason or card.base.id
+  return M.RankNullReason.lookup(card) or card.base.id
 end
 
 M.get_base_chips = function(rank)
@@ -87,7 +98,7 @@ end
 M.top_up_with_stones = function(cards)
   for _, card in ipairs(G.hand.cards) do
     if #cards >= 5 then break end
-    if M.get_visible_suit(card) == M.CardNullReason.STONE then table.insert(cards, card) end
+    if M.get_visible_suit(card) == M.SuitNullReason.STONE then table.insert(cards, card) end
   end
   return cards
 end
@@ -117,7 +128,7 @@ M.high_card = function()
   local best, worst = G.hand.cards[1], G.hand.cards[#G.hand.cards]
   for _, card in ipairs(G.hand.cards) do
     local rank = M.get_visible_rank(card)
-    if not (rank == M.CardNullReason.STONE or rank == M.CardNullReason.MYSTERY) then
+    if not M.RankNullReason.valueset[rank] then
       local score = M.card_importance(card, M.Action.PLAY)
       if score > max_score then
         max_score = score
@@ -136,7 +147,7 @@ end
 M.select_cards_of_suit = function(...)
   local target_suits = tu.valueset { ... }
   -- Additionally, include any wild cards in hand
-  target_suits[M.CardNullReason.WILD] = true
+  target_suits[M.SuitNullReason.WILD] = true
 
   local cards = {}
   for i = 1, #G.hand.cards do
@@ -167,7 +178,7 @@ M.ranked_hands = function(cards)
 
   for _, card in pairs(cards) do
     local rank = M.get_visible_rank(card)
-    if not (rank == M.CardNullReason.STONE or rank == M.CardNullReason.MYSTERY) then
+    if not M.RankNullReason.valueset[rank] then
       if not rank_counts[rank] then rank_counts[rank] = {} end
       table.insert(rank_counts[rank], card)
     end
@@ -211,7 +222,7 @@ M.ranked_hands = function(cards)
 
   local straights = {}
   for i = 1, 10 do
-    local has_straight = 1
+    local has_straight = true
     local straight = {}
     for j = i, i + 4 do
       local actual_rank = j
@@ -221,12 +232,12 @@ M.ranked_hands = function(cards)
       elseif four_fingers and rank_counts[actual_rank - 1] then
         table.insert(straight, rank_counts[actual_rank - 1][1])
       else
-        has_straight = 0
+        has_straight = false
         break
       end
     end
 
-    if has_straight == 1 then table.insert(straights, straight) end
+    if has_straight then table.insert(straights, straight) end
   end
 
   local cards_by_suit = (

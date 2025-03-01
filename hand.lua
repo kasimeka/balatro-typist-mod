@@ -123,7 +123,7 @@ M.flush = function(target_suit)
     cards = {}
     for _, card in tu.reversed_ipairs(G.hand.cards) do
       local suit = hu.get_visible_suit(card)
-      if not (suit == target_suit or suit == hu.CardNullReason.WILD) then
+      if not (suit == target_suit or suit == hu.SuitNullReason.WILD) then
         table.insert(cards, card)
       end
     end
