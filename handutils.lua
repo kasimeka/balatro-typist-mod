@@ -38,8 +38,8 @@ local enhancement_weights = {
 
 local card_null_reason_values = tu.valueset(M.CardNullReason)
 M.get_visible_suit = function(card)
-  for _, v in ipairs { card.ability.effect, card.ability.name, card.facing } do
-    if card_null_reason_values[v] then return v end
+  for _, c in ipairs { card.ability.effect, card.ability.name, card.facing } do
+    if card_null_reason_values[c] and not card.debuff then return c end
   end
   return card.base.suit
 end
