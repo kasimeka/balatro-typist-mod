@@ -8,7 +8,17 @@ M.Action = tu.enum({ "PLAY", "DISCARD" }, {
   end,
 })
 
-M.CardNullReason = tu.enum { "STONE", "MYSTERY", "WILD" }
+M.CardNullReason = tu.enum({ "STONE", "MYSTERY", "WILD" }, {
+  check = function(card)
+    if card.ability.name == "Wild Card" then
+      return M.CardNullReason.WILD
+    elseif card.ability.name == "Stone Card" then
+      return M.CardNullReason.STONE
+    elseif card.facing == "back" then
+      return M.CardNullReason.MYSTERY
+    end
+  end,
+})
 
 -- weights for how urgently a card should be played or discarded given its enhancements
 local enhancement_weights = {
@@ -37,22 +47,11 @@ local enhancement_weights = {
 }
 
 M.get_visible_suit = function(card)
-  if card.ability.name == "Wild Card" then
-    return M.CardNullReason.WILD
-  elseif card.ability.name == "Stone Card" then
-    return M.CardNullReason.STONE
-  elseif card.facing == "back" then
-    return M.CardNullReason.MYSTERY
-  end
-  return card.base.suit
+  return M.CardNullReason.check(card) or card.base.suit
 end
 M.get_visible_rank = function(card)
-  if card.ability.name == "Stone Card" then
-    return M.CardNullReason.STONE
-  elseif card.facing == "back" then
-    return M.CardNullReason.MYSTERY
-  end
-  return card.base.id
+  local null_reason = M.CardNullReason.check(card)
+  return null_reason ~= M.CardNullReason.WILD and null_reason or card.base.id
 end
 
 M.get_base_chips = function(rank)
