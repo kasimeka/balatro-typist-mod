@@ -25,7 +25,7 @@ local enhancement_weights = {
   },
   ability = {
     ["Default Base"] = { [M.Action.PLAY] = 0, [M.Action.DISCARD] = 0 },
-    Wild = { [M.Action.PLAY] = 15, [M.Action.DISCARD] = 0 },
+    Wild = { [M.Action.PLAY] = -5, [M.Action.DISCARD] = 0 },
     Steel = { [M.Action.PLAY] = -70, [M.Action.DISCARD] = -60 },
     Glass = { [M.Action.PLAY] = 25, [M.Action.DISCARD] = 0 },
     Bonus = { [M.Action.PLAY] = 20, [M.Action.DISCARD] = 0 },
