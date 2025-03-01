@@ -28,13 +28,6 @@ return function(area, key, held_keys)
       end
     end
 
-  -- use consumable or pick from a pack
-  elseif
-    (key == layout.proceed or key == layout.buy_and_use)
-    and (area == G.pack_cards or (c.ability.consumeable and c:can_use_consumeable()))
-  then
-    G.FUNCS.use_card(e)
-
   -- deselect it no matter its position
   elseif key == layout.hand.deselect_all then
     c:click()
@@ -62,6 +55,14 @@ return function(area, key, held_keys)
   then
     e.config.id = "buy_and_use"
     G.FUNCS.buy_from_shop(e)
+
+  -- use consumable or pick from a pack
+  elseif
+    not area.__typist_shop
+    and (key == layout.proceed or key == layout.buy_and_use)
+    and ((c.ability.consumeable and c:can_use_consumeable()) and area == G.pack_cards)
+  then
+    G.FUNCS.use_card(e)
 
   -- or
   elseif target then
