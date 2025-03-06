@@ -81,7 +81,11 @@ return function(area, key, held_keys)
     elseif
       area == G.hand
       and (held_keys[layout.select_multiple_right] or held_keys[layout.select_multiple_left])
-      and (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK)
+      and (
+        G.STATE == G.STATES.TAROT_PACK
+        or G.STATE == G.STATES.SPECTRAL_PACK
+        or G.STATE == G.STATES.SMODS_BOOSTER_OPENED
+      )
     then
       CardArea.toggle_card_by_index(area, target)
 
