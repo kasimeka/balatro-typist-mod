@@ -152,9 +152,16 @@ end
 M[G.STATES.BLIND_SELECT] = function(key)
   -- select blind
   if key == layout.proceed then
-    G.FUNCS.select_blind(
+    local e =
       G.blind_select_opts[string.lower(G.GAME.blind_on_deck)]:get_UIE_by_ID("select_blind_button")
-    )
+
+    if e.config.button == "pvp_ready_button" then G.FUNCS.pvp_ready_button(e) end
+
+    if e.config.button == "mp_toggle_ready" then
+      G.FUNCS.mp_toggle_ready(e)
+    else
+      G.FUNCS.select_blind(e)
+    end
 
   -- skip blind
   elseif key == layout.skip then
