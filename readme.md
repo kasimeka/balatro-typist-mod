@@ -17,7 +17,15 @@ the only dependency is the `lovely` code injector, which is also a dependency of
 
 ## compatibility
 
-the only game versions the mod was tested with are `1.0.1n` and `1.0.1o`.
+game versions:
+
+- `1.0.1n`
+- `1.0.1o`
+
+
+other mods:
+
+- [V-rtualized/BalatroMultiplayer v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4)
 
 ## feature overview
 
