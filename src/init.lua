@@ -2,6 +2,11 @@ local layout = require("typist.layout")
 
 print(layout.tostring())
 
+if fhotkey then
+  print("FlushHotkeys detected, unhooking it from the keyboard :)")
+  Controller.key_press_update = assert(fhotkey.FUNCS.keyupdate_ref)
+end
+
 return function(Controller, key) -- order defines precedence
   if layout.global_map[key] then
     layout.global_map[key]()

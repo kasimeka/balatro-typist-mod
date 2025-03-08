@@ -5,7 +5,8 @@
         "find_joker",
         "CardArea",
         "Event",
-        "UIBox"
+        "UIBox",
+        "fhotkey"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"
