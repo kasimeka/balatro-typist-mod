@@ -59,7 +59,7 @@ local enhancement_weights = {
 }
 
 M.get_visible_suit = function(card)
-  return M.SuitNullReason.lookup(card) or card.base.suit
+  return card.debuff and card.base.suit or M.SuitNullReason.lookup(card) or card.base.suit
 end
 M.get_visible_rank = function(card)
   return M.RankNullReason.lookup(card) or card.base.id
