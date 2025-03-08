@@ -30,6 +30,9 @@ other mods:
   - in lobby menu `space` starts the run (if you're the host)
 - [Amvoled/Taikomochi `9a99c3a`](https://github.com/Amvoled/Taikomochi/tree/9a99c3a12c11573a5a16d9b6c11737307d3d25d8)
   - `enter` on the game over screen retries the last ante for zen mode runs
+- [Agoraaa/FlushHotkeys `4c0b1df`](https://github.com/Agoraaa/FlushHotkeys)
+  - removes FlushHotkeys keyboard shortcuts to prevent conflicts
+  - uses FlushHotkeys `select_best_hand` implementation instead of mine (will be removed in the future)
 
 ## feature overview
 

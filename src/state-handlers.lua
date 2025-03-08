@@ -70,10 +70,20 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
     G.FUNCS.sort_hand_suit(nil)
   end
 end
+
+local best_hand
+local fconf = fhotkey and { accept_flush = true, accept_str = true, accept_oak = true }
+if fconf then
+  print("FlushHotkeys detected, will use its `best_hand` implementation instead")
+  best_hand = fhotkey.FUNCS.select_best_hand
+else
+  best_hand = hand.best_hand
+end
 cheat_layer = function(key)
   -- best hand overall
   if key == layout.cheat.best_hand then
-    hand.best_hand()
+    ---@diagnostic disable-next-line: redundant-parameter
+    best_hand(G.hand.cards, fconf)
   -- best flush
   elseif key == layout.cheat.best_flush then
     hand.flush(hand.best_flush_suit())
