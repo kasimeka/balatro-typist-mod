@@ -1,7 +1,7 @@
 <!-- markdownlint-disable line-length -->
 # Typist mod for Balatro
 
-this mod is a mostly complete implementation of keyboard driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts), which adds keybindings for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-, but no hands are ever played or discarded automatically by the mod, it just picks cards and you can inspect the hand & modify it before playing it with `space` or discarding it with `tab`
+this mod is a mostly complete implementation of keyboard driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys), which adds keybindings for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-, but no hands are ever played or discarded automatically by the mod, it just picks cards and you can inspect the hand & modify it before playing it with `space` or discarding it with `tab`
 
 <!-- TODO:
 ## video demo
