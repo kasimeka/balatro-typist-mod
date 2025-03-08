@@ -195,7 +195,12 @@ M[G.STATES.MENU] = function(key)
     -- the play button :)
     if key == layout.proceed then
       local the_play_button = G.MAIN_MENU_UI:get_UIE_by_ID("main_menu_play")
-      if the_play_button then G.FUNCS.setup_run(the_play_button) end
+      if the_play_button then
+        G.FUNCS.setup_run(the_play_button)
+      else
+        local mp_start = G.MAIN_MENU_UI:get_UIE_by_ID("lobby_menu_start")
+        if mp_start then G.FUNCS.lobby_start_game(mp_start) end
+      end
     end
 
   -- if a playable deck is in view
