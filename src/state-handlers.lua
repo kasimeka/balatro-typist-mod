@@ -225,7 +225,11 @@ M[G.STATES.MENU] = function(key)
       G.FUNCS.go_to_menu()
     -- start endless mode
     elseif key == layout.enter then
-      if G.OVERLAY_MENU:get_UIE_by_ID("from_game_won") then G.FUNCS:exit_overlay_menu() end
+      if G.OVERLAY_MENU:get_UIE_by_ID("from_game_won") then
+        G.FUNCS:exit_overlay_menu()
+      elseif G.FUNCS.zen_restart_ante then
+        G.FUNCS.zen_restart_ante(G.OVERLAY_MENU:get_UIE_by_ID("from_game_over"))
+      end
     end
   end
 end
