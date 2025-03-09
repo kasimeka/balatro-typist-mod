@@ -6,7 +6,8 @@
         "CardArea",
         "Event",
         "UIBox",
-        "fhotkey"
+        "fhotkey",
+        "Controller"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"
