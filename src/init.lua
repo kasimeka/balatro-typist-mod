@@ -8,7 +8,9 @@ if fhotkey then
 end
 
 return function(Controller, key) -- order defines precedence
-  if layout.global_map[key] then
+  -- if text input is active, skip over keybind handlers
+  if G.CONTROLLER and G.CONTROLLER.text_input_hook then -- do nothing
+  elseif layout.global_map[key] then
     layout.global_map[key]()
   elseif
     (function()
