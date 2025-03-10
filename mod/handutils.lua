@@ -8,6 +8,91 @@ M.Action = tu.enum({ "PLAY", "DISCARD" }, {
   end,
 })
 
+M.CardModifiers = {
+  Seal = {
+    Gold = 1,
+    Blue = 2,
+    Red = 3,
+    Purple = 4,
+  },
+  Edition = {
+    holo = 5,
+    foil = 6,
+    polychrome = 7,
+  },
+  Enhancement = {
+    ["Default Base"] = 9,
+    Wild = 10,
+    Steel = 11,
+    Glass = 12,
+    Bonus = 13,
+    Mult = 14,
+    Stone = 15,
+    Lucky = 16,
+    Gold = 17,
+  },
+}
+local CM = M.CardModifiers
+tu.attach_methods(M.CardModifiers, {
+  get_edition = function(card)
+    if card.edition then
+      for k, _ in pairs(CM.Edition) do
+        if card.edition[k] then return CM.Edition[k] end
+      end
+    end
+  end,
+  get_enhancement = function(card)
+    if card.ability then return CM.Enhancement[string.gsub(card.ability.name, " Card", "")] end
+  end,
+  get_seal = function(card)
+    if card.seal then return CM.Seal[card.seal] end
+  end,
+  get_all = function(card)
+    return { CM.get_seal(card), CM.get_edition(card), CM.get_enhancement(card) }
+  end,
+})
+
+-- weights for how urgently a card should be played or discarded given its enhancements
+-- TODO: update it to use the card_modifiers table as keys
+local modifier_weights = {
+  [CM.Seal.Gold] = { [M.Action.PLAY] = 20, [M.Action.DISCARD] = -10 },
+  [CM.Seal.Blue] = { [M.Action.PLAY] = -90, [M.Action.DISCARD] = -30 },
+  [CM.Seal.Red] = { [M.Action.PLAY] = 50, [M.Action.DISCARD] = 0 },
+  [CM.Seal.Purple] = { [M.Action.PLAY] = -20, [M.Action.DISCARD] = 50 },
+  [CM.Edition.holo] = { [M.Action.PLAY] = 60, [M.Action.DISCARD] = -20 },
+  [CM.Edition.foil] = { [M.Action.PLAY] = 40, [M.Action.DISCARD] = 0 },
+  [CM.Edition.polychrome] = { [M.Action.PLAY] = 80, [M.Action.DISCARD] = -30 },
+  [CM.Enhancement["Default Base"]] = { [M.Action.PLAY] = 0, [M.Action.DISCARD] = 0 },
+  [CM.Enhancement.Wild] = { [M.Action.PLAY] = -5, [M.Action.DISCARD] = 0 },
+  [CM.Enhancement.Steel] = { [M.Action.PLAY] = -70, [M.Action.DISCARD] = -60 },
+  [CM.Enhancement.Glass] = { [M.Action.PLAY] = 25, [M.Action.DISCARD] = 0 },
+  [CM.Enhancement.Bonus] = { [M.Action.PLAY] = 20, [M.Action.DISCARD] = 0 },
+  [CM.Enhancement.Mult] = { [M.Action.PLAY] = 30, [M.Action.DISCARD] = -20 },
+  [CM.Enhancement.Stone] = { [M.Action.PLAY] = -10, [M.Action.DISCARD] = 35 },
+  [CM.Enhancement.Lucky] = { [M.Action.PLAY] = 40, [M.Action.DISCARD] = -15 },
+  [CM.Enhancement.Gold] = { [M.Action.PLAY] = -25, [M.Action.DISCARD] = -25 },
+}
+
+-- stylua: ignore
+local edition_vs_enhancement_precedence = tu.enum({
+  CM.Enhancement.Glass,
+  CM.Edition.polychrome,
+  CM.Edition.holo,
+  CM.Enhancement.Mult,
+  CM.Enhancement.Lucky,
+  CM.Edition.foil,
+  CM.Enhancement.Bonus,
+}, function() return math.huge end)
+M.card_dominant_ability = function(card)
+  if card.debuff then return false end
+  local edition = CM.get_edition(card)
+  local enhancement = CM.get_enhancement(card)
+  return edition_vs_enhancement_precedence[edition] < edition_vs_enhancement_precedence[enhancement]
+      and edition
+    or enhancement
+    or false
+end
+
 M.SuitNullReason = tu.enum({ "STONE", "MYSTERY", "WILD" }, {
   lookup = function(card)
     if card.ability.name == "Wild Card" then
@@ -19,8 +104,9 @@ M.SuitNullReason = tu.enum({ "STONE", "MYSTERY", "WILD" }, {
     end
   end,
 })
-tu.enum_attach_valueset(M.SuitNullReason)
+tu.attach_valueset(M.SuitNullReason)
 
+-- enum values are > 14 to avoid conflict with card ranks
 M.RankNullReason = tu.enum({ [99] = "STONE", [101] = "MYSTERY" }, {
   lookup = function(card)
     if card.ability.name == "Stone Card" then
@@ -30,77 +116,7 @@ M.RankNullReason = tu.enum({ [99] = "STONE", [101] = "MYSTERY" }, {
     end
   end,
 })
-tu.enum_attach_valueset(M.RankNullReason)
-
-M.card_modifiers = {
-  seal = { Gold = 1, Blue = 2, Red = 3, Purple = 4 },
-  edition = { holo = 5, foil = 6, polychrome = 7 },
-  -- stylua: ignore
-  enhancement = {
-    ["Default Base"] = 9, Wild = 10, Steel = 11, Glass = 12, Bonus = 13,
-    Mult = 14, Stone = 15, Lucky = 16, Gold = 17,
-  },
-}
-
--- stylua: ignore
-local edition_vs_enhancement_precedence = tu.enum({
-  M.card_modifiers.enhancement.Glass,
-  M.card_modifiers.edition.polychrome,
-  M.card_modifiers.edition.holo,
-  M.card_modifiers.enhancement.Mult,
-  M.card_modifiers.enhancement.Lucky,
-  M.card_modifiers.edition.foil,
-  M.card_modifiers.enhancement.Bonus,
-}, function() return math.huge end)
-M.card_main_ability = function(card)
-  if card.debuff then return false end
-  -- stylua: ignore
-  local c_mods = setmetatable({}, { __index = function() return 0 end })
-  if card.ability then
-    local effect = string.gsub(card.ability.name, " Card", "")
-    c_mods.ability = M.card_modifiers.enhancement[effect]
-  end
-  if card.edition then
-    for k, _ in pairs(M.card_modifiers.edition) do
-      if card.edition[k] then
-        c_mods.edition = M.card_modifiers.edition[k]
-        break
-      end
-    end
-  end
-  return edition_vs_enhancement_precedence[c_mods.edition]
-        < edition_vs_enhancement_precedence[c_mods.ability]
-      and c_mods.edition
-    or c_mods.ability
-    or false
-end
-
--- weights for how urgently a card should be played or discarded given its enhancements
--- TODO: update it to use the card_modifiers table as keys
-local enhancement_weights = {
-  seal = {
-    Gold = { [M.Action.PLAY] = 20, [M.Action.DISCARD] = -10 },
-    Blue = { [M.Action.PLAY] = -90, [M.Action.DISCARD] = -30 },
-    Red = { [M.Action.PLAY] = 50, [M.Action.DISCARD] = 0 },
-    Purple = { [M.Action.PLAY] = -20, [M.Action.DISCARD] = 50 },
-  },
-  edition = {
-    holo = { [M.Action.PLAY] = 60, [M.Action.DISCARD] = -20 },
-    foil = { [M.Action.PLAY] = 40, [M.Action.DISCARD] = 0 },
-    polychrome = { [M.Action.PLAY] = 80, [M.Action.DISCARD] = -30 },
-  },
-  ability = {
-    ["Default Base"] = { [M.Action.PLAY] = 0, [M.Action.DISCARD] = 0 },
-    Wild = { [M.Action.PLAY] = -5, [M.Action.DISCARD] = 0 },
-    Steel = { [M.Action.PLAY] = -70, [M.Action.DISCARD] = -60 },
-    Glass = { [M.Action.PLAY] = 25, [M.Action.DISCARD] = 0 },
-    Bonus = { [M.Action.PLAY] = 20, [M.Action.DISCARD] = 0 },
-    Mult = { [M.Action.PLAY] = 30, [M.Action.DISCARD] = -20 },
-    Stone = { [M.Action.PLAY] = -10, [M.Action.DISCARD] = 35 },
-    Lucky = { [M.Action.PLAY] = 40, [M.Action.DISCARD] = -15 },
-    Gold = { [M.Action.PLAY] = -25, [M.Action.DISCARD] = -25 },
-  },
-}
+tu.attach_valueset(M.RankNullReason)
 
 M.get_visible_suit = function(card)
   return card.debuff and card.base.suit or M.SuitNullReason.lookup(card) or card.base.suit
@@ -124,15 +140,8 @@ M.card_importance = function(card, action)
   if card.debuff then return -5 end
 
   local importance = 0
-  if card.seal then importance = importance + enhancement_weights.seal[card.seal][action] end
-  if card.edition then
-    for k, _ in pairs(enhancement_weights.edition) do
-      importance = importance + (card.edition[k] and enhancement_weights.edition[k][action] or 0)
-    end
-  end
-  if card.ability then
-    local effect = string.gsub(card.ability.name, " Card", "")
-    importance = importance + enhancement_weights.ability[effect][action]
+  for _, modifier in pairs(CM.get_all(card)) do
+    if modifier then importance = importance + modifier_weights[modifier][action] end
   end
 
   return (M.get_base_chips(card.base.id) + importance) * (action == M.Action.DISCARD and -1 or 1)

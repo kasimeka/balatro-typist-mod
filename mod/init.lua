@@ -1,4 +1,4 @@
-local layout = require("typist.layout")
+local layout = require("typist.mod.layout")
 
 print(layout.tostring())
 
@@ -17,15 +17,15 @@ return function(Controller, key) -- order defines precedence
       for leader, area in pairs(layout.cardarea_map) do
         if Controller.held_keys[leader] then
           local a = area()
-          return a and require("typist.cardarea-handler")(a, key, Controller.held_keys)
+          return a and require("typist.mod.cardarea-handler")(a, key, Controller.held_keys)
         end
       end
     end)()
   then -- nothing :)
   elseif G.SETTINGS.paused then
-    require("typist.state-handlers")[G.STATES.MENU](key)
-  elseif require("typist.state-handlers")[G.STATE] and G.GAME.STOP_USE == 0 then
-    require("typist.state-handlers")[G.STATE](key, Controller.held_keys)
+    require("typist.mod.state-handlers")[G.STATES.MENU](key)
+  elseif require("typist.mod.state-handlers")[G.STATE] and G.GAME.STOP_USE == 0 then
+    require("typist.mod.state-handlers")[G.STATE](key, Controller.held_keys)
   end
 
   -- can be invoked anywhere with no consideration for state or precedence
