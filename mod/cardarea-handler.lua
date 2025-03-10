@@ -2,7 +2,7 @@ require("typist.lib.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
 
-local layout = require("typist.layout")
+local layout = require("typist.mod.layout")
 
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
@@ -11,7 +11,7 @@ return function(area, key, held_keys)
 
   -- if no cards selected, select the target card
   if target and #area.highlighted == 0 then
-    CardArea.toggle_card_by_index(area, target)
+    CardArea.__typist_toggle_card_by_index(area, target)
     return true -- otherwise out of bounds will falltrough to other card areas and confuse players
   end
 
@@ -70,12 +70,12 @@ return function(area, key, held_keys)
 
     -- if it's also the target card, deselect it
     if src_pos == target then
-      CardArea.toggle_card_by_index(area, target)
+      CardArea.__typist_toggle_card_by_index(area, target)
 
     -- if it's a shop card change the selection with no need to deselect first
     elseif area.__typist_shop or area == G.pack_cards then
-      CardArea.toggle_card_by_index(area, src_pos)
-      CardArea.toggle_card_by_index(area, target)
+      CardArea.__typist_toggle_card_by_index(area, src_pos)
+      CardArea.__typist_toggle_card_by_index(area, target)
 
     -- if ctrl is held, select the target card as well but only in booster hands
     elseif
@@ -87,7 +87,7 @@ return function(area, key, held_keys)
         or G.STATE == G.STATES.SMODS_BOOSTER_OPENED
       )
     then
-      CardArea.toggle_card_by_index(area, target)
+      CardArea.__typist_toggle_card_by_index(area, target)
 
     -- otherwise, move the highligted card to the target position
     else

@@ -1,4 +1,4 @@
-function CardArea:toggle_card_by_index(index)
+function CardArea:__typist_toggle_card_by_index(index)
   local target = self.cards[index]
   if not target then
     play_sound("cancel")

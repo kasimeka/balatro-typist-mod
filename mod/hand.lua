@@ -1,6 +1,6 @@
 local tu = require("typist.lib.tblutils")
 
-local hu = require("typist.handutils")
+local hu = require("typist.mod.handutils")
 
 local M = {}
 
@@ -129,7 +129,7 @@ M.flush = function(target_suit)
     end
     table.sort(cards, function(x, y)
       local action = hu.Action.select_discard_if_possible()
-      return hu.card_importance(x, action) > hu.card_importance(y, action)
+      return hu.card_importance(x, action) < hu.card_importance(y, action)
     end)
     cards = tu.list_take(cards, 5)
   end
@@ -145,22 +145,22 @@ end
 local card_order_by_modifier
 -- stylua: ignore
 card_order_by_modifier = tu.enum({
-  hu.card_modifiers.edition.holo,
-  hu.card_modifiers.enhancement.Lucky,
-  hu.card_modifiers.enhancement.Mult,
-  hu.card_modifiers.edition.foil,
-  hu.card_modifiers.enhancement.Bonus,
+  hu.CardModifiers.Edition.holo,
+  hu.CardModifiers.Enhancement.Lucky,
+  hu.CardModifiers.Enhancement.Mult,
+  hu.CardModifiers.Edition.foil,
+  hu.CardModifiers.Enhancement.Bonus,
   "EVERYTHING_ELSE",
-  hu.card_modifiers.edition.polychrome,
-  hu.card_modifiers.enhancement.Glass,
+  hu.CardModifiers.Edition.polychrome,
+  hu.CardModifiers.Enhancement.Glass,
 }, function() return card_order_by_modifier.EVERYTHING_ELSE end)
 M.reorder_by_enhancements = function()
   table.sort(G.hand.cards, function(x, y)
-    local x_order = card_order_by_modifier[hu.card_main_ability(x)]
-    local y_order = card_order_by_modifier[hu.card_main_ability(y)]
+    local x_order = card_order_by_modifier[hu.card_dominant_ability(x)]
+    local y_order = card_order_by_modifier[hu.card_dominant_ability(y)]
     -- TODO: try to stack polychrome, glass and red seal on the very last card
     if x_order == y_order then
-      return hu.card_importance(x, hu.Action.PLAY) < hu.card_importance(y, hu.Action.PLAY)
+      return hu.card_importance(x, hu.Action.PLAY) > hu.card_importance(y, hu.Action.PLAY)
     else
       return x_order < y_order
     end

@@ -2,9 +2,9 @@ require("typist.lib.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
 
-local cardarea_handler = require("typist.cardarea-handler")
-local hand = require("typist.hand")
-local layout = require("typist.layout")
+local cardarea_handler = require("typist.mod.cardarea-handler")
+local hand = require("typist.mod.hand")
+local layout = require("typist.mod.layout")
 
 local M = {}
 
@@ -33,7 +33,7 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
 
   -- toggle card by position in hand
   elseif layout.free_select_map[key] then
-    G.hand:toggle_card_by_index(layout.free_select_map[key])
+    G.hand:__typist_toggle_card_by_index(layout.free_select_map[key])
 
   -- play hand
   elseif

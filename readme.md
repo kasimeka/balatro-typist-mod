@@ -55,7 +55,7 @@ other mods:
     - in rounds: 
       - `c` to sort by suit
       - `v` to sort by rank
-      - `b` to sort by enhancement+rank, where glass cards are moved to the end, and lucky and mult cards to the beginning
+      - `b` to sort by enhancement+score, where glass cards are moved to the end, and lucky and mult cards to the beginning
     - in the shop: 
       - `c` to buy an item or a pack or a voucher 
       - `v` to buy and use an item, or buy a pack or a voucher

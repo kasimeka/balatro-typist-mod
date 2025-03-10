@@ -70,36 +70,36 @@ name = "typist.lib.tblutils"
 
 [[patches]]
 [patches.module]
-source = "src/init.lua"
+source = "mod/init.lua"
 before = "main.lua"
 name = "typist"
 
 [[patches]]
 [patches.module]
-source = "src/cardarea-handler.lua"
+source = "mod/cardarea-handler.lua"
 before = "main.lua"
-name = "typist.cardarea-handler"
+name = "typist.mod.cardarea-handler"
 
 [[patches]]
 [patches.module]
-source = "src/hand.lua"
+source = "mod/hand.lua"
 before = "main.lua"
-name = "typist.hand"
+name = "typist.mod.hand"
 
 [[patches]]
 [patches.module]
-source = "src/handutils.lua"
+source = "mod/handutils.lua"
 before = "main.lua"
-name = "typist.handutils"
+name = "typist.mod.handutils"
 
 [[patches]]
 [patches.module]
-source = "src/layout.lua"
+source = "mod/layout.lua"
 before = "main.lua"
-name = "typist.layout"
+name = "typist.mod.layout"
 
 [[patches]]
 [patches.module]
-source = "src/state-handlers.lua"
+source = "mod/state-handlers.lua"
 before = "main.lua"
-name = "typist.state-handlers"
+name = "typist.mod.state-handlers"
