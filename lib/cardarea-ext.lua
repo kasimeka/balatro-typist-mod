@@ -15,7 +15,7 @@ function CardArea:__typist_toggle_card_by_index(index)
   if G.E_MANAGER then
     G.E_MANAGER:add_event(Event {
       trigger = "after",
-      delay = 8, -- seconds
+      delay = 6, -- seconds
       blockable = false,
       blocking = false,
       func = function()
