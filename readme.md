@@ -59,7 +59,7 @@ other mods:
     - in the shop: 
       - `c` to buy an item or a pack or a voucher 
       - `v` to buy and use an item, or buy a pack or a voucher
-    - `m` to deselect all cards in a cardarea and `n` to invert card selection in rounds
+    - `n` to deselect all cards in a cardarea and `m` to invert card selection in rounds
     - `x` to view run info whenever it's available
     - & others (see [`./layout.lua`](./layout.lua)) for dvorak and the full keymap
   - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc

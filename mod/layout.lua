@@ -104,12 +104,12 @@ end
 
 M.hand = subscript_fields({
   deselect_all = {
-    dvorak = "m",
-    qwerty = "m",
-  },
-  invert_selection = {
     dvorak = "b",
     qwerty = "n",
+  },
+  invert_selection = {
+    dvorak = "m",
+    qwerty = "m",
   },
   left5 = {
     dvorak = "w",
