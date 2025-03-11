@@ -30,7 +30,7 @@ return function(area, key, held_keys)
 
   -- deselect it no matter its position
   elseif key == layout.hand.deselect_all then
-    c:click()
+    area:unhighlight_all()
 
   -- use voucher or pack
   elseif
