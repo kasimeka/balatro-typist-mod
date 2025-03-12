@@ -1,12 +1,16 @@
 <!-- markdownlint-disable line-length -->
 # Typist mod for Balatro
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/janw4ld/balatro-typist-mod/main/assets/typist-hd.png" alt="Typist logo, a modification of Four Fingers that's square in aspect ratio and has five fingers instead" style="max-width:50%;">
+</p>
+
 this mod is a mostly complete implementation of keyboard driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys), which adds keybindings for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-, but no hands are ever played or discarded automatically by the mod, it just picks cards and you can inspect the hand & modify it before playing it with `space` or discarding it with `tab`
 
-<!-- TODO:
 ## video demo
 
--->
+[![YouTube](http://i.ytimg.com/vi/k2l6-RqTk1c/hqdefault.jpg)](https://www.youtube.com/watch?v=k2l6-RqTk1c)
+
 ## installation
 
 the only dependency is the `lovely` code injector, which is also a dependency of the [Steamodded mod loader](https://github.com/Steamodded/smods), so if you have `smods` you can just drop this repo into your `Mods` directory and it'll get picked up. if not then follow the first two steps of Steamodded's ["How to install Steamodded" guide](https://github.com/Steamodded/smods/wiki#how-to-install-steamodded), namely "Step 1: Anti-virus setup" and "Step 2: Installing Lovely", then download the mod (either with `git clone` or from the green "Code" button at the top of the page) and save it to the appropriate directory for your platform:
@@ -52,18 +56,19 @@ other mods:
     - closes any overlay menu
     - exits to main menu from the game over screen
   - the bottom row of the keyboard as the "control panel", for example:
-    - in rounds: 
-      - `c` to sort by suit
+    - in rounds:
+      - hold `z` for the quick deck preview
+      - press `c` to sort by suit
       - `v` to sort by rank
       - `b` to sort by enhancement+score, where glass cards are moved to the end, and lucky and mult cards to the beginning
-    - in the shop: 
-      - `c` to buy an item or a pack or a voucher 
+    - in the shop:
+      - `c` to buy an item or a pack or a voucher
       - `v` to buy and use an item, or buy a pack or a voucher
     - `n` to deselect all cards in a cardarea and `m` to invert card selection in rounds
     - `x` to view run info whenever it's available
     - & others (see [`./mod/layout.lua`](./mod/layout.lua)) for dvorak and the full keymap
   - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
-- cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for 
+- cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for
   - consumables, accessed by holding `'`
   - jokers, accessed by holding `[`
   - pack cards, with no leader key
@@ -82,6 +87,6 @@ other mods:
 
 ## future plans
 
-- half-keyboard layouts to be used with one hand on the mouse and the other on one side of keyboard
+- half-keyboard layouts to be used with one hand on the mouse and the other on one side of keyboard (similar to photoshop and other editing software)
 - menu navigation keybinds, menus are the only part of the game that currently requires the mouse to navigate
 - redesign arcana and spectral packs UX, hand manipulation in these screens is a bit clunky due to the need for `shift+/` for cardarea multiselect
