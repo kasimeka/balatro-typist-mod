@@ -90,3 +90,5 @@ other mods:
 - half-keyboard layouts to be used with one hand on the mouse and the other on one side of keyboard (similar to photoshop and other editing software)
 - menu navigation keybinds, menus are the only part of the game that currently requires the mouse to navigate
 - redesign arcana and spectral packs UX, hand manipulation in these screens is a bit clunky due to the need for `shift+/` for cardarea multiselect
+- use the controller UI to display keybind hints  
+  ![controller hints UI, shows the game's discard button with a "Y" written on it](https://raw.githubusercontent.com/janw4ld/balatro-typist-mod/main/assets/controller-hints.png)
