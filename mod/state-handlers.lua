@@ -142,7 +142,7 @@ M[G.STATES.SHOP] = function(key)
     G.FUNCS.reroll_shop()
 
   -- switch to blind select
-  elseif key == layout.proceed then
+  elseif key == layout.dismiss then
     G.FUNCS.toggle_shop()
 
   -- handle shop card actions
