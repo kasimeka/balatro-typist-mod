@@ -45,12 +45,12 @@ other mods:
   - `space` being generally the "proceed" button:
     - it plays the selected hand
     - selects the upcoming blind
-    - moves from the shop to blind selection
     - uses consumable cards
     - selects the highlighted pack item
     - starts a new run from the game over screen
   - `tab` being the dismiss button:
     - it discards the selected hand
+    - moves from the shop to blind selection
     - sells consumable or joker cards
     - skips the current booster pack
     - closes any overlay menu
