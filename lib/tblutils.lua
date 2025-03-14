@@ -34,7 +34,11 @@ M.reversed_ipairs = function(tbl)
 end
 
 M.list_take = function(list, n)
-  return table.move(list, 1, n, 1, {})
+  local res = {}
+  for i = 1, n do
+    table.insert(res, list[i])
+  end
+  return res
 end
 
 M.list_diff = function(tbl1, tbl2)
