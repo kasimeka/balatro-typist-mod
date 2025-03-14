@@ -94,6 +94,10 @@ M.buy_and_use = ({
 M.enter = "return"
 M.escape = "escape"
 
+local is_mac = love.system.getOS() == "OS X"
+M.debug_leader_left = is_mac and "lgui" or "lctrl"
+M.debug_leader_right = is_mac and "rgui" or "rctrl"
+
 local function subscript_fields(keymap, l)
   local res = {}
   for k, v in pairs(keymap) do
