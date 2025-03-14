@@ -19,7 +19,7 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
       blocking = false,
       blockable = false,
       func = function()
-        if not G.CONTROLLER.held_keys[layout.preview_deck] then
+        if not (tu.dig(G, { "CONTROLLER", "held_keys", layout.preview_deck })) then
           G.deck_preview:remove()
           G.deck_preview = nil
           return true
