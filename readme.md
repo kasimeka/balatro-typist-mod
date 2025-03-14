@@ -32,6 +32,8 @@ other mods:
 - [V-rtualized/BalatroMultiplayer v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4)
   - on pvp blinds `space` toggles the ready state instead of immediately starting the blind
   - in lobby menu `space` starts the run (if you're the host)
+- [WilsontheWolf/DebugPlus v1.4.1](https://github.com/WilsontheWolf/DebugPlus/releases/tag/v1.4.1)
+  - hold `ctrl` as a leader for the entire keyboard except `typist` if the game is in debug mode
 - [Amvoled/Taikomochi `9a99c3a`](https://github.com/Amvoled/Taikomochi/tree/9a99c3a12c11573a5a16d9b6c11737307d3d25d8)
   - `enter` on the game over screen retries the last ante for zen mode runs
 - [Agoraaa/FlushHotkeys `4c0b1df`](https://github.com/Agoraaa/FlushHotkeys)
