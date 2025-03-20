@@ -247,6 +247,11 @@ M[G.STATES.MENU] = function(key)
       elseif not G.OVERLAY_MENU.config.no_esc then
         -- close it
         G.FUNCS:exit_overlay_menu()
+
+      -- work around for a game bug that leaves you stuck on new run menu when triggered from the game over screen
+      elseif G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run")) then
+        -- navigate to the main menu instead
+        G.FUNCS.go_to_menu()
       end
 
     --
