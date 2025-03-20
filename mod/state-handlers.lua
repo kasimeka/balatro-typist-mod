@@ -216,33 +216,52 @@ M[G.STATES.MENU] = function(key)
         if mp_start then G.FUNCS.lobby_start_game(mp_start) end
       end
     end
+  elseif G.OVERLAY_MENU then
+    -- if on game over screen
+    local new_run_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
+      or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
+    local game_end_screen = not not new_run_button
 
-  -- if a playable deck is in view
-  elseif tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" }) then
-    -- start a new run with it
-    if key == layout.proceed then G.FUNCS.start_setup_run { config = { id = {} } } end
-
-  -- if an exitable menu is visible
-  elseif G.OVERLAY_MENU and not G.OVERLAY_MENU.config.no_esc then
-    -- close it
-    if key == layout.escape or key == layout.dismiss then G.FUNCS:exit_overlay_menu() end
-
-  -- game over screen
-  elseif G.OVERLAY_MENU and (G.GAME.won or G.STATE == G.STATES.GAME_OVER) then
-    -- go to deck selection
     if key == layout.proceed then
-      local new_run_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
-        or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
-      if new_run_button then G.FUNCS.notify_then_setup_run(new_run_button) end
-    -- go to main menu
-    elseif key == layout.escape then
-      G.FUNCS.go_to_menu()
-    -- start endless mode
-    elseif key == layout.enter then
-      if G.OVERLAY_MENU:get_UIE_by_ID("from_game_won") then
+      -- go to deck selection
+      if game_end_screen then
+        G.FUNCS.notify_then_setup_run(new_run_button)
+
+      -- if a playable deck is in view
+      elseif
+        (
+          G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_continue"))
+          or G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run"))
+        ) and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
+      then
+        G.FUNCS.start_setup_run { config = { id = {} } }
+      end
+
+    --
+    elseif key == layout.escape or key == layout.dismiss then
+      -- go to main menu
+      if game_end_screen then
+        G.FUNCS.go_to_menu()
+
+      -- if an exitable menu is visible
+      elseif not G.OVERLAY_MENU.config.no_esc then
+        -- close it
         G.FUNCS:exit_overlay_menu()
-      elseif G.FUNCS.zen_restart_ante then
-        G.FUNCS.zen_restart_ante(G.OVERLAY_MENU:get_UIE_by_ID("from_game_over"))
+      end
+
+    --
+    elseif key == layout.enter then
+      -- start endless mode
+      if tu.dig(new_run_button, { "config", "id" }) == "from_game_won" then
+        G.FUNCS:exit_overlay_menu()
+
+      -- or if u lost and have Taikomochi, retry the ante
+      elseif -- TODO: rely only on `get_UIE_by_ID`, needs a change to Taikomochi
+        tu.dig(new_run_button, { "parent", "children", 1, "config", "button" })
+          == "zen_restart_ante"
+        or G.OVERLAY_MENU:get_UIE_by_ID("zen_restart_ante")
+      then
+        G.FUNCS.zen_restart_ante()
       end
     end
   end
