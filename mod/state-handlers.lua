@@ -31,7 +31,7 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
   end
 
   if held_keys[layout.cheat.leader_right] or held_keys[layout.cheat.leader_left] then
-    cheat_layer(key)
+    cheat_layer(key, held_keys)
 
   -- toggle card by position in hand
   elseif layout.free_select_map[key] then
@@ -79,15 +79,15 @@ local best_hand
 local fconf = fhotkey and { accept_flush = true, accept_str = true, accept_oak = true }
 if fconf then
   print("FlushHotkeys detected, will use its `best_hand` implementation instead")
-  best_hand = fhotkey.FUNCS.select_best_hand
+  -- stylua: ignore
+  best_hand = function() fhotkey.FUNCS.select_best_hand(G.hand.cards, fconf) end
 else
   best_hand = hand.best_hand
 end
-cheat_layer = function(key)
+cheat_layer = function(key, held_keys)
   -- best hand overall
   if key == layout.cheat.best_hand then
-    ---@diagnostic disable-next-line: redundant-parameter
-    best_hand(G.hand.cards, fconf)
+    best_hand(held_keys[layout.cheat.reverse_left] or held_keys[layout.cheat.reverse_right])
   -- best flush
   elseif key == layout.cheat.best_flush then
     hand.flush(hand.best_flush_suit())

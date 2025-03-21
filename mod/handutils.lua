@@ -343,13 +343,16 @@ M.ranked_hands = function(cards)
   return tu.list_concat(fives, fours, full_houses, flushes, straights, trips, two_pairs, twos)
 end
 
-M.next_best_hand = function(possible_hands, curr_hand)
+M.next_best_hand = function(possible_hands, curr_hand, reverse)
   if #possible_hands == 1 then return possible_hands[1] end
   if #possible_hands == 0 then return {} end
   for i = 1, (#possible_hands - 1) do
-    if M.are_ranks_same(possible_hands[i], curr_hand) then return possible_hands[i + 1] end
+    if reverse then i = #possible_hands - i + 1 end
+    if M.are_ranks_same(possible_hands[i], curr_hand) then
+      return possible_hands[i + (reverse and -1 or 1)]
+    end
   end
-  return possible_hands[1]
+  return possible_hands[reverse and #possible_hands or 1]
 end
 
 M.highlight_hand = function(cards)

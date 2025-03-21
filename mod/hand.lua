@@ -137,9 +137,9 @@ M.flush = function(target_suit)
   hu.highlight_hand(cards)
 end
 
-M.best_hand = function()
+M.best_hand = function(reverse)
   local possible_hands = hu.ranked_hands(G.hand.cards)
-  hu.highlight_hand(hu.next_best_hand(possible_hands, G.hand.highlighted))
+  hu.highlight_hand(hu.next_best_hand(possible_hands, G.hand.highlighted, reverse))
 end
 
 local card_order_by_modifier
