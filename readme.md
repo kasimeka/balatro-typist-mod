@@ -29,7 +29,7 @@ game versions:
 
 other mods:
 
-- [V-rtualized/BalatroMultiplayer v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4) and the private 1.0 alpha
+- V-rtualized/BalatroMultiplayer [v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4),  [v0.2.0](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.2.0) and the private 1.0 alpha
   - on pvp blinds `space` toggles the ready state instead of immediately starting the blind
   - in lobby menu `space` starts the run (if you're the host)
 - Amvoled/Taikomochi revs [`9a99c3a`](https://github.com/Amvoled/Taikomochi/tree/9a99c3a12c11573a5a16d9b6c11737307d3d25d8) & [`26d2507`](https://github.com/Amvoled/Taikomochi/tree/26d250746a45f1265168324f16c6a62f0050c461)
