@@ -174,14 +174,11 @@ M.are_ranks_same = function(hand1, hand2)
   return next(h1_rank_counts) == nil
 end
 
-M.high_card = function()
-  G.hand:unhighlight_all()
-
+M.high_card = function(cards)
   local max_score, min_score = -math.huge, math.huge
-  local best, worst = G.hand.cards[1], G.hand.cards[#G.hand.cards]
-  for _, card in ipairs(G.hand.cards) do
-    local rank = M.get_visible_rank(card)
-    if not M.RankNullReason.valueset[rank] then
+  local best, worst = nil, nil
+  for _, card in ipairs(cards) do
+    if not M.RankNullReason.lookup(card) then
       local score = M.card_importance(card, M.Action.PLAY)
       if score > max_score then
         max_score = score
@@ -340,7 +337,20 @@ M.ranked_hands = function(cards)
     return M.hand_importance(x) > M.hand_importance(y)
   end)
 
-  return tu.list_concat(fives, fours, full_houses, flushes, straights, trips, two_pairs, twos)
+  local best_card, worst_card = M.high_card(cards)
+
+  local hands = tu.list_concat(
+    fives,
+    fours,
+    full_houses,
+    flushes,
+    straights,
+    trips,
+    two_pairs,
+    twos,
+    { M.top_up_with_stones { best_card }, M.top_up_with_stones { worst_card } }
+  )
+  return hands
 end
 
 M.next_best_hand = function(possible_hands, curr_hand, reverse)
