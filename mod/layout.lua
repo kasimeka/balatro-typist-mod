@@ -160,6 +160,8 @@ M.cheat = tu.override_merge(subscript_fields({
     ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5, ["6"] = 6, ["7"] = 7, ["8"] = 8,
     ["9"] = 9, ["0"] = 10, ["1"] = 10, ["j"] = 11, ["q"] = 12, ["k"] = 13, ["a"] = 14,
   },
+  reverse_left = "lshift",
+  reverse_right = "rshift",
 })
 
 if overrides then M = tu.override_merge(M, overrides()) end
