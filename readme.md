@@ -5,7 +5,7 @@
   <img src="https://raw.githubusercontent.com/janw4ld/balatro-typist-mod/main/assets/typist-joker-hd.png" alt="Typist logo, a modification of Four Fingers that's square in aspect ratio and has five fingers instead" style="width:50%;">
 </p>
 
-this mod is a mostly complete implementation of keyboard driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys), which adds keybindings for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-, but no hands are ever played or discarded automatically by the mod, it just picks cards and you can inspect the hand & modify it before playing it with `space` or discarding it with `tab`
+this mod is an implementation of fully keyboard-driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys) for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-.
 
 ## video demo
 
@@ -58,7 +58,9 @@ other mods:
   - the bottom row of the keyboard as the "control panel", for example:
     - in rounds:
       - hold `z` for the quick deck preview
-      - press `c` to sort by suit
+      - press `,` to select the leftmost 5 cards
+      - `.` to select the rightmost 5 cards
+      - `c` to sort by suit
       - `v` to sort by rank
       - `b` to sort by enhancement+score, where glass cards are moved to the end, and lucky and mult cards to the beginning
     - in the shop:
