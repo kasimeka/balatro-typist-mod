@@ -155,7 +155,6 @@ M.cheat = tu.override_merge(subscript_fields({
   best_hand = "b",
   best_flush = "f",
   suits_map = { s = "Spades", d = "Diamonds", c = "Clubs", h = "Hearts" },
-  -- TODO: fix jqk conflict in dvorak
   ranks_map =  {
     ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5, ["6"] = 6, ["7"] = 7, ["8"] = 8,
     ["9"] = 9, ["0"] = 10, ["1"] = 10, ["j"] = 11, ["q"] = 12, ["k"] = 13, ["a"] = 14,
