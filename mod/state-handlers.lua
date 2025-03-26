@@ -138,11 +138,16 @@ end
 
 -- pseudo-CardArea object to manipulate the shop as if it's one hand
 local shop = setmetatable({}, { __index = { __typist_shop = true } })
+-- stylua: ignore
+local to_big = to_big or function(x) return x end -- talisman compat
 M[G.STATES.SHOP] = function(key)
   -- reroll shop
   if
     key == layout.reroll
-    and (G.GAME.dollars - G.GAME.current_round.reroll_cost >= G.GAME.bankrupt_at)
+    and (
+      to_big(G.GAME.dollars) - to_big(G.GAME.current_round.reroll_cost)
+      >= to_big(G.GAME.bankrupt_at)
+    )
   then
     G.FUNCS.reroll_shop()
 
