@@ -98,9 +98,15 @@ cheat_layer = function(key, held_keys)
   -- select by suit
   elseif layout.cheat.suits_map[key] then
     hand.flush(layout.cheat.suits_map[key])
-  -- select by rank
+  -- select by rank - avoid conflict with leader keys when not being used as a shortcut
   elseif layout.cheat.ranks_map[key] then
-    hand.by_rank(layout.cheat.ranks_map[key])
+    if -- only allow a leader key to pass when another leader key is held
+      not (key == layout.cheat.leader_left or key == layout.cheat.leader_right)
+      or (key == layout.cheat.leader_left and held_keys[layout.cheat.leader_right])
+      or (key == layout.cheat.leader_right and held_keys[layout.cheat.leader_left])
+    then
+      hand.by_rank(layout.cheat.ranks_map[key])
+    end
   -- because why not
   elseif
     key == layout.proceed
