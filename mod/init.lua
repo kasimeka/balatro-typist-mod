@@ -27,9 +27,4 @@ return function(Controller, key) -- order defines precedence
   elseif require("typist.mod.state-handlers")[G.STATE] and G.GAME.STOP_USE == 0 then
     require("typist.mod.state-handlers")[G.STATE](key, Controller.held_keys)
   end
-
-  -- can be invoked anywhere with no consideration for state or precedence
-  if Controller.held_keys["d"] and key == "x" then
-    debug.debug() -- start a lua console in the global context
-  end
 end
