@@ -18,6 +18,7 @@ function Controller:key_press_update(key, dt)
     if
       self.held_keys[debug_leader_right]
       or self.held_keys[debug_leader_left]
+      or (G.CONTROLLER and G.CONTROLLER.text_input_hook)
     then
       return key_press_update_impl(self, key, dt)
     else
