@@ -5,7 +5,7 @@
 --- MOD_AUTHOR: [janw4ld]
 --- MOD_DESCRIPTION: Keyboard shortcuts for card manipulation and hand assessment
 --- PREFIX: typist
---- VERSION: 1.0.0
+--- VERSION: 1.3.0
 --- LOADER_VERSION_GEQ: 1.0.0
 
 SMODS.Atlas {
