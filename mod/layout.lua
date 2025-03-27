@@ -9,6 +9,27 @@ local layout = love.filesystem.getInfo("typist-layout")
 local overrides = love.filesystem.getInfo("typist-overrides.lua")
   and love.filesystem.load("typist-overrides.lua")
 
+M.preview_deck = ({
+  dvorak = ";",
+  qwerty = "z",
+})[layout]
+
+M.proceed = "space"
+M.dismiss = "tab"
+M.reroll = "r"
+M.skip = "s"
+M.buy = ({
+  dvorak = "j",
+  qwerty = "c",
+})[layout]
+M.buy_and_use = ({
+  dvorak = "k",
+  qwerty = "v",
+})[layout]
+
+M.enter = "return"
+M.escape = "escape"
+
 -- stylua: ignore
 M.free_select_map = ({
   dvorak = tu.enum {
@@ -39,15 +60,17 @@ M.global_map = stitch({
     dvorak = "q",
     qwerty = "x",
   },
-  -- [global.OPTIONS] = {
-  --   dvorak = "v",
-  --   qwerty = ".",
-  -- },
+  [global.OPTIONS] = {
+    dvorak = M.escape,
+    qwerty = M.escape,
+  },
 }, {
   [global.RUN_INFO] = function()
     if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
   end,
-  -- [global.OPTIONS] = G.FUNCS.options,
+  [global.OPTIONS] = function()
+    if not G.OVERLAY_MENU then G.FUNCS:options() end
+  end,
 }, layout)
 
 local cardarea = tu.enum { "HAND", "JOKERS", "CONSUMEABLES" }
@@ -72,27 +95,6 @@ M.cardarea_map = stitch({
 }, layout)
 M.select_multiple_right = "rshift"
 M.select_multiple_left = "lshift"
-
-M.preview_deck = ({
-  dvorak = ";",
-  qwerty = "z",
-})[layout]
-
-M.proceed = "space"
-M.dismiss = "tab"
-M.reroll = "r"
-M.skip = "s"
-M.buy = ({
-  dvorak = "j",
-  qwerty = "c",
-})[layout]
-M.buy_and_use = ({
-  dvorak = "k",
-  qwerty = "v",
-})[layout]
-
-M.enter = "return"
-M.escape = "escape"
 
 local function subscript_fields(keymap, l)
   local res = {}
