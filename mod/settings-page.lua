@@ -31,6 +31,7 @@ function create_UIBox_options()
 end
 
 -- add layout change notification on menu exit
+-- TODO: maybe don't rely on \`require\` to generate a static layout table, and allow changing the layout on the fly instead?
 local original_exit_overlay_menu = G.FUNCS.exit_overlay_menu
 G.FUNCS.exit_overlay_menu = function(...)
   original_exit_overlay_menu(...)
