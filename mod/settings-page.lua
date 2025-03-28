@@ -1,29 +1,24 @@
 local layout = require("typist.mod.layout")
 local tu = require("typist.lib.tblutils")
 
--- Flag to track if layout was changed
 local layout_changed = false
-
--- Define the layout change callback
-G.FUNCS.__typist_write_layout = function(x)
+G.FUNCS.__typist_write_layout = function(x) -- layout change UI callback
   local l = x.to_val
   love.filesystem.write("typist-layout", l)
   print('`typist-layout` set to: "' .. l .. '"')
   layout_changed = l ~= layout.current_layout
 end
 
--- Add settings button to options menu
 local original_create_UIBox_options = create_UIBox_options
 -- TODO: insert a tab in the settings menu instead of an extra menu just for typist
 function create_UIBox_options()
   local contents = original_create_UIBox_options()
 
-  -- Create button
   local button = UIBox_button {
     minw = 5,
     button = "__typist_settings_page_ui",
     label = { "Typist Settings" },
-    colour = { 0.643, 0.404, 0.776, 1 }, -- a467c6 in RGB format (164, 103, 198)
+    colour = { 0.643, 0.404, 0.776, 1 }, -- #a467c6
   }
 
   table.insert(
@@ -35,7 +30,7 @@ function create_UIBox_options()
   return contents
 end
 
--- Setup notification on menu exit
+-- add layout change notification on menu exit
 local original_exit_overlay_menu = G.FUNCS.exit_overlay_menu
 G.FUNCS.exit_overlay_menu = function(...)
   original_exit_overlay_menu(...)
@@ -43,7 +38,6 @@ G.FUNCS.exit_overlay_menu = function(...)
   if layout_changed then
     layout_changed = false
 
-    -- Layout changed notification
     G.FUNCS.overlay_menu {
       definition = {
         n = G.UIT.ROOT,
@@ -85,7 +79,6 @@ G.FUNCS.exit_overlay_menu = function(...)
   end
 end
 
--- Create settings menu function
 G.FUNCS.__typist_settings_page_ui = function()
   local tabs = create_tabs {
     snap_to_nav = true,
