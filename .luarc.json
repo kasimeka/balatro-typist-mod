@@ -12,7 +12,8 @@
         "create_option_cycle",
         "create_tabs",
         "create_UIBox_generic_options",
-        "UIBox_button"
+        "UIBox_button",
+        "DynaText"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"
