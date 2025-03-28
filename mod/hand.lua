@@ -145,14 +145,14 @@ end
 local card_order_by_modifier
 -- stylua: ignore
 card_order_by_modifier = tu.enum({
-  hu.CardModifiers.Edition.holo,
-  hu.CardModifiers.Enhancement.Lucky,
-  hu.CardModifiers.Enhancement.Mult,
-  hu.CardModifiers.Edition.foil,
-  hu.CardModifiers.Enhancement.Bonus,
+  hu.Card_Modifier.Edition.holo,
+  hu.Card_Modifier.Enhancement.Lucky,
+  hu.Card_Modifier.Enhancement.Mult,
+  hu.Card_Modifier.Edition.foil,
+  hu.Card_Modifier.Enhancement.Bonus,
   "EVERYTHING_ELSE",
-  hu.CardModifiers.Edition.polychrome,
-  hu.CardModifiers.Enhancement.Glass,
+  hu.Card_Modifier.Edition.polychrome,
+  hu.Card_Modifier.Enhancement.Glass,
 }, function() return card_order_by_modifier.EVERYTHING_ELSE end)
 M.reorder_by_enhancements = function()
   table.sort(G.hand.cards, function(x, y)

@@ -8,7 +8,7 @@ M.Action = tu.enum({ "PLAY", "DISCARD" }, {
   end,
 })
 
-M.CardModifiers = {
+M.Card_Modifier = {
   Seal = {
     Gold = 1,
     Blue = 2,
@@ -32,8 +32,8 @@ M.CardModifiers = {
     Gold = 17,
   },
 }
-local CM = M.CardModifiers
-tu.attach_methods(M.CardModifiers, {
+local CM = M.Card_Modifier
+tu.attach_methods(M.Card_Modifier, {
   get_edition = function(card)
     if card.edition then
       for k, _ in pairs(CM.Edition) do
