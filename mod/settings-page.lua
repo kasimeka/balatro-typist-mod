@@ -84,7 +84,7 @@ M.settings_page_ui = function()
                 opt_callback = "__typist_update_and_save_settings_state",
                 current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
               },
-              create_dynamic_textbox("active_layout", "active layout: " .. layout.current_layout),
+              create_dynamic_textbox("active_layout"),
               create_dynamic_textbox("restart_required"),
             },
           }
@@ -103,6 +103,7 @@ G.FUNCS.__typist_update_and_save_settings_state = function(x) -- layout change U
   restart_required = l ~= layout.current_layout
   should_notify_of_layout_change = restart_required
 
+  dynamic_ui_text.active_layout = "active layout: " .. layout.current_layout
   dynamic_ui_text.restart_required = "restart required: " .. (restart_required and "yes" or "no")
 end
 
