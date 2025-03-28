@@ -5,10 +5,10 @@ local tu = require("typist.lib.tblutils")
 local layout_changed = false
 
 -- Define the layout change callback
-G.FUNCS.set_Typist_layout = function(x)
+G.FUNCS.__typist_write_layout = function(x)
   local l = x.to_val
   love.filesystem.write("typist-layout", l)
-  print("Layout set to: " .. l)
+  print('`typist-layout` set to: "' .. l .. '"')
   layout_changed = true
 end
 
@@ -21,7 +21,7 @@ function create_UIBox_options()
   -- Create button
   local button = UIBox_button {
     minw = 5,
-    button = "typistMenu",
+    button = "__typist_settings_page_ui",
     label = { "Typist Settings" },
     colour = { 0.643, 0.404, 0.776, 1 }, -- a467c6 in RGB format (164, 103, 198)
   }
@@ -86,7 +86,7 @@ G.FUNCS.exit_overlay_menu = function(...)
 end
 
 -- Create settings menu function
-G.FUNCS.typistMenu = function()
+G.FUNCS.__typist_settings_page_ui = function()
   local tabs = create_tabs {
     snap_to_nav = true,
     tabs = {
@@ -111,7 +111,7 @@ G.FUNCS.typistMenu = function()
                 scale = 0.8,
                 w = 4,
                 options = layout.builtin_layouts,
-                opt_callback = "set_Typist_layout",
+                opt_callback = "__typist_write_layout",
                 current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
               },
             },
