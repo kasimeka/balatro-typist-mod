@@ -1,0 +1,57 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.module]
+source = "lib/cardarea-ext.lua"
+before = "main.lua"
+name = "typist.lib.cardarea-ext"
+
+[[patches]]
+[patches.module]
+source = "lib/tblutils.lua"
+before = "main.lua"
+name = "typist.lib.tblutils"
+
+[[patches]]
+[patches.module]
+source = "mod/init.lua"
+before = "main.lua"
+name = "typist"
+
+[[patches]]
+[patches.module]
+source = "mod/cardarea-handler.lua"
+before = "main.lua"
+name = "typist.mod.cardarea-handler"
+
+[[patches]]
+[patches.module]
+source = "mod/hand.lua"
+before = "main.lua"
+name = "typist.mod.hand"
+
+[[patches]]
+[patches.module]
+source = "mod/handutils.lua"
+before = "main.lua"
+name = "typist.mod.handutils"
+
+[[patches]]
+[patches.module]
+source = "mod/layout.lua"
+before = "main.lua"
+name = "typist.mod.layout"
+
+[[patches]]
+[patches.module]
+source = "mod/state-handlers.lua"
+before = "main.lua"
+name = "typist.mod.state-handlers"
+
+[[patches]]
+[patches.module]
+source = "mod/settings-page.lua"
+before = "main.lua"
+name = "typist.mod.settings-page"

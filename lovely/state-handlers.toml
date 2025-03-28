@@ -1,0 +1,32 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "globals.lua"
+position = "after"
+times = 1
+pattern = "function Game:set_globals()"
+payload = "self.__typist_ORPHANED_UIBOXES = {}"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+position = "after"
+times = 1
+pattern = '''
+        args.config.major = args.config.major or args.config.parent or self
+'''
+payload = "if not args.config.parent then G.__typist_ORPHANED_UIBOXES[self] = true end"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+position = "after"
+pattern = "function UIBox:remove()"
+times = 1
+payload = "G.__typist_ORPHANED_UIBOXES[self] = nil"
+match_indent = true
