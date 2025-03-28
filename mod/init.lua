@@ -1,9 +1,8 @@
+require("typist.mod.settings-page")
+
 local layout = require("typist.mod.layout")
 
 print(layout.tostring())
-
--- Load settings module (it will add options menu button, etc.)
-require("typist.mod.settings")
 
 if fhotkey then
   print("FlushHotkeys detected, unhooking it from the keyboard :)")

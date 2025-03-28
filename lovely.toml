@@ -113,6 +113,6 @@ name = "typist.mod.state-handlers"
 
 [[patches]]
 [patches.module]
-source = "mod/settings.lua"
+source = "mod/settings-page.lua"
 before = "main.lua"
-name = "typist.mod.settings"
+name = "typist.mod.settings-page"
