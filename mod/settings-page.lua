@@ -29,33 +29,32 @@ G.FUNCS.__typist_draw_settings_page = function()
 end
 
 local dynamic_ui_text = {}
-M.settings_page_ui = function()
-  local function create_dynamic_textbox(name, initial_value)
-    dynamic_ui_text[name] = type(initial_value) == "function" and initial_value()
-      or initial_value
-      or dynamic_ui_text[name]
-      or ""
-    return {
-      n = G.UIT.R,
-      config = { align = "cm", padding = 0 },
-      nodes = {
-        {
-          n = G.UIT.O,
-          config = {
-            id = "__typist_" .. name,
-            object = DynaText {
-              string = { { ref_table = dynamic_ui_text, ref_value = name } },
-              colours = { G.C.RED },
-              bump = true,
-              silent = true,
-              scale = 0.45,
-            },
+local function create_dynamic_textbox(name, initial_value)
+  dynamic_ui_text[name] = type(initial_value) == "function" and initial_value()
+    or initial_value
+    or dynamic_ui_text[name]
+    or ""
+  return {
+    n = G.UIT.R,
+    config = { align = "cm", padding = 0 },
+    nodes = {
+      {
+        n = G.UIT.O,
+        config = {
+          id = "__typist_" .. name,
+          object = DynaText {
+            string = { { ref_table = dynamic_ui_text, ref_value = name } },
+            colours = { G.C.RED },
+            bump = true,
+            silent = true,
+            scale = 0.45,
           },
         },
       },
-    }
-  end
-
+    },
+  }
+end
+M.settings_page_ui = function()
   G.FUNCS.__typist_update_and_save_settings_state { to_val = layout.current_layout }
 
   return create_tabs {
