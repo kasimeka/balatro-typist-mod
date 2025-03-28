@@ -2,6 +2,9 @@ local layout = require("typist.mod.layout")
 
 print(layout.tostring())
 
+-- Load settings module (it will add options menu button, etc.)
+require("typist.mod.settings")
+
 if fhotkey then
   print("FlushHotkeys detected, unhooking it from the keyboard :)")
   Controller.key_press_update = assert(fhotkey.FUNCS.keyupdate_ref)

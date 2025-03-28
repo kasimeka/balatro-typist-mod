@@ -110,3 +110,9 @@ name = "typist.mod.layout"
 source = "mod/state-handlers.lua"
 before = "main.lua"
 name = "typist.mod.state-handlers"
+
+[[patches]]
+[patches.module]
+source = "mod/settings.lua"
+before = "main.lua"
+name = "typist.mod.settings"
