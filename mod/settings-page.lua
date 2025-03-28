@@ -45,7 +45,6 @@ local function create_dynamic_textbox(name, initial_value)
           object = DynaText {
             string = { { ref_table = dynamic_ui_text, ref_value = name } },
             colours = { G.C.RED },
-            bump = true,
             silent = true,
             scale = 0.45,
           },
