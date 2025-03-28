@@ -1,5 +1,3 @@
-require("typist.mod.settings-page")
-
 local layout = require("typist.mod.layout")
 
 print(layout.tostring())
