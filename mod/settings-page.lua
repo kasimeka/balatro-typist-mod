@@ -1,35 +1,29 @@
--- Typist Settings
--- Adds a keyboard layout selection to the options menu
-
-print("Typist settings module loaded")
-
--- Available keyboard layouts
-local layouts = { "qwerty", "dvorak" }
+local layout = require("typist.mod.layout")
 
 -- Flag to track if layout was changed
 local layout_changed = false
 
 -- Load current layout from file
 local function load_current_layout()
-  local layout = "qwerty" -- Default
+  local l = layout.builtin_layouts.default
   local file_exists = love.filesystem.getInfo("typist-layout")
 
   if file_exists then
-    layout = love.filesystem.read("typist-layout"):gsub("%s+", "")
-    print("Loaded layout: " .. layout)
+    l = love.filesystem.read("typist-layout"):gsub("%s+", "")
+    print("Loaded layout: " .. l)
   else
-    print("No layout file found, using default: " .. layout)
-    love.filesystem.write("typist-layout", layout)
+    print("No layout file found, using default: " .. l)
+    love.filesystem.write("typist-layout", l)
   end
 
-  return layout
+  return l
 end
 
 -- Define the layout change callback
 G.FUNCS.set_Typist_layout = function(x)
-  local layout = x.to_val
-  love.filesystem.write("typist-layout", layout)
-  print("Layout set to: " .. layout)
+  local l = x.to_val
+  love.filesystem.write("typist-layout", l)
+  print("Layout set to: " .. l)
   layout_changed = true
 end
 
@@ -84,7 +78,7 @@ G.FUNCS.exit_overlay_menu = function(...)
               {
                 n = G.UIT.T,
                 config = {
-                  text = "Layout changed - restart game",
+                  text = "layout changed - restart game",
                   scale = 0.4,
                   colour = G.C.RED,
                 },
@@ -110,13 +104,13 @@ end
 
 -- Create settings menu function
 G.FUNCS.typistMenu = function()
-  local layout = load_current_layout()
+  local l = load_current_layout()
 
   -- Find current layout index
   local layout_idx = 1
-  for i, l in ipairs(layouts) do
-    if l == layout then
-      layout_idx = i
+  for k, v in ipairs(layout.builtin_layouts) do
+    if v == l then
+      layout_idx = k
       break
     end
   end
@@ -145,7 +139,7 @@ G.FUNCS.typistMenu = function()
                 label = "Keyboard Layout",
                 scale = 0.8,
                 w = 4,
-                options = layouts,
+                options = layout.builtin_layouts,
                 opt_callback = "set_Typist_layout",
                 current_option = layout_idx,
               },
