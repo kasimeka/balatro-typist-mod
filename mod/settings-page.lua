@@ -9,6 +9,50 @@ G.FUNCS.__typist_write_layout = function(x) -- layout change UI callback
   layout_changed = l ~= layout.current_layout
 end
 
+G.FUNCS.__typist_settings_page_ui = function()
+  local tabs = create_tabs {
+    snap_to_nav = true,
+    tabs = {
+      {
+        label = "Typist Settings",
+        chosen = true,
+        tab_definition_function = function()
+          return {
+            n = G.UIT.ROOT,
+            config = {
+              emboss = 0.05,
+              minh = 6,
+              r = 0.1,
+              minw = 10,
+              align = "cm",
+              padding = 0.2,
+              colour = G.C.BLACK,
+            },
+            nodes = {
+              create_option_cycle {
+                label = "Keyboard Layout",
+                scale = 0.8,
+                w = 4,
+                options = layout.builtin_layouts,
+                opt_callback = "__typist_write_layout",
+                current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
+              },
+            },
+          }
+        end,
+      },
+    },
+  }
+
+  G.FUNCS.overlay_menu {
+    definition = create_UIBox_generic_options {
+      back_func = "options",
+      contents = { tabs },
+    },
+    config = { offset = { x = 0, y = 10 } },
+  }
+end
+
 local original_create_UIBox_options = create_UIBox_options
 -- TODO: insert a tab in the settings menu instead of an extra menu just for typist
 function create_UIBox_options()
@@ -68,48 +112,4 @@ G.FUNCS.exit_overlay_menu = function(...)
       config = { offset = { x = 0, y = -0.5 } },
     }
   end
-end
-
-G.FUNCS.__typist_settings_page_ui = function()
-  local tabs = create_tabs {
-    snap_to_nav = true,
-    tabs = {
-      {
-        label = "Typist Settings",
-        chosen = true,
-        tab_definition_function = function()
-          return {
-            n = G.UIT.ROOT,
-            config = {
-              emboss = 0.05,
-              minh = 6,
-              r = 0.1,
-              minw = 10,
-              align = "cm",
-              padding = 0.2,
-              colour = G.C.BLACK,
-            },
-            nodes = {
-              create_option_cycle {
-                label = "Keyboard Layout",
-                scale = 0.8,
-                w = 4,
-                options = layout.builtin_layouts,
-                opt_callback = "__typist_write_layout",
-                current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
-              },
-            },
-          }
-        end,
-      },
-    },
-  }
-
-  G.FUNCS.overlay_menu {
-    definition = create_UIBox_generic_options {
-      back_func = "options",
-      contents = { tabs },
-    },
-    config = { offset = { x = 0, y = 10 } },
-  }
 end
