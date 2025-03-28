@@ -55,7 +55,7 @@ G.FUNCS.exit_overlay_menu = function(...)
               {
                 n = G.UIT.T,
                 config = {
-                  text = "layout changed - restart game",
+                  text = "typist layout changed, a restart is required for the change to take effect.",
                   scale = 0.4,
                   colour = G.C.RED,
                 },
@@ -66,16 +66,6 @@ G.FUNCS.exit_overlay_menu = function(...)
       },
       config = { offset = { x = 0, y = -0.5 } },
     }
-
-    -- Auto-dismiss after 5 seconds
-    G.E_MANAGER:add_event(Event {
-      trigger = "after",
-      delay = 5,
-      func = function()
-        G.FUNCS.exit_overlay_menu()
-        return true
-      end,
-    })
   end
 end
 
