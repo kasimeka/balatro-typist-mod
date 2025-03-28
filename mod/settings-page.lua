@@ -1,23 +1,8 @@
 local layout = require("typist.mod.layout")
+local tu = require("typist.lib.tblutils")
 
 -- Flag to track if layout was changed
 local layout_changed = false
-
--- Load current layout from file
-local function load_current_layout()
-  local l = layout.builtin_layouts.default
-  local file_exists = love.filesystem.getInfo("typist-layout")
-
-  if file_exists then
-    l = love.filesystem.read("typist-layout"):gsub("%s+", "")
-    print("Loaded layout: " .. l)
-  else
-    print("No layout file found, using default: " .. l)
-    love.filesystem.write("typist-layout", l)
-  end
-
-  return l
-end
 
 -- Define the layout change callback
 G.FUNCS.set_Typist_layout = function(x)
@@ -39,9 +24,6 @@ function create_UIBox_options()
     label = { "Typist Settings" },
     colour = { 0.643, 0.404, 0.776, 1 }, -- a467c6 in RGB format (164, 103, 198)
   }
-
-  -- Add button to menu
-  print("Adding Typist Settings button to options menu")
 
   table.insert(
     contents.nodes[1].nodes[1].nodes[1].nodes,
@@ -104,18 +86,6 @@ end
 
 -- Create settings menu function
 G.FUNCS.typistMenu = function()
-  local l = load_current_layout()
-
-  -- Find current layout index
-  local layout_idx = 1
-  for k, v in ipairs(layout.builtin_layouts) do
-    if v == l then
-      layout_idx = k
-      break
-    end
-  end
-
-  -- Create and show menu
   local tabs = create_tabs {
     snap_to_nav = true,
     tabs = {
@@ -141,7 +111,7 @@ G.FUNCS.typistMenu = function()
                 w = 4,
                 options = layout.builtin_layouts,
                 opt_callback = "set_Typist_layout",
-                current_option = layout_idx,
+                current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
               },
             },
           }
