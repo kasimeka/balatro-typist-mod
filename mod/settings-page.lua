@@ -55,7 +55,11 @@ local function create_dynamic_textbox(name, initial_value)
   }
 end
 M.settings_page_ui = function()
-  G.FUNCS.__typist_update_and_save_settings_state { to_val = layout.current_layout }
+  local layout_name_on_disk = love.filesystem.getInfo("typist-layout")
+      and love.filesystem.read("typist-layout"):gsub("%s+", "")
+    or layout.current_layout
+
+  G.FUNCS.__typist_update_and_save_settings_state { to_val = layout_name_on_disk }
 
   return create_tabs {
     snap_to_nav = true,
@@ -82,7 +86,7 @@ M.settings_page_ui = function()
                 w = 4,
                 options = layout.builtin_layouts,
                 opt_callback = "__typist_update_and_save_settings_state",
-                current_option = tu.list_index_of(layout.builtin_layouts, layout.current_layout),
+                current_option = tu.list_index_of(layout.builtin_layouts, layout_name_on_disk),
               },
               create_dynamic_textbox("active_layout"),
               create_dynamic_textbox("restart_required"),
