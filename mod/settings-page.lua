@@ -9,7 +9,7 @@ G.FUNCS.__typist_write_layout = function(x)
   local l = x.to_val
   love.filesystem.write("typist-layout", l)
   print('`typist-layout` set to: "' .. l .. '"')
-  layout_changed = true
+  layout_changed = l ~= layout.current_layout
 end
 
 -- Add settings button to options menu
