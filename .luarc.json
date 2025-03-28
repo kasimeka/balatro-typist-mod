@@ -8,7 +8,11 @@
         "UIBox",
         "fhotkey",
         "Controller",
-        "localize"
+        "localize",
+        "create_option_cycle",
+        "create_tabs",
+        "create_UIBox_generic_options",
+        "UIBox_button"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"

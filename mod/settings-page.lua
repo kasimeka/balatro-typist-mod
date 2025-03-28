@@ -14,6 +14,7 @@ end
 
 -- Add settings button to options menu
 local original_create_UIBox_options = create_UIBox_options
+-- TODO: insert a tab in the settings menu instead of an extra menu just for typist
 function create_UIBox_options()
   local contents = original_create_UIBox_options()
 
