@@ -5,17 +5,16 @@ priority = 0
 [[patches]]
 [patches.pattern]
 target = "functions/button_callbacks.lua"
-position = "before"
+position = "after"
 times = 1
-pattern = "G.FUNCS.continue_unlock = function()"
-payload = '''
-local __typist_exit_overlay_menu_impl = G.FUNCS.exit_overlay_menu
-G.FUNCS.exit_overlay_menu = function()
-  __typist_exit_overlay_menu_impl()
-  require("typist.mod.settings-page").draw_layout_change_notification()
-end
+pattern = '''
+  G.OVERLAY_MENU:remove()
+  G.OVERLAY_MENU = nil
+  G.VIEWING_DECK = nil
+  G.SETTINGS.paused = false
 '''
-match_indent = false
+payload = 'require("typist.mod.settings-page").draw_layout_change_notification()'
+match_indent = true
 
 [[patches]]
 [patches.pattern]

@@ -82,12 +82,40 @@ M.settings_page_ui = function()
             nodes = {
               create_option_cycle {
                 label = "Keyboard Layout",
-                scale = 0.8,
                 w = 4,
                 options = layout.builtin_layouts,
                 opt_callback = "__typist_update_and_save_settings_state",
                 current_option = tu.list_index_of(layout.builtin_layouts, layout_name_on_disk),
               },
+              {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0 },
+                nodes = {
+                  create_slider {
+                    label = "Hover Duration (s)",
+                    w = 4,
+                    ref_table = G.SETTINGS.__typist,
+                    ref_value = "card_hover_duration",
+                    min = 0,
+                    max = 20,
+                  },
+                  {
+                    n = G.UIT.R,
+                    config = { align = "cm", padding = 0 },
+                    nodes = {
+                      {
+                        n = G.UIT.T,
+                        config = {
+                          text = "0 keeps cards hovered indefinitely",
+                          scale = 0.35,
+                          colour = G.C.WHITE,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              { n = G.UIT.R, config = { align = "cm", padding = 0.1 }, nodes = {} }, -- separator
               create_dynamic_textbox("active_layout"),
               create_dynamic_textbox("restart_required"),
             },
