@@ -2,9 +2,21 @@ local tu = require("typist.lib.tblutils")
 
 local M = {}
 
+tu.add_metavalues(M, {
+  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty" }, { default = "qwerty" }),
+  tostring = function()
+    return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
+  end,
+  -- stylua: ignore
+  print = function()
+    io.write("keymap = ") tu.dump_to_stdout(M) io.write('\nlayout_name = "' .. M.current_layout ..'"')
+  end,
+})
+
 local layout = love.filesystem.getInfo("typist-layout")
     and love.filesystem.read("typist-layout"):gsub("%s+", "")
-  or "qwerty"
+  or M.builtin_layouts.default
+tu.add_metavalues(M, { current_layout = layout })
 
 local overrides = love.filesystem.getInfo("typist-overrides.lua")
   and love.filesystem.load("typist-overrides.lua")
@@ -167,13 +179,4 @@ M.cheat = tu.override_merge(subscript_fields({
 
 if overrides then M = tu.override_merge(M, overrides()) end
 
--- stylua: ignore
-return setmetatable(M, {__index = {
-  layout_name = layout,
-  tostring = function()
-    return "keymap = " .. tu.dump_to_string(M) .. "\nlayout_name = \"" .. layout.."\""
-  end,
-  print = function()
-    io.write("keymap = ") tu.dump_to_stdout(M) io.write("\nlayout_name = \"" .. layout.."\"")
-  end,
-}})
+return M

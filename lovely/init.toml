@@ -1,0 +1,34 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "engine/controller.lua"
+position = "before"
+times = 1
+pattern = "function Controller:key_hold_update(key, dt)"
+payload = '''
+local __typist_key_press_update_impl = Controller.key_press_update
+local __typist_is_mac = love.system.getOS() == "OS X"
+local __typist_debug_leader_right = __typist_is_mac and "rgui" or "rctrl"
+local __typist_debug_leader_left = __typist_is_mac and "lgui" or "lctrl"
+function Controller:key_press_update(key, dt)
+  if not (_RELEASE_MODE or key == "escape") then
+    if
+      self.held_keys[__typist_debug_leader_right]
+      or self.held_keys[__typist_debug_leader_left]
+      or (G.CONTROLLER and G.CONTROLLER.text_input_hook)
+    then
+      return __typist_key_press_update_impl(self, key, dt)
+    else
+      require("typist")(self, key, dt)
+    end
+  else
+    require("typist")(self, key, dt)
+    return __typist_key_press_update_impl(self, key, dt)
+  end
+end
+'''
+match_indent = false
+

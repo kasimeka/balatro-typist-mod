@@ -126,7 +126,7 @@ end
 M[G.STATES.ROUND_EVAL] = function(key)
   if key == layout.proceed then
     local cash_out_button
-    for e, _ in pairs(G.ORPHANED_UIBOXES) do
+    for e, _ in pairs(G.__typist_ORPHANED_UIBOXES) do
       cash_out_button = e:get_UIE_by_ID("cash_out_button")
       if cash_out_button and cash_out_button.config.button then
         G.FUNCS.cash_out(cash_out_button)
