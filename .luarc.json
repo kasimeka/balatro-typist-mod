@@ -13,7 +13,8 @@
         "create_tabs",
         "create_UIBox_generic_options",
         "UIBox_button",
-        "DynaText"
+        "DynaText",
+        "create_slider"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"
