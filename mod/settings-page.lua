@@ -4,6 +4,7 @@ local tu = require("typist.lib.tblutils")
 local M = {}
 
 -- TODO: insert a tab in the settings menu instead of an extra menu just for typist
+-- TODO: add the settings page in the smods menu instead of options if present
 M.insert_settings_page_button = function(options_menu_ui)
   table.insert(
     options_menu_ui.nodes[1].nodes[1].nodes[1].nodes,
