@@ -2,6 +2,8 @@ local layout = require("typist.mod.layout")
 
 print(layout.tostring())
 
+G.SETTINGS.__typist = G.SETTINGS.__typist or {}
+
 if fhotkey then
   print("FlushHotkeys detected, unhooking it from the keyboard :)")
   Controller.key_press_update = assert(fhotkey.FUNCS.keyupdate_ref)
