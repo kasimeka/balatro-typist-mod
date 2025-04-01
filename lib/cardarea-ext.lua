@@ -27,7 +27,7 @@ function CardArea:__typist_toggle_card_by_index(index)
     last_hover.card = target
 
     -- hover duration 0 means infinite hover
-    if G.SETTINGS.__typist_card_hover_duration <= 0 and target.highlighted then return end
+    if G.SETTINGS.__typist.card_hover_duration <= 0 and target.highlighted then return end
 
     last_hover.e = Event {
       -- while selecting a card, hover it for a longer duration than deselection
