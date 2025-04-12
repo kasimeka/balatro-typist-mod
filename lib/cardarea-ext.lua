@@ -20,8 +20,19 @@ function CardArea:__typist_toggle_card_by_index(index)
     last_hover.e.func = no_op
   end
 
-  __typist_ACTIVE_TOP_AREA_SELECTION = self.__typist_top_area and not target.highlighted and target
+  if __typist_ACTIVE_TOP_AREA_SELECTION then
+    local hysm = __typist_ACTIVE_TOP_AREA_SELECTION
+    __typist_ACTIVE_TOP_AREA_SELECTION = self.__typist_top_area
+      and not target.highlighted
+      and target
+    hysm:highlight(true)
+  else
+    __typist_ACTIVE_TOP_AREA_SELECTION = self.__typist_top_area
+      and not target.highlighted
+      and target
+  end
   target:click()
+
   target:hover()
   if G.E_MANAGER then
     last_hover.card = target
