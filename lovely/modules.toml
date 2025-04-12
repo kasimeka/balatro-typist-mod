@@ -55,9 +55,3 @@ name = "typist.mod.state-handlers"
 source = "mod/settings-page.lua"
 before = "main.lua"
 name = "typist.mod.settings-page"
-
-[[patches]]
-[patches.module]
-source = "mod/top-cardarea.lua"
-before = "main.lua"
-name = "typist.mod.top-cardarea"

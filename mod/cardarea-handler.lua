@@ -9,8 +9,12 @@ local layout = require("typist.mod.layout")
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
 return function(area, key, held_keys)
-  local target = layout.free_select_two_electric_boogaloo[key]
-    or (not __typist_ACTIVE_TOP_AREA_SELECTION and layout.free_select_map[key])
+  local target
+  if area.__typist_top_area then
+    target = layout.free_select_two_electric_boogaloo[key]
+  else
+    target = layout.free_select_map[key]
+  end
 
   -- if no cards selected, select the target card
   if target and #area.highlighted == 0 then
