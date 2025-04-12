@@ -4,6 +4,7 @@ local last_hover = {}
 local no_op = function()
   return true
 end
+
 function CardArea:__typist_toggle_card_by_index(index)
   local target = self.cards[index]
   if not target then
@@ -27,7 +28,7 @@ function CardArea:__typist_toggle_card_by_index(index)
     stale_hover.ambient_tilt = 0.2
     stale_hover:highlight(true)
   end
-  target:click()
+  target:click() -- target.highlighted is toggled here
 
   target:hover()
   if G.E_MANAGER then
@@ -53,6 +54,7 @@ function CardArea:__typist_toggle_card_by_index(index)
 
   return target.highlighted and target
 end
+M.steal_top_area_focus = CardArea.__typist_steal_top_area_focus
 M.toggle_card_by_index = CardArea.__typist_toggle_card_by_index
 
 return M

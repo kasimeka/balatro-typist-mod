@@ -14,7 +14,8 @@
         "create_UIBox_generic_options",
         "UIBox_button",
         "DynaText",
-        "create_slider"
+        "create_slider",
+        "Card"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"

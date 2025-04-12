@@ -7,12 +7,8 @@ local layout = require("typist.mod.layout")
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
 return function(area, key, held_keys)
-  local target
-  if area.__typist_top_area then
-    target = layout.top_area_free_select_map[key]
-  else
-    target = layout.free_select_map[key]
-  end
+  local target = layout.top_area_free_select_map[key]
+    or (not area.__typist_top_area and layout.free_select_map[key])
 
   -- if no cards selected, select the target card
   if target and #area.highlighted == 0 then
@@ -35,7 +31,15 @@ return function(area, key, held_keys)
 
   -- deselect it no matter its position
   elseif key == layout.hand.deselect_all then
-    CardArea.unhighlight_all(area)
+    if area.__typist_top_area then
+      if G.__typist_TOP_AREA.active_selection then
+        G.__typist_TOP_AREA.active_selection.ambient_tilt = 0.2
+        G.__typist_TOP_AREA.active_selection:click()
+      end
+      G.__typist_TOP_AREA.active_selection = nil
+    else
+      CardArea.unhighlight_all(area)
+    end
 
   -- use voucher or pack
   elseif
