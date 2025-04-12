@@ -13,7 +13,7 @@ if fhotkey then
 end
 
 -- pseudo-CardArea object to manipulate jokers and consumable as if they're one hand
-local top_area = setmetatable({}, { __index = { __typist_top_area = true } })
+G.__typist_TOP_AREA = setmetatable({}, { __index = { __typist_top_area = true } })
 return function(Controller, key) -- order defines precedence
   -- if text input is active, skip over keybind handlers
   if G.CONTROLLER and G.CONTROLLER.text_input_hook then -- do nothing
@@ -33,10 +33,11 @@ return function(Controller, key) -- order defines precedence
   then -- nothing :)
   elseif
     (function()
-      if layout.free_select_two_electric_boogaloo[key] or __typist_ACTIVE_TOP_AREA_SELECTION then
-        top_area.cards = tu.list_concat(G.jokers.cards, G.consumeables.cards)
-        top_area.highlighted = tu.list_concat(G.jokers.highlighted, G.consumeables.highlighted)
-        return require("typist.mod.cardarea-handler")(top_area, key)
+      if layout.top_area_free_select_map[key] or G.__typist_TOP_AREA.active_selection then
+        G.__typist_TOP_AREA.cards = tu.list_concat(G.jokers.cards, G.consumeables.cards)
+        G.__typist_TOP_AREA.highlighted =
+          tu.list_concat(G.jokers.highlighted, G.consumeables.highlighted)
+        return require("typist.mod.cardarea-handler")(G.__typist_TOP_AREA, key)
       end
     end)()
   then -- nothing here too

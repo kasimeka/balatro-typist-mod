@@ -58,7 +58,7 @@ M.free_select_map = ({
   },
 })[layout]
 -- stylua: ignore
-M.free_select_two_electric_boogaloo = {
+M.top_area_free_select_map = {
   ["1"] = 1, ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5;
   ["6"] = 6, ["7"] = 7, ["8"] = 8, ["9"] = 9, ["0"] = 10;
 }

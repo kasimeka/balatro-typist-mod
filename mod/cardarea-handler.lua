@@ -1,17 +1,15 @@
-require("typist.lib.cardarea-ext")
+require("typist.mod.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
 
 local layout = require("typist.mod.layout")
-
--- TODO: unused
 
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
 return function(area, key, held_keys)
   local target
   if area.__typist_top_area then
-    target = layout.free_select_two_electric_boogaloo[key]
+    target = layout.top_area_free_select_map[key]
   else
     target = layout.free_select_map[key]
   end
@@ -33,8 +31,6 @@ return function(area, key, held_keys)
       for _, j in ipairs(G.jokers.cards) do
         j:calculate_joker { selling_card = true }
       end
-
-      __typist_ACTIVE_TOP_AREA_SELECTION = false
     end
 
   -- deselect it no matter its position
@@ -69,7 +65,6 @@ return function(area, key, held_keys)
   elseif not area.__typist_shop and (key == layout.proceed or key == layout.buy_and_use) then
     if (c.ability.consumeable and c:can_use_consumeable()) or area == G.pack_cards then
       G.FUNCS.use_card(e)
-      __typist_ACTIVE_TOP_AREA_SELECTION = false
     end
 
   -- or

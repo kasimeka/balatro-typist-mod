@@ -1,6 +1,3 @@
-G.SETTINGS.__typist = G.SETTINGS.__typist or {}
-G.SETTINGS.__typist.card_hover_duration = G.SETTINGS.__typist.card_hover_duration or 10
-
 local M = {}
 
 local last_hover = {}
@@ -20,16 +17,15 @@ function CardArea:__typist_toggle_card_by_index(index)
     last_hover.e.func = no_op
   end
 
-  if __typist_ACTIVE_TOP_AREA_SELECTION then
-    local hysm = __typist_ACTIVE_TOP_AREA_SELECTION
-    __typist_ACTIVE_TOP_AREA_SELECTION = self.__typist_top_area
-      and not target.highlighted
-      and target
-    hysm:highlight(true)
-  else
-    __typist_ACTIVE_TOP_AREA_SELECTION = self.__typist_top_area
-      and not target.highlighted
-      and target
+  local stale_hover = G.__typist_TOP_AREA.active_selection
+  G.__typist_TOP_AREA.active_selection = self.__typist_top_area
+    and not target.highlighted
+    and target
+  -- the card's `use_button` ui is redrawn to its normal scale here
+  -- when `G.__typist_TOP_AREA.active_selection ~= stale_hover`
+  if stale_hover then
+    stale_hover.ambient_tilt = 0.2
+    stale_hover:highlight(true)
   end
   target:click()
 
