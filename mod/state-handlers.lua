@@ -1,4 +1,4 @@
-require("typist.lib.cardarea-ext")
+require("typist.mod.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
 

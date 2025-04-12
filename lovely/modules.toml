@@ -4,12 +4,6 @@ priority = 0
 
 [[patches]]
 [patches.module]
-source = "lib/cardarea-ext.lua"
-before = "main.lua"
-name = "typist.lib.cardarea-ext"
-
-[[patches]]
-[patches.module]
 source = "lib/tblutils.lua"
 before = "main.lua"
 name = "typist.lib.tblutils"
@@ -19,6 +13,13 @@ name = "typist.lib.tblutils"
 source = "mod/init.lua"
 before = "main.lua"
 name = "typist"
+
+[[patches]]
+[patches.module]
+source = "mod/cardarea-ext.lua"
+before = "main.lua"
+name = "typist.mod.cardarea-ext"
+
 
 [[patches]]
 [patches.module]

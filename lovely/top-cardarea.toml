@@ -1,0 +1,81 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+position = "after"
+pattern = "function G.UIDEF.use_and_sell_buttons(card)"
+payload = '''
+local __typist_no_prefix = card == G.__typist_TOP_AREA.active_selection
+if __typist_no_prefix then card.ambient_tilt = 1.5 end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+position = "at"
+pattern = "{n=G.UIT.T, config={text = localize('b_sell'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}"
+payload = '''
+{
+  n = G.UIT.T,
+  config = {
+    text = localize("b_sell"),
+    colour = __typist_no_prefix and G.C.RED or G.C.UI.TEXT_LIGHT,
+    scale = __typist_no_prefix and 0.8 or 0.4,
+    shadow = true,
+  },
+}
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+position = "at"
+pattern = '''
+            {n=G.UIT.T, config={text = localize('$'),colour = G.C.WHITE, scale = 0.4, shadow = true}},
+            {n=G.UIT.T, config={ref_table = card, ref_value = 'sell_cost_label',colour = G.C.WHITE, scale = 0.55, shadow = true}}
+'''
+payload = '''
+{
+  n = G.UIT.T,
+  config = {
+    text = localize("$"),
+    colour = __typist_no_prefix and G.C.RED or G.C.WHITE,
+    scale = __typist_no_prefix and 0.8 or 0.4,
+    shadow = true,
+  },
+},
+{
+  n = G.UIT.T,
+  config = {
+    ref_table = card,
+    ref_value = "sell_cost_label",
+    colour = __typist_no_prefix and G.C.RED or G.C.WHITE,
+    scale = __typist_no_prefix and 0.9 or 0.55,
+    shadow = true,
+  },
+},
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+position = "at"
+pattern = "{n=G.UIT.T, config={text = localize('b_use'),colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}"
+payload = '''
+{
+  n = G.UIT.T,
+  config = {
+    text = localize("b_use"),
+    colour = __typist_no_prefix and G.C.BLACK or G.C.UI.TEXT_LIGHT,
+    scale = __typist_no_prefix and 0.9 or 0.55,
+    shadow = true,
+  },
+}
+'''
+match_indent = true

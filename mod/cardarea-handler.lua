@@ -1,4 +1,4 @@
-require("typist.lib.cardarea-ext")
+require("typist.mod.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
 
@@ -7,7 +7,8 @@ local layout = require("typist.mod.layout")
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
 return function(area, key, held_keys)
-  local target = layout.free_select_map[key]
+  local target = layout.top_area_free_select_map[key]
+    or (not area.__typist_top_area and layout.free_select_map[key])
 
   -- if no cards selected, select the target card
   if target and #area.highlighted == 0 then
@@ -30,7 +31,15 @@ return function(area, key, held_keys)
 
   -- deselect it no matter its position
   elseif key == layout.hand.deselect_all then
-    area:unhighlight_all()
+    if area.__typist_top_area then
+      if G.__typist_TOP_AREA.active_selection then
+        G.__typist_TOP_AREA.active_selection.ambient_tilt = 0.2
+        G.__typist_TOP_AREA.active_selection:click()
+      end
+      G.__typist_TOP_AREA.active_selection = nil
+    else
+      CardArea.unhighlight_all(area)
+    end
 
   -- use voucher or pack
   elseif
@@ -70,12 +79,12 @@ return function(area, key, held_keys)
     if src_pos == target then
       CardArea.__typist_toggle_card_by_index(area, target)
 
-    -- if it's a shop card change the selection with no need to deselect first
-    elseif area.__typist_shop or area == G.pack_cards then
+    -- if it's a shop or top area card change the selection with no need to deselect first
+    elseif area.__typist_shop or area.__typist_top_area or area == G.pack_cards then
       CardArea.__typist_toggle_card_by_index(area, src_pos)
       CardArea.__typist_toggle_card_by_index(area, target)
 
-    -- if ctrl is held, select the target card as well but only in booster hands
+    -- if shift is held, select the target card as well but only in booster hands
     elseif
       area == G.hand
       and (held_keys[layout.select_multiple_right] or held_keys[layout.select_multiple_left])
