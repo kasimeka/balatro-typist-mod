@@ -124,7 +124,7 @@ cheat_layer = function(key, held_keys)
 end
 
 M[G.STATES.ROUND_EVAL] = function(key)
-  if key == layout.proceed then
+  if key == layout.proceed or key == layout.enter then
     local cash_out_button
     for e, _ in pairs(G.__typist_ORPHANED_UIBOXES) do
       cash_out_button = e:get_UIE_by_ID("cash_out_button")
@@ -152,7 +152,7 @@ M[G.STATES.SHOP] = function(key)
     G.FUNCS.reroll_shop()
 
   -- switch to blind select
-  elseif key == layout.dismiss then
+  elseif key == layout.dismiss or key == layout.enter then
     G.FUNCS.toggle_shop()
 
   -- handle shop card actions
@@ -176,7 +176,7 @@ end
 
 M[G.STATES.BLIND_SELECT] = function(key)
   -- select blind
-  if key == layout.proceed then
+  if key == layout.proceed or key == layout.enter then
     local e =
       G.blind_select_opts[string.lower(G.GAME.blind_on_deck)]:get_UIE_by_ID("select_blind_button")
 
