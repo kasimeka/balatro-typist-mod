@@ -35,7 +35,7 @@ return function(area, key, held_keys)
 
   -- deselect it no matter its position
   elseif key == layout.hand.deselect_all then
-    area:unhighlight_all()
+    CardArea.unhighlight_all(area)
 
   -- use voucher or pack
   elseif
