@@ -73,6 +73,7 @@ other mods:
 - cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for
   - consumables, accessed by holding `'`
   - jokers, accessed by holding `[`
+  - a convenience jokers+consumables area accessed with the number row buttons and no leader key
   - pack cards, with no leader key
   - the shop, with no leader key
   - the hand, which is accessed
