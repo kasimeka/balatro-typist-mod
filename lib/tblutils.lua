@@ -19,7 +19,7 @@ end
 M.list_concat = function(...)
   local res = {}
   for _, t in ipairs { ... } do
-    for _, v in ipairs(t) do
+    for _, v in ipairs(t or {}) do
       table.insert(res, v)
     end
   end
