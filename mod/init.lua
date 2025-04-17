@@ -34,9 +34,12 @@ return function(Controller, key) -- order defines precedence
   elseif
     (function()
       if layout.top_area_free_select_map[key] or G.__typist_TOP_AREA.active_selection then
+        if not (G.jokers and G.consumeables) then return end
+
         G.__typist_TOP_AREA.cards = tu.list_concat(G.jokers.cards, G.consumeables.cards)
         G.__typist_TOP_AREA.highlighted =
           tu.list_concat(G.jokers.highlighted, G.consumeables.highlighted)
+
         return cardarea_handler(G.__typist_TOP_AREA, key)
       end
     end)()
