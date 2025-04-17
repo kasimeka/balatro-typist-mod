@@ -166,4 +166,27 @@ M.attach_valueset = function(enum, key)
   return M.add_metavalues(enum, { [key or "valueset"] = M.valueset(enum) })
 end
 
+M.deep_merge = function(into, from)
+  local stack = {}
+  local node1 = into
+  local node2 = from
+  while true do
+    for k, v in pairs(node2) do
+      if type(v) == "table" and type(node1[k]) == "table" then
+        table.insert(stack, { node1[k], node2[k] })
+      else
+        node1[k] = v
+      end
+    end
+    if #stack > 0 then
+      local t = stack[#stack]
+      node1, node2 = t[1], t[2]
+      stack[#stack] = nil
+    else
+      break
+    end
+  end
+  return into
+end
+
 return M
