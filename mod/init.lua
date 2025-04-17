@@ -25,7 +25,7 @@ return function(Controller, key) -- order defines precedence
     (function()
       for leader, area in pairs(layout.cardarea_map) do
         if Controller.held_keys[leader] then
-          local a = area()
+          local a = area and area()
           return a and cardarea_handler(a, key, Controller.held_keys)
         end
       end
@@ -37,7 +37,7 @@ return function(Controller, key) -- order defines precedence
         G.__typist_TOP_AREA.cards = tu.list_concat(G.jokers.cards, G.consumeables.cards)
         G.__typist_TOP_AREA.highlighted =
           tu.list_concat(G.jokers.highlighted, G.consumeables.highlighted)
-        return require("typist.mod.cardarea-handler")(G.__typist_TOP_AREA, key)
+        return cardarea_handler(G.__typist_TOP_AREA, key)
       end
     end)()
   then -- nothing here too

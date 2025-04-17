@@ -181,6 +181,19 @@ M.cheat = tu.override_merge(subscript_fields({
   reverse_right = "rshift",
 })
 
-if overrides then M = tu.override_merge(M, overrides()) end
+if overrides then
+  local chunk = overrides()
+  if type(chunk) == "function" then
+    M = tu.deep_merge(M, chunk(M))
+  elseif type(chunk) == "table" then
+    M = tu.deep_merge(M, chunk)
+  else
+    error(
+      "`typist-overrides.lua` is invalid: expected a function or table, got "
+        .. type(chunk)
+        .. " instead"
+    )
+  end
+end
 
 return M
