@@ -6,6 +6,7 @@ local layout = require("typist.mod.layout")
 print(layout.tostring())
 
 G.SETTINGS.__typist = G.SETTINGS.__typist or {}
+G.SETTINGS.__typist.card_hover_duration = G.SETTINGS.__typist.card_hover_duration or 10
 
 if fhotkey then
   print("FlushHotkeys detected, unhooking it from the keyboard :)")
