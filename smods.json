@@ -1,13 +1,13 @@
 {
     "id": "typist",
-    "name": "Typist",
+    "name": "typist",
     "prefix": "typist",
     "author": [
-        "janw4ld"
+        "kasimeka"
     ],
-    "description": "Fully keyboard-driven UX with keybindings for (almost) every in-game action.",
+    "description": "Fully keyboard-driven UX with keybindings for (almost) every game action.",
     "priority": 0,
     "main_file": "mod/smods.lua",
     "badge_colour": "ffffff",
-    "version": "1.6.1"
+    "version": "1.6.2"
 }
