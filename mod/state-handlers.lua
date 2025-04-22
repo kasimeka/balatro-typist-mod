@@ -75,15 +75,7 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
   end
 end
 
-local best_hand
-local fconf = fhotkey and { accept_flush = true, accept_str = true, accept_oak = true }
-if fconf then
-  print("FlushHotkeys detected, will use its `best_hand` implementation instead")
-  -- stylua: ignore
-  best_hand = function() fhotkey.FUNCS.select_best_hand(G.hand.cards, fconf) end
-else
-  best_hand = hand.best_hand
-end
+local best_hand = require("typist.compat.fhotkey").best_hand_impl()
 cheat_layer = function(key, held_keys)
   -- best hand overall
   if key == layout.cheat.best_hand then
