@@ -259,12 +259,8 @@ M[G.STATES.MENU] = function(key)
         G.FUNCS:exit_overlay_menu()
 
       -- or if u lost and have Taikomochi, retry the ante
-      elseif -- TODO: rely only on `get_UIE_by_ID`, needs a change to Taikomochi
-        tu.dig(new_run_button, { "parent", "children", 1, "config", "button" })
-          == "zen_restart_ante"
-        or G.OVERLAY_MENU:get_UIE_by_ID("zen_restart_ante")
-      then
-        G.FUNCS.zen_restart_ante()
+      else
+        require("typist.compat.taikomochi").zen_restart_ante()
       end
     end
   end
