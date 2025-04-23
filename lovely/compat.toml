@@ -19,12 +19,18 @@ name = "typist.compat.init"
 
 [[patches]]
 [patches.module]
+source = "compat/debugplus.lua"
+before = "main.lua"
+name = "typist.compat.debugplus"
+
+[[patches]]
+[patches.module]
 source = "compat/fhotkey.lua"
 before = "main.lua"
 name = "typist.compat.fhotkey"
 
 [[patches]]
 [patches.module]
-source = "compat/debugplus.lua"
+source = "compat/multiplayer.lua"
 before = "main.lua"
-name = "typist.compat.debugplus"
+name = "typist.compat.multiplayer"

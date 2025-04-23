@@ -6,6 +6,8 @@ local cardarea_handler = require("typist.mod.cardarea-handler")
 local hand = require("typist.mod.hand")
 local layout = require("typist.mod.layout")
 
+local multiplayer_compat = require("typist.compat.multiplayer")
+
 local M = {}
 
 local cheat_layer
@@ -172,13 +174,7 @@ M[G.STATES.BLIND_SELECT] = function(key)
     local e =
       G.blind_select_opts[string.lower(G.GAME.blind_on_deck)]:get_UIE_by_ID("select_blind_button")
 
-    if e.config.button == "pvp_ready_button" then G.FUNCS.pvp_ready_button(e) end
-
-    if e.config.button == "mp_toggle_ready" then
-      G.FUNCS.mp_toggle_ready(e)
-    else
-      G.FUNCS.select_blind(e)
-    end
+    if not multiplayer_compat.pvp_toggle_ready(e) then G.FUNCS.select_blind(e) end
 
   -- skip blind
   elseif key == layout.skip then
@@ -215,8 +211,7 @@ M[G.STATES.MENU] = function(key)
       if the_play_button then
         G.FUNCS.setup_run(the_play_button)
       else
-        local mp_start = G.MAIN_MENU_UI:get_UIE_by_ID("lobby_menu_start")
-        if mp_start then G.FUNCS.lobby_start_game(mp_start) end
+        multiplayer_compat.lobby_start_game()
       end
     end
   elseif G.OVERLAY_MENU then
