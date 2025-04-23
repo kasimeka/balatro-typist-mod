@@ -1,7 +1,5 @@
 local M = {}
 
-M.init = function() end
-
 M.lobby_start_game = function()
   local mp_start = G.MAIN_MENU_UI:get_UIE_by_ID("lobby_menu_start")
   if mp_start then G.FUNCS.lobby_start_game(mp_start) end

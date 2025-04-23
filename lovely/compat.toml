@@ -34,3 +34,9 @@ name = "typist.compat.fhotkey"
 source = "compat/multiplayer.lua"
 before = "main.lua"
 name = "typist.compat.multiplayer"
+
+[[patches]]
+[patches.module]
+source = "compat/taikomochi.lua"
+before = "main.lua"
+name = "typist.compat.taikomochi"
