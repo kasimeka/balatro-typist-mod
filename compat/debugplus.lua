@@ -13,19 +13,19 @@ M.init = function()
     "you're loading me before the controls are initialized :("
   )
 
-  local debugplus_consoleOpen = false
-  local debugplus_consoleHandleKey = require("debugplus.console").consoleHandleKey
+  local consoleOpen = false
+  local consoleHandleKey = require("debugplus.console").consoleHandleKey
   require("debugplus.console").consoleHandleKey = function(key)
     if
-      debugplus_consoleOpen
+      consoleOpen
       or held_keys[layout.debug_leader_left]
       or held_keys[layout.debug_leader_right]
     then
       --
       -- in DebugPlus v1.4.1, the thing™ is only true if the console is closed
       -- and we're signaling for another thing to open it :)
-      local the_thing = debugplus_consoleHandleKey(key)
-      debugplus_consoleOpen = (
+      local the_thing = consoleHandleKey(key)
+      consoleOpen = (
         not the_thing -- so as long as the thing is false, we're in the console
         or key == "/" -- if the thing is true & key is "/", we're opening the console on the next frame
       )
