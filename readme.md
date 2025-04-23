@@ -29,14 +29,16 @@ game versions:
 
 other mods:
 
-- V-rtualized/BalatroMultiplayer [v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4),  [v0.2.1](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.2.1) and the private 1.0 alpha
+- [WilsontheWolf/DebugPlus v1.4.1](https://github.com/WilsontheWolf/DebugPlus/releases/tag/v1.4.1)
+  - hold `ctrl` as a leader for the entire keyboard except `typist` and `debugplus.console` if the game is in debug mode
+- V-rtualized/BalatroMultiplayer [v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4),  versions **0.2.x**, and the private ~1.0~ alpha
   - on pvp blinds `space` toggles the ready state instead of immediately starting the blind
   - in lobby menu `space` starts the run (if you're the host)
 - Amvoled/Taikomochi rev [`26d2507`](https://github.com/Amvoled/Taikomochi/tree/26d250746a45f1265168324f16c6a62f0050c461)
   - `enter` on the game over screen retries the last ante for zen mode runs
 - [Agoraaa/FlushHotkeys `4c0b1df`](https://github.com/Agoraaa/FlushHotkeys)
-  - removes FlushHotkeys keyboard shortcuts to prevent conflicts
-  - uses FlushHotkeys `select_best_hand` implementation instead of mine (will be removed in the future)
+  - FlushHotkeys keyboard shortcuts are removed to prevent conflicts
+  - FlushHotkeys' `select_best_hand` implementation is used instead of mine (will be removed in the future)
 
 ## feature overview
 
