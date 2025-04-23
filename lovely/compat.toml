@@ -1,0 +1,30 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+position = "after"
+times = 1
+pattern = "G:start_up()"
+payload = 'require("typist.compat.init")()'
+match_indent = true
+
+[[patches]]
+[patches.module]
+source = "compat/init.lua"
+before = "main.lua"
+name = "typist.compat.init"
+
+[[patches]]
+[patches.module]
+source = "compat/fhotkey.lua"
+before = "main.lua"
+name = "typist.compat.fhotkey"
+
+[[patches]]
+[patches.module]
+source = "compat/debugplus.lua"
+before = "main.lua"
+name = "typist.compat.debugplus"

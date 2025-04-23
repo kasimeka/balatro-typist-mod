@@ -21,6 +21,10 @@ tu.add_metavalues(M, { current_layout = layout })
 local overrides = love.filesystem.getInfo("typist-overrides.lua")
   and love.filesystem.load("typist-overrides.lua")
 
+local is_mac = love.system.getOS() == "OS X"
+M.debug_leader_left = is_mac and "lgui" or "lctrl"
+M.debug_leader_right = is_mac and "rgui" or "rctrl"
+
 M.preview_deck = ({
   dvorak = ";",
   qwerty = "z",
