@@ -4,7 +4,9 @@ local M = {}
 M.init = function()
   if not pcall(require, "debugplus.console") then return end
 
-  print("DebugPlus detected, moving it behind the `ctrl` key to avoid conflicts")
+  require("typist.lib.log")(
+    "DebugPlus detected, moving it behind the `ctrl` key to avoid conflicts"
+  )
 
   local held_keys = assert(
     G.CONTROLLER and G.CONTROLLER.held_keys,

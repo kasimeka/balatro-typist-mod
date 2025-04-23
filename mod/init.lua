@@ -3,7 +3,7 @@ local tu = require("typist.lib.tblutils")
 local cardarea_handler = require("typist.mod.cardarea-handler")
 local layout = require("typist.mod.layout")
 
-print(layout.tostring())
+require("typist.lib.log")(layout.tostring())
 
 G.SETTINGS.__typist = G.SETTINGS.__typist or {}
 G.SETTINGS.__typist.card_hover_duration = G.SETTINGS.__typist.card_hover_duration or 10
