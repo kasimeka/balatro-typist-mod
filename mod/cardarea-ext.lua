@@ -54,7 +54,6 @@ function CardArea:__typist_toggle_card_by_index(index)
 
   return target.highlighted and target
 end
-M.steal_top_area_focus = CardArea.__typist_steal_top_area_focus
 M.toggle_card_by_index = CardArea.__typist_toggle_card_by_index
 
 return M

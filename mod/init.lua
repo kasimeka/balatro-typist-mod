@@ -36,7 +36,7 @@ return function(Controller, key) -- order defines precedence
         G.__typist_TOP_AREA.highlighted =
           tu.list_concat(G.jokers.highlighted, G.consumeables.highlighted)
 
-        return cardarea_handler(G.__typist_TOP_AREA, key)
+        return cardarea_handler(G.__typist_TOP_AREA, key, Controller.held_keys)
       end
     end)()
   then -- nothing here too
