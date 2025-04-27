@@ -134,7 +134,7 @@ end
 local shop = setmetatable({}, { __index = { __typist_shop = true } })
 -- stylua: ignore
 local to_big = to_big or function(x) return x end -- talisman compat
-M[G.STATES.SHOP] = function(key)
+M[G.STATES.SHOP] = function(key, held_keys)
   -- reroll shop
   if
     key == layout.reroll
@@ -162,7 +162,8 @@ M[G.STATES.SHOP] = function(key)
         )
         return shop
       end)(),
-      key
+      key,
+      held_keys
     )
   then -- do nothing
   end
@@ -267,13 +268,13 @@ M[G.STATES.MENU] = function(key)
 end
 
 local pack_event = { config = {} }
-M[G.STATES.STANDARD_PACK] = function(key)
+M[G.STATES.STANDARD_PACK] = function(key, held_keys)
   if key == layout.dismiss then
     if G.FUNCS.can_skip_booster(pack_event) or pack_event.config.button then
       G.FUNCS.skip_booster(pack_event)
     end
   else
-    cardarea_handler(G.pack_cards, key)
+    cardarea_handler(G.pack_cards, key, held_keys)
   end
 end
 M[G.STATES.PLANET_PACK] = M[G.STATES.STANDARD_PACK]

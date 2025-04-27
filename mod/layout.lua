@@ -25,6 +25,7 @@ local is_mac = love.system.getOS() == "OS X"
 M.debug_leader_left = is_mac and "lgui" or "lctrl"
 M.debug_leader_right = is_mac and "rgui" or "rctrl"
 
+M.unacorn_card = "\\"
 M.preview_deck = ({
   dvorak = ";",
   qwerty = "z",

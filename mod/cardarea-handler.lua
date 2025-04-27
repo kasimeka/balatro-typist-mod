@@ -4,6 +4,41 @@ local tu = require("typist.lib.tblutils")
 
 local layout = require("typist.mod.layout")
 
+local last_drag = { pos = {} }
+-- drag a card out of its area into the center of the screen (a bit above jimbo)
+-- for only one card at a time, intended to counter the Amber Acorn boss, where
+-- a player can snatch their best xmult joker away to prevent it from getting
+-- shuffled out of place
+local function unacorn_card(card, held_keys)
+  if not G.E_MANAGER or (last_drag.e and not last_drag.e.complete) then return end
+
+  card.__typist_unacorned = true
+  card.states.drag.is = true
+  card.states.click.is = true
+
+  last_drag.card = card
+  last_drag.pos.y = card.T.y
+
+  last_drag.e = Event {
+    trigger = "immediate",
+    blocking = false,
+    func = function()
+      local card_dropped = not held_keys[layout.unacorn_card]
+      if card_dropped then
+        card.__typist_unacorned = nil
+        card.states.drag.is = false
+        card.states.click.is = false
+
+        last_drag.e.complete = true
+      else
+        card.T.y = 3
+      end
+      return card_dropped
+    end,
+  }
+  G.E_MANAGER:add_event(last_drag.e)
+end
+
 -- returns whether or not the method did anything, if it returns false then we
 -- should fallthrough to the next key handler branches
 return function(area, key, held_keys)
@@ -19,6 +54,18 @@ return function(area, key, held_keys)
   if not (#area.highlighted == 1 or area == G.hand) then return false end
   local c = area.highlighted[1]
   local e = { config = { ref_table = c }, UIBox = { states = {} } }
+
+  if c and held_keys[layout.unacorn_card] then unacorn_card(c, held_keys) end
+
+  -- prevent use or sale of unacorned cards, falling through to other handlers.
+  -- needed to let players unacorn a joker then use `space` to start the blind.
+  if
+    c -- could be `nil` if area is `G.hand`
+    and c.__typist_unacorned
+    and not target -- target is `nil` when we're operating on the selected card
+  then
+    return false
+  end
 
   -- sell the card if possible
   if key == layout.dismiss then
