@@ -5,7 +5,7 @@
   <img src="https://raw.githubusercontent.com/janw4ld/balatro-typist-mod/main/assets/typist-joker-hd.png" alt="Typist logo, a modification of Four Fingers that's square in aspect ratio and has five fingers instead" style="width:50%;">
 </p>
 
-this mod is an implementation of fully keyboard-driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys) for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-.
+this mod is an implementation of fully keyboard-driven UX for Balatro. it adds keybindings for all of the gameplay actions, and includes code from [DorkDad141's Keyboard Shortcuts](https://github.com/DorkDad141/keyboard-shortcuts) & [FlushHotkeys](https://github.com/Agoraaa/FlushHotkeys) for quickly selecting the best hand available or making flush & high card hands -called "the cheat layer" in typist-. join the discussion on the official Balatro discord: [typist's thread](https://discord.com/channels/1116389027176787968/1349532762259980308), [server invite](https://discord.com/invite/balatro)
 
 ## video demo
 
