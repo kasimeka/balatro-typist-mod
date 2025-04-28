@@ -71,7 +71,6 @@ other mods:
     - `n` to deselect all cards in a cardarea and `m` to invert card selection in rounds
     - `x` to view run info whenever it's available
     - & others (see [`./mod/layout.lua`](./mod/layout.lua)) for dvorak and the full keymap
-  - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
 - cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for
   - consumables, accessed by holding `'`
   - jokers, accessed by holding `[`
@@ -82,6 +81,11 @@ other mods:
     - by holding `/` everywhere for selection and movement of a single card
     - by holding `shift+/` for multiselect in booster packs
     - with no leader key for multiselect in rounds
+- mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
+- holding `\` on a selected card to drag it out of its area, this can be used to snatch a joker away before the Amber Acorn boss can shuffle it
+
+https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
+
 - support for `qwerty` and `dvorak` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
