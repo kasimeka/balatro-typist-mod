@@ -4,6 +4,15 @@ priority = 0
 
 [[patches]]
 [patches.pattern]
+target = "main.lua"
+position = "after"
+times = 1
+pattern = "G:start_up()"
+payload = 'require("typist.mod.init")'
+match_indent = true
+
+[[patches]]
+[patches.pattern]
 target = "engine/controller.lua"
 position = "before"
 times = 1

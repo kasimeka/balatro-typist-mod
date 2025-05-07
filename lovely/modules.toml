@@ -16,9 +16,15 @@ name = "typist.lib.log"
 
 [[patches]]
 [patches.module]
-source = "mod/init.lua"
+source = "mod/entrypoint.lua"
 before = "main.lua"
 name = "typist"
+
+[[patches]]
+[patches.module]
+source = "mod/init.lua"
+before = "main.lua"
+name = "typist.mod.init"
 
 [[patches]]
 [patches.module]
