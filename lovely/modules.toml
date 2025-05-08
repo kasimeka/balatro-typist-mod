@@ -67,3 +67,33 @@ name = "typist.mod.state-handlers"
 source = "mod/settings-page.lua"
 before = "main.lua"
 name = "typist.mod.settings-page"
+
+[[patches]]
+[patches.module]
+source = "compat/init.lua"
+before = "main.lua"
+name = "typist.compat.init"
+
+[[patches]]
+[patches.module]
+source = "compat/debugplus.lua"
+before = "main.lua"
+name = "typist.compat.debugplus"
+
+[[patches]]
+[patches.module]
+source = "compat/fhotkey.lua"
+before = "main.lua"
+name = "typist.compat.fhotkey"
+
+[[patches]]
+[patches.module]
+source = "compat/multiplayer.lua"
+before = "main.lua"
+name = "typist.compat.multiplayer"
+
+[[patches]]
+[patches.module]
+source = "compat/taikomochi.lua"
+before = "main.lua"
+name = "typist.compat.taikomochi"

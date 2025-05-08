@@ -22,13 +22,14 @@ function CardArea:__typist_toggle_card_by_index(index)
   G.__typist_TOP_AREA.active_selection = self.__typist_top_area
     and not target.highlighted
     and target
-  -- the card's `use_button` ui is redrawn to its normal scale here
-  -- when `G.__typist_TOP_AREA.active_selection ~= stale_hover`
   if stale_hover then
     stale_hover.ambient_tilt = 0.2
+
+    -- the card's `use_button` ui is redrawn to its normal scale here
+    -- when `G.__typist_TOP_AREA.active_selection ~= stale_hover`
     stale_hover:highlight(true)
   end
-  target:click() -- target.highlighted is toggled here
+  target:click() -- `target.highlighted` is toggled here
 
   target:hover()
   if G.E_MANAGER then

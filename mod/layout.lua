@@ -166,14 +166,6 @@ M.cheat = tu.override_merge(subscript_fields({
     dvorak = "'",
     qwerty = "q",
   },
-  -- best_high_card = {
-  --   dvorak = "k",
-  --   qwerty = "h",
-  -- },
-  -- worst_high_card = {
-  --   dvorak = "j",
-  --   qwerty = "l",
-  -- },
 }, layout), {
   best_hand = "b",
   best_flush = "f",

@@ -85,10 +85,6 @@ cheat_layer = function(key, held_keys)
   -- best flush
   elseif key == layout.cheat.best_flush then
     hand.flush(hand.best_flush_suit())
-  --[[ elseif key == layout.cheat.best_high_card then
-    hand.best_high_card()
-  elseif key == layout.cheat.worst_high_card then
-    hand.worst_high_card() ]]
   -- select by suit
   elseif layout.cheat.suits_map[key] then
     hand.flush(layout.cheat.suits_map[key])
