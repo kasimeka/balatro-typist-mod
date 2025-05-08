@@ -3,8 +3,6 @@ local tu = require("typist.lib.tblutils")
 local cardarea_handler = require("typist.mod.cardarea-handler")
 local layout = require("typist.mod.layout")
 
--- pseudo-CardArea object to manipulate jokers and consumable as if they're one hand
-G.__typist_TOP_AREA = setmetatable({}, { __index = { __typist_top_area = true } })
 return function(Controller, key) -- order defines precedence
   -- if text input is active, skip over keybind handlers
   if G.CONTROLLER and G.CONTROLLER.text_input_hook then -- do nothing
