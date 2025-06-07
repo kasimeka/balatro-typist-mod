@@ -3,7 +3,7 @@ local tu = require("typist.lib.tblutils")
 local M = {}
 
 tu.add_metavalues(M, {
-  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty" }, { default = "qwerty" }),
+  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "workman" }, { default = "qwerty" }),
   tostring = function()
     return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
   end,
@@ -29,6 +29,7 @@ M.unacorn_card = "\\"
 M.preview_deck = ({
   dvorak = ";",
   qwerty = "z",
+  workman = "z",
 })[layout]
 
 M.proceed = "space"
@@ -38,10 +39,12 @@ M.skip = "s"
 M.buy = ({
   dvorak = "j",
   qwerty = "c",
+  workman = "m",
 })[layout]
 M.buy_and_use = ({
   dvorak = "k",
   qwerty = "v",
+  workman = "c",
 })[layout]
 
 M.enter = "return"
@@ -60,6 +63,12 @@ M.free_select_map = ({
     "h", "j", "k", "l", ";";
     "y", "u", "i", "o", "p";
     "q", "w", "e", "r", "t";
+  },
+  workman = tu.enum {
+    "a", "s", "h", "t", "g";
+    "y", "n", "e", "o", "i";
+    "j", "f", "u", "p", ";";
+    "b", "w", "r", "d", "q";
   },
 })[layout]
 -- stylua: ignore
@@ -80,10 +89,12 @@ M.global_map = stitch({
   [global.RUN_INFO] = {
     dvorak = "q",
     qwerty = "x",
+    workman = "x",
   },
   [global.OPTIONS] = {
     dvorak = M.escape,
     qwerty = M.escape,
+    workman = M.escape,
   },
 }, {
   [global.RUN_INFO] = function()
@@ -100,14 +111,17 @@ M.cardarea_map = stitch({
   [cardarea.HAND] = {
     dvorak = "z",
     qwerty = "/",
+    workman = "/",
   },
   [cardarea.JOKERS] = {
     dvorak = "/",
     qwerty = "[",
+    workman = "[",
   },
   [cardarea.CONSUMEABLES] = {
     dvorak = "-",
     qwerty = "'",
+    workman = "'",
   },
 }, {
   [cardarea.HAND] = function() return G.hand end,
@@ -129,30 +143,37 @@ M.hand = subscript_fields({
   deselect_all = {
     dvorak = "b",
     qwerty = "n",
+    workman = "k",
   },
   invert_selection = {
     dvorak = "m",
     qwerty = "m",
+    workman = "l",
   },
   left5 = {
     dvorak = "w",
     qwerty = ",",
+    workman = "d",
   },
   right5 = {
     dvorak = "v",
     qwerty = ".",
+    workman = ".",
   },
   reorder_by_enhancements = {
     dvorak = "x",
     qwerty = "b",
+    workman = "v",
   },
   sort_by_rank = {
     dvorak = "k",
     qwerty = "v",
+    workman = "c",
   },
   sort_by_suit = {
     dvorak = "j",
     qwerty = "c",
+    workman = "m",
   },
 }, layout)
 
@@ -161,10 +182,12 @@ M.cheat = tu.override_merge(subscript_fields({
   leader_right = {
     dvorak = "l",
     qwerty = "p",
+    workman = ";",
   },
   leader_left = {
     dvorak = "'",
     qwerty = "q",
+    workman = "q",
   },
 }, layout), {
   best_hand = "b",
