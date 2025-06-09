@@ -4,10 +4,10 @@ priority = 0
 
 [[patches]]
 [patches.pattern]
-target = "main.lua"
+target = "globals.lua"
 position = "after"
 times = 1
-pattern = "G:start_up()"
+pattern = "G = Game()"
 payload = 'require("typist.mod.init")'
 match_indent = true
 
