@@ -70,7 +70,7 @@ other mods:
       - `v` to buy and use an item, or buy a pack or a voucher
     - `n` to deselect all cards in a cardarea and `m` to invert card selection in rounds
     - `x` to view run info whenever it's available
-    - & others (see [`./mod/layout.lua`](./mod/layout.lua)) for dvorak and the full keymap
+    - & others (see [`./mod/layout.lua`](./mod/layout.lua)) the full keymap as well as other layouts
 - cardarea keybind layers for selecting, moving, selling & using cards. these apply globally for
   - consumables, accessed by holding `'`
   - jokers, accessed by holding `[`
@@ -86,7 +86,7 @@ other mods:
 
 https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
 
-- support for `qwerty` and `dvorak` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
+- support for `qwerty`, `dvorak` and `workman` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
 
