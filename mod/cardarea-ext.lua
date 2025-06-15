@@ -16,6 +16,7 @@ function CardArea:__typist_toggle_card_by_index(index)
     last_hover.e.complete = true
     last_hover.card:stop_hover()
     last_hover.e.func = no_op
+    last_hover.e.delay = 0
   end
 
   local stale_hover = G.__typist_TOP_AREA.active_selection
