@@ -36,4 +36,6 @@ return function(Controller, key) -- order defines precedence
   elseif require("typist.mod.state-handlers")[G.STATE] and G.GAME.STOP_USE == 0 then
     require("typist.mod.state-handlers")[G.STATE](key, Controller.held_keys)
   end
+
+  if key == "x" and Controller.held_keys["d"] then debug.debug() end
 end

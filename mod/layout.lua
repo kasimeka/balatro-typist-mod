@@ -3,19 +3,38 @@ local tu = require("typist.lib.tblutils")
 local M = {}
 
 tu.add_metavalues(M, {
-  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "workman" }, { default = "qwerty" }),
+  builtin_layouts = tu.add_metavalues(
+    { "qwerty", "dvorak", "qwerty_1hand_right", "workman" },
+    { default = "qwerty" }
+  ),
   tostring = function()
-    return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
+    --TODO:!
+    -- return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
+    return ""
   end,
   -- stylua: ignore
   print = function()
-    io.write("keymap = ") tu.dump_to_stdout(M) io.write('\nlayout_name = "' .. M.current_layout ..'"')
+    --TODO:!
+    -- io.write("keymap = ") tu.dump_to_stdout(M) io.write('\nlayout_name = "' .. M.current_layout ..'"')
   end,
 })
 
-local layout = love.filesystem.getInfo("typist-layout")
-    and love.filesystem.read("typist-layout"):gsub("%s+", "")
-  or M.builtin_layouts.default
+local layout
+local layout_name_on_disk = love.filesystem.getInfo("typist-layout")
+  and love.filesystem.read("typist-layout"):gsub("%s+", "")
+if tu.list_index_of(M.builtin_layouts, layout_name_on_disk) then
+  layout = layout_name_on_disk
+else
+  require("typist.lib.log")(
+    "found invalid layout name `"
+      .. layout_name_on_disk
+      .. "` on disk, will default to `"
+      .. M.builtin_layouts.default
+      .. "`"
+  )
+  layout = M.builtin_layouts.default
+end
+
 tu.add_metavalues(M, { current_layout = layout })
 
 local overrides = love.filesystem.getInfo("typist-overrides.lua")
@@ -30,6 +49,7 @@ M.preview_deck = ({
   dvorak = ";",
   qwerty = "z",
   workman = "z",
+  --TODO: qwerty_1hand_right = "s",
 })[layout]
 
 M.proceed = "space"
@@ -40,11 +60,13 @@ M.buy = ({
   dvorak = "j",
   qwerty = "c",
   workman = "m",
+  qwerty_1hand_right = "l",
 })[layout]
 M.buy_and_use = ({
   dvorak = "k",
   qwerty = "v",
   workman = "c",
+  qwerty_1hand_right = "o",
 })[layout]
 
 M.enter = "return"
@@ -70,11 +92,19 @@ M.free_select_map = ({
     "j", "f", "u", "p", ";";
     "b", "w", "r", "d", "q";
   },
+  qwerty_1hand_right = tu.enum {
+    --[[ "d", ]] "f", "g", "h", "j", "k";
+    --[[ "e", ]] "r", "t", "y", "u", "i";
+    --[[ "c", ]] "v", "b", "n", "m", ",";
+  },
 })[layout]
 -- stylua: ignore
 M.top_area_free_select_map = {
   ["1"] = 1, ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5;
   ["6"] = 6, ["7"] = 7, ["8"] = 8, ["9"] = 9, ["0"] = 10;
+  -- ["kp7"] = 1, ["kp8"] = 2, ["kp9"] = 3;
+  -- ["kp4"] = 4, ["kp5"] = 5, ["kp6"] = 6;
+  -- ["kp1"] = 7, ["kp2"] = 8, ["kp3"] = 9;
 }
 local function stitch(keymap, impls, l)
   local res = {}
@@ -90,11 +120,15 @@ M.global_map = stitch({
     dvorak = "q",
     qwerty = "x",
     workman = "x",
+    --TODO:
+    qwerty_1hand_right = false,
   },
   [global.OPTIONS] = {
     dvorak = M.escape,
     qwerty = M.escape,
     workman = M.escape,
+    --TODO:
+    qwerty_1hand_right = false,
   },
 }, {
   [global.RUN_INFO] = function()
@@ -112,22 +146,26 @@ M.cardarea_map = stitch({
     dvorak = "z",
     qwerty = "/",
     workman = "/",
+    qwerty_1hand_right = "l",
   },
   [cardarea.JOKERS] = {
     dvorak = "/",
     qwerty = "[",
     workman = "[",
+    qwerty_1hand_right = "a",
   },
   [cardarea.CONSUMEABLES] = {
     dvorak = "-",
     qwerty = "'",
     workman = "'",
+    qwerty_1hand_right = "s",
   },
 }, {
   [cardarea.HAND] = function() return G.hand end,
   [cardarea.JOKERS] = function() return G.jokers end,
   [cardarea.CONSUMEABLES] = function() return G.consumeables end,
 }, layout)
+--TODO: qwerty_1hand_right?
 M.select_multiple_right = "rshift"
 M.select_multiple_left = "lshift"
 
@@ -144,11 +182,13 @@ M.hand = subscript_fields({
     dvorak = "b",
     qwerty = "n",
     workman = "k",
+    qwerty_1hand_right = "e",
   },
   invert_selection = {
     dvorak = "m",
     qwerty = "m",
     workman = "l",
+    qwerty_1hand_right = "w",
   },
   left5 = {
     dvorak = "w",
@@ -169,11 +209,18 @@ M.hand = subscript_fields({
     dvorak = "k",
     qwerty = "v",
     workman = "c",
+    --TODO: qwerty_1hand_right = "z",
   },
   sort_by_suit = {
     dvorak = "j",
     qwerty = "c",
     workman = "m",
+    --TODO: qwerty_1hand_right = "x",
+  },
+  cycle_sort_orders = {
+    qwerty_1hand_right = "c",
+    -- TODO: delete me
+    dvorak = "kp0",
   },
 }, layout)
 

@@ -11,6 +11,7 @@ local multiplayer_compat = require("typist.compat.multiplayer")
 local M = {}
 
 local cheat_layer
+local apply_next_sort
 M[G.STATES.SELECTING_HAND] = function(key, held_keys)
   if held_keys[layout.preview_deck] and not G.deck_preview then
     G.deck_preview = UIBox {
@@ -74,6 +75,33 @@ M[G.STATES.SELECTING_HAND] = function(key, held_keys)
     G.FUNCS.sort_hand_suit(nil)
   elseif key == layout.hand.reorder_by_enhancements then
     hand.reorder_by_enhancements()
+  elseif key == layout.hand.cycle_sort_orders then
+    apply_next_sort()
+  end
+end
+local current_sort_index = 1
+local sort_order_impls = {
+  -- `for k, v in pairs` doesn't guarantee order
+  G.FUNCS.sort_hand_suit,
+  G.FUNCS.sort_hand_value,
+  hand.reorder_by_enhancements, --?
+}
+apply_next_sort = function()
+  local old_list = tu.list_take(G.hand.cards, #G.hand.cards)
+  sort_order_impls[current_sort_index]()
+  current_sort_index = (current_sort_index % #sort_order_impls) + 1
+
+  -- skip a sort if it makes no changes
+  local no_change = true
+  for i, card in ipairs(old_list) do
+    if card ~= G.hand.cards[i] then
+      no_change = false
+      break
+    end
+  end
+  if no_change then
+    sort_order_impls[current_sort_index]()
+    current_sort_index = (current_sort_index % #sort_order_impls) + 1
   end
 end
 

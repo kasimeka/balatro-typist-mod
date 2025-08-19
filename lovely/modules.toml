@@ -73,12 +73,12 @@ name = "typist.mod.settings-page"
 source = "compat/init.lua"
 before = "main.lua"
 name = "typist.compat.init"
-
-[[patches]]
-[patches.module]
-source = "compat/debugplus.lua"
-before = "main.lua"
-name = "typist.compat.debugplus"
+#
+# [[patches]]
+# [patches.module]
+# source = "compat/debugplus.lua"
+# before = "main.lua"
+# name = "typist.compat.debugplus"
 
 [[patches]]
 [patches.module]
