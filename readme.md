@@ -29,7 +29,7 @@ game versions:
 
 other mods:
 
-- [WilsontheWolf/DebugPlus v1.4.1](https://github.com/WilsontheWolf/DebugPlus/releases/tag/v1.4.1)
+- [WilsontheWolf/DebugPlus](https://github.com/WilsontheWolf/DebugPlus/releases) v1.4.x
   - hold `ctrl` as a leader for the entire keyboard except `typist` and `debugplus.console` if the game is in debug mode
 - V-rtualized/BalatroMultiplayer [v0.1.8.4](https://github.com/V-rtualized/BalatroMultiplayer/releases/tag/0.1.8.4),  versions **0.2.x**, and the private ~1.0~ alpha
   - on pvp blinds `space` toggles the ready state instead of immediately starting the blind
