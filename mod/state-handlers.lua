@@ -199,6 +199,16 @@ M[G.STATES.SPLASH] = function()
   G:main_menu()
 end
 
+local function cycle_index(current, count, step)
+  return ((current + step - 1) % count) + 1
+end
+local direction = {
+  [layout.menu_nav.left] = -1,
+  [layout.menu_nav.right] = 1,
+  [layout.menu_nav.down] = -1,
+  [layout.menu_nav.up] = 1,
+}
+local ordered_names, viewed_deck = {}, 1
 M[G.STATES.MENU] = function(key)
   -- main menu
   if G.MAIN_MENU_UI and not G.SETTINGS.paused then
@@ -213,21 +223,43 @@ M[G.STATES.MENU] = function(key)
     end
   elseif G.OVERLAY_MENU then
     -- if on game over screen
-    local new_run_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
+    local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
       or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
-    local game_end_screen = not not new_run_button
+    local game_end_screen = not not new_run_from_game_end_button
 
-    if key == layout.proceed then
+    if G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run")) then
+      if key == layout.menu_nav.left or key == layout.menu_nav.right then
+        for i, v in ipairs(G.P_CENTER_POOLS.Back) do
+          ordered_names[i] = v.name
+          if v.name == G.GAME.viewed_back.name then viewed_deck = i end
+        end
+
+        local new_index = cycle_index(viewed_deck, #ordered_names, direction[key])
+
+        G.FUNCS.change_viewed_back { to_key = new_index, to_val = ordered_names[new_index] }
+      elseif key == layout.menu_nav.down or key == layout.menu_nav.up then
+        local max_stake = get_deck_win_stake(G.GAME.viewed_back.effect.center.key)
+        if G.PROFILES[G.SETTINGS.profile].all_unlocked then max_stake = 8 end
+
+        local stake_count = math.min(max_stake + 1, 8)
+
+        local new_stake = cycle_index(G.viewed_stake, stake_count, direction[key])
+
+        G.FUNCS.change_stake { to_key = new_stake }
+      elseif
+        key == layout.proceed and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
+      then
+        G.FUNCS.start_setup_run { config = { id = {} } }
+      end
+    elseif key == layout.proceed then
       -- go to deck selection
       if game_end_screen then
-        G.FUNCS.notify_then_setup_run(new_run_button)
+        G.FUNCS.notify_then_setup_run(new_run_from_game_end_button)
 
       -- if a playable deck is in view
       elseif
-        (
-          G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_continue"))
-          or G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run"))
-        ) and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
+        G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_continue"))
+        and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
       then
         G.FUNCS.start_setup_run { config = { id = {} } }
       end
@@ -252,7 +284,7 @@ M[G.STATES.MENU] = function(key)
     --
     elseif key == layout.enter then
       -- start endless mode
-      if tu.dig(new_run_button, { "config", "id" }) == "from_game_won" then
+      if tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
         G.FUNCS:exit_overlay_menu()
 
       -- or if u lost and have Taikomochi, retry the ante

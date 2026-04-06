@@ -15,7 +15,9 @@
         "UIBox_button",
         "DynaText",
         "create_slider",
-        "Card"
+        "Card",
+        "get_deck_win_stake",
+        "to_big"
     ],
     "workspace.library": [
         "${3rd}/love2d/library"

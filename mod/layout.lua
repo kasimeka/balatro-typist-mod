@@ -36,6 +36,12 @@ M.proceed = "space"
 M.dismiss = "tab"
 M.reroll = "r"
 M.skip = "s"
+M.menu_nav = {
+  left = "h",
+  down = "j",
+  up = "k",
+  right = "l",
+}
 M.buy = ({
   dvorak = "j",
   qwerty = "c",

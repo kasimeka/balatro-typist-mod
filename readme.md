@@ -50,6 +50,7 @@ other mods:
     - uses consumable cards
     - selects the highlighted pack item
     - starts a new run from the game over screen
+    - starts a run from the new run screen with the currently selected deck and stake
   - `tab` being the dismiss button:
     - it discards the selected hand
     - moves from the shop to blind selection
@@ -88,11 +89,8 @@ https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
 
 - support for `qwerty`, `dvorak` and `workman` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
+- arrow keys or `hjkl` to change decks and stakes on the new run screen
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
-
-## TODOs
-
-- deck selection keybinds, the "new run" menu has only one keybind, `space` to start a run with the selected deck, would be nice to add `hjkl` for deck and stake selection too
 
 ## future plans
 
