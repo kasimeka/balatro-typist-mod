@@ -226,8 +226,46 @@ M[G.STATES.MENU] = function(key)
     local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
       or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
     local game_end_screen = not not new_run_from_game_end_button
+    local run_setup_tabs = {}
 
-    if G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run")) then
+    if G.OVERLAY_MENU:get_UIE_by_ID("tab_contents") then
+      for _, label in ipairs {
+        localize("b_new_run"),
+        localize("b_continue"),
+        localize("b_challenges"),
+      } do
+        local tab = G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. label)
+        if tab and tu.dig(tab, { "config", "button" }) then
+          run_setup_tabs[#run_setup_tabs + 1] = tab
+        end
+      end
+    end
+
+    if key == layout.dismiss and #run_setup_tabs > 1 then
+      local current_tab = 1
+
+      for i, tab in ipairs(run_setup_tabs) do
+        if tu.dig(tab, { "config", "chosen" }) then
+          current_tab = i
+          break
+        end
+      end
+
+      local next_tab = run_setup_tabs[cycle_index(current_tab, #run_setup_tabs, 1)]
+
+      for _, tab in ipairs(run_setup_tabs) do
+        tab.config.chosen = false
+      end
+      next_tab.config.chosen = true
+
+      G.FUNCS.change_tab(next_tab)
+      return
+    elseif
+      G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run"))
+      and G.SETTINGS.current_setup == "New Run"
+      and tu.dig(G, { "GAME", "viewed_back", "effect", "center" })
+      and direction[key]
+    then
       if key == layout.menu_nav.left or key == layout.menu_nav.right then
         for i, v in ipairs(G.P_CENTER_POOLS.Back) do
           ordered_names[i] = v.name
@@ -238,19 +276,15 @@ M[G.STATES.MENU] = function(key)
 
         G.FUNCS.change_viewed_back { to_key = new_index, to_val = ordered_names[new_index] }
       elseif key == layout.menu_nav.down or key == layout.menu_nav.up then
-        local max_stake = get_deck_win_stake(G.GAME.viewed_back.effect.center.key)
+        local max_stake = get_deck_win_stake(G.GAME.viewed_back.effect.center.key) or 0
         if G.PROFILES[G.SETTINGS.profile].all_unlocked then max_stake = 8 end
 
         local stake_count = math.min(max_stake + 1, 8)
-
-        local new_stake = cycle_index(G.viewed_stake, stake_count, direction[key])
+        local new_stake = cycle_index(G.viewed_stake or 1, stake_count, direction[key])
 
         G.FUNCS.change_stake { to_key = new_stake }
-      elseif
-        key == layout.proceed and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
-      then
-        G.FUNCS.start_setup_run { config = { id = {} } }
       end
+      return
     elseif key == layout.proceed then
       -- go to deck selection
       if game_end_screen then

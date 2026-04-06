@@ -56,8 +56,11 @@ other mods:
     - moves from the shop to blind selection
     - sells consumable or joker cards
     - skips the current booster pack
-    - closes any overlay menu
+    - cycles `new run`, `continue` and `challenges` on the run setup screen
+    - closes any other overlay menu
     - exits to main menu from the game over screen
+  - `escape` being the back button on the run setup screen:
+    - it closes the run setup overlay instead of cycling tabs
   - the bottom row of the keyboard as the "control panel", for example:
     - in rounds:
       - hold `z` for the quick deck preview
@@ -90,6 +93,7 @@ https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
 - support for `qwerty`, `dvorak` and `workman` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
 - arrow keys or `hjkl` to change decks and stakes on the new run screen
+- `tab` to cycle `new run`, `continue` and `challenges` on the run setup screen, and `escape` to close it
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
 
 ## future plans
