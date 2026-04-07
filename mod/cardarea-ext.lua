@@ -1,7 +1,7 @@
 local M = {}
 
 local last_hover = {}
-local no_op = function()
+local function no_op()
   return true
 end
 

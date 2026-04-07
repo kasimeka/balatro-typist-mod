@@ -5,6 +5,7 @@ local tu = require("typist.lib.tblutils")
 local cardarea_handler = require("typist.mod.cardarea-handler")
 local hand = require("typist.mod.hand")
 local layout = require("typist.mod.layout")
+local seeded_run = require("typist.mod.seeded-run")
 
 local multiplayer_compat = require("typist.compat.multiplayer")
 
@@ -226,6 +227,7 @@ M[G.STATES.MENU] = function(key)
     local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
       or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
     local game_end_screen = not not new_run_from_game_end_button
+    local in_new_run_setup = seeded_run.is_new_run_overlay()
     local run_setup_tabs = {}
 
     if G.OVERLAY_MENU:get_UIE_by_ID("tab_contents") then
@@ -260,9 +262,10 @@ M[G.STATES.MENU] = function(key)
 
       G.FUNCS.change_tab(next_tab)
       return
+    elseif in_new_run_setup and key == layout.menu_nav.seed and seeded_run.enable_and_focus() then
+      return
     elseif
-      G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run"))
-      and G.SETTINGS.current_setup == "New Run"
+      in_new_run_setup
       and tu.dig(G, { "GAME", "viewed_back", "effect", "center" })
       and direction[key]
     then
@@ -289,6 +292,8 @@ M[G.STATES.MENU] = function(key)
       -- go to deck selection
       if game_end_screen then
         G.FUNCS.notify_then_setup_run(new_run_from_game_end_button)
+      elseif in_new_run_setup and seeded_run.start_run() then
+        return
 
       -- if a playable deck is in view
       elseif
@@ -317,8 +322,10 @@ M[G.STATES.MENU] = function(key)
 
     --
     elseif key == layout.enter then
+      if in_new_run_setup and seeded_run.start_run() then
+        return
       -- start endless mode
-      if tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
+      elseif tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
         G.FUNCS:exit_overlay_menu()
 
       -- or if u lost and have Taikomochi, retry the ante

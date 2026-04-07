@@ -41,6 +41,7 @@ M.menu_nav = {
   down = "j",
   up = "k",
   right = "l",
+  seed = "s",
 }
 M.buy = ({
   dvorak = "j",
