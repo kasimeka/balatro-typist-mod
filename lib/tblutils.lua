@@ -1,3 +1,4 @@
+---@module "typist.lib.tblutils"
 local M = {}
 
 M.contains = function(tbl, value)
@@ -57,6 +58,9 @@ M.list_diff = function(tbl1, tbl2)
   return difference
 end
 
+---@param list any[]
+---@param from integer
+---@param to integer
 M.list_move_item = function(list, from, to)
   table.insert(list, to, table.remove(list, from))
 end
@@ -166,6 +170,9 @@ M.attach_valueset = function(enum, key)
   return M.add_metavalues(enum, { [key or "valueset"] = M.valueset(enum) })
 end
 
+---@param into table
+---@param from table
+---@return table into
 M.deep_merge = function(into, from)
   local stack = {}
   local node1 = into

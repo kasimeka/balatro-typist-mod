@@ -1,26 +1,16 @@
 {
     "diagnostics.globals": [
-        "G",
-        "play_sound",
-        "find_joker",
-        "CardArea",
-        "Event",
-        "UIBox",
         "fhotkey",
-        "Controller",
-        "localize",
-        "create_option_cycle",
-        "create_tabs",
-        "create_UIBox_generic_options",
-        "UIBox_button",
-        "DynaText",
-        "create_slider",
-        "Card",
-        "get_deck_win_stake",
+        "SMODS",
         "to_big"
     ],
     "workspace.library": [
-        "${3rd}/love2d/library"
+        "${3rd}/love2d/library",
+        "./the-game/src"
     ],
-    "workspace.checkThirdParty": "Disable"
+    "workspace.checkThirdParty": "Disable",
+    "diagnostics.disable": [
+        "missing-fields",
+        "undefined-field"
+    ]
 }

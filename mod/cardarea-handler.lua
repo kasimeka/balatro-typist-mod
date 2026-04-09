@@ -1,3 +1,9 @@
+--[[
+  key dispatch for a CardArea-shaped table: real engine CardAreas (`G.hand`, shop rows, packs)
+  or composites like `G.__typist_TOP_AREA` / the shop proxy (`__typist_shop`)
+  return `true` when this module handled the key; return `false` so `entrypoint` / state handlers
+  can try other branches
+]]
 require("typist.mod.cardarea-ext")
 
 local tu = require("typist.lib.tblutils")
@@ -12,6 +18,7 @@ local last_drag = { pos = {} }
 local function unacorn_card(card, held_keys)
   if not G.E_MANAGER or (last_drag.e and not last_drag.e.complete) then return end
 
+  -- tag blocks use/sale until the card is dropped (see guard on `__typist_unacorned` below)
   card.__typist_unacorned = true
   card.states.drag.is = true
   card.states.click.is = true
@@ -52,16 +59,18 @@ return function(area, key, held_keys)
   end
 
   if not (#area.highlighted == 1 or area == G.hand) then return false end
-  local c = area.highlighted[1]
-  local e = { config = { ref_table = c }, UIBox = { states = {} } }
+  local highlighted_card = area.highlighted[1]
+  local e = { config = { ref_table = highlighted_card }, UIBox = { states = {} } }
 
-  if c and held_keys[layout.unacorn_card] then unacorn_card(c, held_keys) end
+  if highlighted_card and held_keys[layout.unacorn_card] then
+    unacorn_card(highlighted_card, held_keys)
+  end
 
-  -- prevent use or sale of unacorned cards, falling through to other handlers.
-  -- needed to let players unacorn a joker then use `space` to start the blind.
+  -- prevent use or sale of unacorned cards, falling through to other handlers
+  -- needed to let players unacorn a joker then use `space` to start the blind
   if
-    c -- could be `nil` if area is `G.hand`
-    and c.__typist_unacorned
+    highlighted_card -- could be `nil` if area is `G.hand`
+    and highlighted_card.__typist_unacorned
     and not target -- target is `nil` when we're operating on the selected card
   then
     return false
@@ -69,8 +78,8 @@ return function(area, key, held_keys)
 
   -- sell the card if possible
   if key == layout.dismiss then
-    if c:can_sell_card() then
-      c:sell_card()
+    if highlighted_card:can_sell_card() then
+      highlighted_card:sell_card()
       for _, j in ipairs(G.jokers.cards) do
         j:calculate_joker { selling_card = true }
       end
@@ -92,7 +101,7 @@ return function(area, key, held_keys)
   elseif
     area.__typist_shop
     and (key == layout.buy or key == layout.buy_and_use)
-    and (c.ability.set == "Voucher" or c.ability.set == "Booster")
+    and (highlighted_card.ability.set == "Voucher" or highlighted_card.ability.set == "Booster")
     and (G.FUNCS.can_redeem(e) or e.config.button or G.FUNCS.can_open(e) or e.config.button)
   then
     G.FUNCS.use_card(e)
@@ -106,7 +115,7 @@ return function(area, key, held_keys)
   elseif
     area.__typist_shop
     and key == layout.buy_and_use
-    and c.ability.consumeable
+    and highlighted_card.ability.consumeable
     and (G.FUNCS.can_buy_and_use(e) or e.config.button)
   then
     e.config.id = "buy_and_use"
@@ -115,7 +124,7 @@ return function(area, key, held_keys)
   -- use consumable or pick from a pack
   elseif not area.__typist_shop and (key == layout.proceed or key == layout.buy_and_use) then
     if
-      (c.ability.consumeable and c:can_use_consumeable())
+      (highlighted_card.ability.consumeable and highlighted_card:can_use_consumeable())
       or (area == G.pack_cards and (G.FUNCS.can_select_card(e) or e.config.button))
     then
       G.FUNCS.use_card(e)
@@ -123,7 +132,7 @@ return function(area, key, held_keys)
 
   -- or
   elseif target then
-    local src_pos = tu.list_index_of(area.cards, c)
+    local src_pos = tu.list_index_of(area.cards, highlighted_card)
 
     -- if it's also the target card, deselect it
     if src_pos == target then

@@ -1,5 +1,12 @@
+--[[
+  keymap for the mod: load order is (1) built-in per-layout tables below, (2) optional
+  `typist-layout` file selecting dvorak/qwerty/workman, (3) `typist-overrides.lua` merged at the end
+  via `tu.deep_merge`. `stitch` and `subscript_fields` stitch one semantic action across
+  layouts
+]]
 local tu = require("typist.lib.tblutils")
 
+---@module "typist.mod.layout"
 local M = {}
 
 tu.add_metavalues(M, {
@@ -83,6 +90,12 @@ M.top_area_free_select_map = {
   ["1"] = 1, ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5;
   ["6"] = 6, ["7"] = 7, ["8"] = 8, ["9"] = 9, ["0"] = 10;
 }
+---build a flat key -> callback (or value) table for the active layout `l`: each `impls` entry shares
+---the same meaning across layouts but binds to a different physical key per row in `keymap`
+---@param keymap table<any, table<string, string>>
+---@param impls table<any, function|any>
+---@param l string layout name (`dvorak`|`qwerty`|`workman`)
+---@return table<string, function|any>
 local function stitch(keymap, impls, l)
   local res = {}
   for k, v in pairs(impls) do
@@ -138,6 +151,10 @@ M.cardarea_map = stitch({
 M.select_multiple_right = "rshift"
 M.select_multiple_left = "lshift"
 
+---pick one column per field name from per-layout key tables (same shape as `stitch` rows)
+---@param keymap table<string, table<string, string>>
+---@param l string
+---@return table<string, string>
 local function subscript_fields(keymap, l)
   local res = {}
   for k, v in pairs(keymap) do

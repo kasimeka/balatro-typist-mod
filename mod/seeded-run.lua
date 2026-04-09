@@ -58,10 +58,7 @@ M.seed_input_hook_active = function()
     and cfg.ref_value == "setup_seed"
 end
 
--- Prevents infinite recursion: submit_from_text_input runs inside text_input_key before the
--- RETURN branch; delegating to text_input_key({ key = "return" }) re-enters and must skip this hook.
 local releasing_text_input_hook = false
-
 M.submit_from_text_input = function(key)
   if releasing_text_input_hook then return false end
   if (key ~= "RETURN" and key ~= " ") or not M.seed_input_hook_active() then return false end
