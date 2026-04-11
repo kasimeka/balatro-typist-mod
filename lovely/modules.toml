@@ -58,9 +58,9 @@ name = "typist.mod.layout"
 
 [[patches]]
 [patches.module]
-source = "mod/seeded-run.lua"
+source = "mod/run-setup.lua"
 before = "main.lua"
-name = "typist.mod.seeded-run"
+name = "typist.mod.run-setup"
 
 [[patches]]
 [patches.module]

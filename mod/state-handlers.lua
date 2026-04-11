@@ -5,7 +5,7 @@ local tu = require("typist.lib.tblutils")
 local cardarea_handler = require("typist.mod.cardarea-handler")
 local hand = require("typist.mod.hand")
 local layout = require("typist.mod.layout")
-local seeded_run = require("typist.mod.seeded-run")
+local run_setup = require("typist.mod.run-setup")
 
 local multiplayer_compat = require("typist.compat.multiplayer")
 
@@ -262,20 +262,20 @@ local function handle_overlay_menu(key)
   local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
     or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
   local game_end_screen = not not new_run_from_game_end_button
-  local in_new_run_setup = seeded_run.is_new_run_overlay()
   local run_setup_tabs = collect_run_setup_tabs()
+  local in_new_run_tab = run_setup.is_new_run()
 
   if key == layout.dismiss and #run_setup_tabs > 1 then
     cycle_run_setup_tabs(run_setup_tabs)
     return
   end
 
-  if in_new_run_setup and key == layout.menu_nav.seed and seeded_run.enable_and_focus() then
+  if in_new_run_tab and key == layout.menu_nav.seed and run_setup.enable_and_focus_seed_input() then
     return
   end
 
   if
-    in_new_run_setup
+    in_new_run_tab
     and tu.dig(G, { "GAME", "viewed_back", "effect", "center" })
     and direction[key]
   then
@@ -286,7 +286,7 @@ local function handle_overlay_menu(key)
   if key == layout.proceed then
     if game_end_screen then
       G.FUNCS.notify_then_setup_run(new_run_from_game_end_button)
-    elseif in_new_run_setup and seeded_run.start_run() then
+    elseif in_new_run_tab and run_setup.try_start() then
       return
     elseif
       G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_continue"))
@@ -309,7 +309,7 @@ local function handle_overlay_menu(key)
   end
 
   if key == layout.enter then
-    if in_new_run_setup and seeded_run.start_run() then
+    if in_new_run_tab and run_setup.try_start() then
       return
     elseif tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
       G.FUNCS:exit_overlay_menu()

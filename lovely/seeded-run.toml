@@ -11,7 +11,7 @@ pattern = '''
   if string.len(text.ref_table[text.ref_value]) > 0 and args.key == 'BACKSPACE' then --If not at start, remove preceding letter
 '''
 payload = '''
-  if require("typist.mod.seeded-run").submit_from_text_input(args.key) then
+  if require("typist.mod.run-setup").start_from_seed_input(args.key) then
     return
   end
 '''
