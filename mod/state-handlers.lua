@@ -179,74 +179,6 @@ M[G.STATES.SPLASH] = function()
   G:main_menu()
 end
 
-local function cycle_index(current, count, step)
-  return ((current + step - 1) % count) + 1
-end
-local direction = {
-  [layout.menu_nav.left] = -1,
-  [layout.menu_nav.right] = 1,
-  [layout.menu_nav.down] = -1,
-  [layout.menu_nav.up] = 1,
-}
-local ordered_names, viewed_deck = {}, 1
-
-local function collect_run_setup_tabs()
-  local run_setup_tabs = {}
-  if G.OVERLAY_MENU:get_UIE_by_ID("tab_contents") then
-    for _, label in ipairs {
-      localize("b_new_run"),
-      localize("b_continue"),
-      localize("b_challenges"),
-    } do
-      local tab = G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. label)
-      if tab and tu.dig(tab, { "config", "button" }) then
-        run_setup_tabs[#run_setup_tabs + 1] = tab
-      end
-    end
-  end
-  return run_setup_tabs
-end
-
-local function cycle_run_setup_tabs(run_setup_tabs)
-  local current_tab = 1
-  for i, tab in ipairs(run_setup_tabs) do
-    if tu.dig(tab, { "config", "chosen" }) then
-      current_tab = i
-      break
-    end
-  end
-
-  local next_tab = run_setup_tabs[cycle_index(current_tab, #run_setup_tabs, 1)]
-
-  for _, tab in ipairs(run_setup_tabs) do
-    tab.config.chosen = false
-  end
-  next_tab.config.chosen = true
-
-  G.FUNCS.change_tab(next_tab)
-end
-
-local function navigate_deck_and_stake(key)
-  if key == layout.menu_nav.left or key == layout.menu_nav.right then
-    for i, v in ipairs(G.P_CENTER_POOLS.Back) do
-      ordered_names[i] = v.name
-      if v.name == G.GAME.viewed_back.name then viewed_deck = i end
-    end
-
-    local new_index = cycle_index(viewed_deck, #ordered_names, direction[key])
-
-    G.FUNCS.change_viewed_back { to_key = new_index, to_val = ordered_names[new_index] }
-  elseif key == layout.menu_nav.down or key == layout.menu_nav.up then
-    local max_stake = get_deck_win_stake(G.GAME.viewed_back.effect.center.key) or 0
-    if G.PROFILES[G.SETTINGS.profile].all_unlocked then max_stake = 8 end
-
-    local stake_count = math.min(max_stake + 1, 8)
-    local new_stake = cycle_index(G.viewed_stake or 1, stake_count, direction[key])
-
-    G.FUNCS.change_stake { to_key = new_stake }
-  end
-end
-
 local function handle_main_menu(key)
   if key == layout.proceed then
     local the_play_button = G.MAIN_MENU_UI:get_UIE_by_ID("main_menu_play")
@@ -262,32 +194,12 @@ local function handle_overlay_menu(key)
   local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
     or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
   local game_end_screen = not not new_run_from_game_end_button
-  local run_setup_tabs = collect_run_setup_tabs()
-  local in_new_run_tab = run_setup.is_new_run()
 
-  if key == layout.dismiss and #run_setup_tabs > 1 then
-    cycle_run_setup_tabs(run_setup_tabs)
-    return
-  end
-
-  if in_new_run_tab and key == layout.menu_nav.seed and run_setup.enable_and_focus_seed_input() then
-    return
-  end
-
-  if
-    in_new_run_tab
-    and tu.dig(G, { "GAME", "viewed_back", "effect", "center" })
-    and direction[key]
-  then
-    navigate_deck_and_stake(key)
-    return
-  end
+  if run_setup.handle(key) then return end
 
   if key == layout.proceed then
     if game_end_screen then
       G.FUNCS.notify_then_setup_run(new_run_from_game_end_button)
-    elseif in_new_run_tab and run_setup.try_start() then
-      return
     elseif
       G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_continue"))
       and tu.dig(G.GAME, { "viewed_back", "effect", "center", "unlocked" })
@@ -309,9 +221,7 @@ local function handle_overlay_menu(key)
   end
 
   if key == layout.enter then
-    if in_new_run_tab and run_setup.try_start() then
-      return
-    elseif tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
+    if tu.dig(new_run_from_game_end_button, { "config", "id" }) == "from_game_won" then
       G.FUNCS:exit_overlay_menu()
     else
       require("typist.compat.taikomochi").zen_restart_ante()
