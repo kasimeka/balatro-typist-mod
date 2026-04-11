@@ -58,6 +58,12 @@ name = "typist.mod.layout"
 
 [[patches]]
 [patches.module]
+source = "mod/run-setup.lua"
+before = "main.lua"
+name = "typist.mod.run-setup"
+
+[[patches]]
+[patches.module]
 source = "mod/state-handlers.lua"
 before = "main.lua"
 name = "typist.mod.state-handlers"

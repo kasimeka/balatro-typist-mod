@@ -1,0 +1,18 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+position = "before"
+times = 1
+pattern = '''
+  if string.len(text.ref_table[text.ref_value]) > 0 and args.key == 'BACKSPACE' then --If not at start, remove preceding letter
+'''
+payload = '''
+  if require("typist.mod.run-setup").start_from_seed_input(args.key) then
+    return
+  end
+'''
+match_indent = true

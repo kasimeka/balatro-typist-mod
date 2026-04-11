@@ -1,7 +1,12 @@
+--[[
+  monkey-patches `CardArea` for typist: `__typist_toggle_card_by_index` implements homerow / number
+  selection with hover timing. `G.__typist_TOP_AREA` uses `__typist_top_area` on cards for the
+  composite jokers+consumables row
+]]
 local M = {}
 
 local last_hover = {}
-local no_op = function()
+local function no_op()
   return true
 end
 

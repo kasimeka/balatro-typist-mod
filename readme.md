@@ -1,4 +1,5 @@
-<!-- markdownlint-disable line-length -->
+<!-- markdownlint-disable line-length no-inline-html -->
+<!-- cspell: words Balatro keymap keybind keybinds hjkl aoeu asdfgh Steamodded smods steamapps compatdata steamuser WilsontheWolf debugplus V-rtualized Amvoled Taikomochi Agoraaa mult cardarea -->
 # Typist mod for Balatro
 
 <p align="center">
@@ -26,8 +27,8 @@ game versions:
 - `1.0.1n`
 - `1.0.1o`
 
-
-other mods:
+<details>
+<summary>other mods:</summary>
 
 - [WilsontheWolf/DebugPlus](https://github.com/WilsontheWolf/DebugPlus/releases) v1.4.x
   - hold `ctrl` as a leader for the entire keyboard except `typist` and `debugplus.console` if the game is in debug mode
@@ -40,6 +41,8 @@ other mods:
   - FlushHotkeys keyboard shortcuts are removed to prevent conflicts
   - FlushHotkeys' `select_best_hand` implementation is used instead of mine (will be removed in the future)
 
+</details>
+
 ## feature overview
 
 - toggling hand cards with `asdfgh...` keys
@@ -50,13 +53,17 @@ other mods:
     - uses consumable cards
     - selects the highlighted pack item
     - starts a new run from the game over screen
+    - starts a run from the new run screen with the currently selected deck and stake
   - `tab` being the dismiss button:
     - it discards the selected hand
     - moves from the shop to blind selection
     - sells consumable or joker cards
     - skips the current booster pack
-    - closes any overlay menu
+    - cycles `new run`, `continue` and `challenges` on the run setup screen
+    - closes any other overlay menu
     - exits to main menu from the game over screen
+  - `escape` being the back button on the run setup screen:
+    - it closes the run setup overlay instead of cycling tabs
   - the bottom row of the keyboard as the "control panel", for example:
     - in rounds:
       - hold `z` for the quick deck preview
@@ -81,18 +88,19 @@ other mods:
     - by holding `/` everywhere for selection and movement of a single card
     - by holding `shift+/` for multiselect in booster packs
     - with no leader key for multiselect in rounds
+- run setup keybinds
+  - `h` and `l` to change decks, `j` and `k` to change stakes
+  - `s` to toggle "seeded run" on and focus the seed input field, `escape` to disable seeded run
+  - `space` or `enter` to start a run with the selected options
+  - `tab` to cycle "new run", "continue" and "challenges" tabs
 - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
 - holding `\` on a selected card to drag it out of its area, this can be used to snatch a joker away before the Amber Acorn boss can shuffle it
-
+<!-- markdownlint-disable no-bare-urls -->
 https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
-
+<!-- markdownlint-enable no-bare-urls -->
 - support for `qwerty`, `dvorak` and `workman` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
-
-## TODOs
-
-- deck selection keybinds, the "new run" menu has only one keybind, `space` to start a run with the selected deck, would be nice to add `hjkl` for deck and stake selection too
 
 ## future plans
 
