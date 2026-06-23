@@ -119,6 +119,21 @@ M.global_map = stitch({
   end,
 }, layout)
 
+local global_with_leader = tu.enum { "DECK_INFO" }
+M.global_secondary_layer_right = "rshift"
+M.global_secondary_layer_left = "lshift"
+M.global_with_leader_map = stitch({
+  [global_with_leader.DECK_INFO] = {
+    dvorak = ";",
+    qwerty = "z",
+    workman = "z",
+  },
+}, {
+  [global_with_leader.DECK_INFO] = function()
+    if G.HUD then G.FUNCS.deck_info() end
+  end,
+}, layout)
+
 local cardarea = tu.enum { "HAND", "JOKERS", "CONSUMEABLES" }
 -- stylua: ignore
 M.cardarea_map = stitch({
