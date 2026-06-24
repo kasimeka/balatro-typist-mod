@@ -146,7 +146,7 @@ return function(area, key, held_keys)
     -- if shift is held, select the target card as well but only in booster hands
     elseif
       area == G.hand
-      and (held_keys[layout.select_multiple_right] or held_keys[layout.select_multiple_left])
+      and (held_keys[layout.modifier_right] or held_keys[layout.modifier_left])
       and (
         G.STATE == G.STATES.TAROT_PACK
         or G.STATE == G.STATES.SPECTRAL_PACK

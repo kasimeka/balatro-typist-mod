@@ -19,7 +19,8 @@ function M.collect(labels)
   return tabs
 end
 
-function M.cycle(tabs, state)
+function M.cycle(tabs, state, step)
+  step = step or 1
   state = state or {}
   local current = state.current
   if not current or not tabs[current] or not tu.dig(tabs[current], { "config", "chosen" }) then
@@ -29,7 +30,7 @@ function M.cycle(tabs, state)
     end
   end
 
-  local next = M.cycle_index(current, #tabs, 1)
+  local next = M.cycle_index(current, #tabs, step)
   tabs[current].config.chosen = false
   tabs[next].config.chosen = true
   G.FUNCS.change_tab(tabs[next])
@@ -38,11 +39,12 @@ end
 
 function M.make_handler(labels_fn)
   local state = {}
-  return function(key)
+  return function(key, held_keys)
     if key ~= layout.dismiss then return false end
     local t = M.collect(labels_fn())
     if #t < 2 then return false end
-    M.cycle(t, state)
+    local step = (held_keys[layout.modifier_left] or held_keys[layout.modifier_right]) and -1 or 1
+    M.cycle(t, state, step)
     return true
   end
 end
