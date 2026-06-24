@@ -191,13 +191,13 @@ local function handle_main_menu(key)
   end
 end
 
-local function handle_overlay_menu(key)
+local function handle_overlay_menu(key, held_keys)
   local new_run_from_game_end_button = G.OVERLAY_MENU:get_UIE_by_ID("from_game_over")
     or G.OVERLAY_MENU:get_UIE_by_ID("from_game_won")
   local game_end_screen = not not new_run_from_game_end_button
 
-  if run_setup.handle(key) then return end
-  if run_info.handle(key) then return end
+  if run_setup.handle(key, held_keys) then return end
+  if run_info.handle(key, held_keys) then return end
 
   if key == layout.proceed then
     if game_end_screen then
@@ -238,11 +238,11 @@ local function handle_overlay_menu(key)
   end
 end
 
-M[G.STATES.MENU] = function(key)
+M[G.STATES.MENU] = function(key, held_keys)
   if G.MAIN_MENU_UI and not G.SETTINGS.paused then
     handle_main_menu(key)
   elseif G.OVERLAY_MENU then
-    handle_overlay_menu(key)
+    handle_overlay_menu(key, held_keys)
   end
 end
 

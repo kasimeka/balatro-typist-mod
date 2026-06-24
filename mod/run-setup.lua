@@ -73,8 +73,8 @@ local tab_handler = tabs.make_handler(function()
   }
 end)
 
-M.handle = function(key)
-  if tab_handler(key) then return true end
+M.handle = function(key, held_keys)
+  if tab_handler(key, held_keys) then return true end
   if not is_new_run() then return false end
 
   if key == layout.menu_nav.seed then
