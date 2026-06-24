@@ -60,10 +60,13 @@ game versions:
     - sells consumable or joker cards
     - skips the current booster pack
     - cycles `new run`, `continue` and `challenges` on the run setup screen
-    - closes any other overlay menu
+    - cycles poker hands, blinds, vouchers & stake on the run info screen
+    - `shift+tab` cycles backwards in both menus
     - exits to main menu from the game over screen
-  - `escape` being the back button on the run setup screen:
-    - it closes the run setup overlay instead of cycling tabs
+  - `escape` being the universal back button:
+    - closes any overlay menu
+    - skips the splash screen and returns to the main menu
+    - opens the options menu otherwise
   - the bottom row of the keyboard as the "control panel", for example:
     - in rounds:
       - hold `z` for the quick deck preview
@@ -93,6 +96,8 @@ game versions:
   - `s` to toggle "seeded run" on and focus the seed input field, `escape` to disable seeded run
   - `space` or `enter` to start a run with the selected options
   - `tab` to cycle "new run", "continue" and "challenges" tabs
+- run info keybinds
+  - `tab` to cycle poker hands, blinds, vouchers & stake info screens
 - mnemonic keys for less frequent actions, like `s` to skip blinds, `r` to reroll the shop or boss, `b` in the cheat layer (accessed by holding `p`) to pick the best hand out the available cards, `f` in the cheat layer to fish for the best flush in hand, etc
 - holding `\` on a selected card to drag it out of its area, this can be used to snatch a joker away before the Amber Acorn boss can shuffle it
 <!-- markdownlint-disable no-bare-urls -->
