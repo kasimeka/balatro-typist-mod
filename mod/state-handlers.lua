@@ -5,6 +5,7 @@ local tu = require("typist.lib.tblutils")
 local cardarea_handler = require("typist.mod.cardarea-handler")
 local hand = require("typist.mod.hand")
 local layout = require("typist.mod.layout")
+local run_info = require("typist.mod.run-info")
 local run_setup = require("typist.mod.run-setup")
 
 local multiplayer_compat = require("typist.compat.multiplayer")
@@ -196,6 +197,7 @@ local function handle_overlay_menu(key)
   local game_end_screen = not not new_run_from_game_end_button
 
   if run_setup.handle(key) then return end
+  if run_info.handle(key) then return end
 
   if key == layout.proceed then
     if game_end_screen then
