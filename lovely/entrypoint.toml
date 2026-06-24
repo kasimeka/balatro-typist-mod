@@ -16,7 +16,9 @@ function Controller:key_press_update(key, dt)
     if key == "escape" and require("typist.mod.run-setup").disable_and_unfocus_seed_input() then
       return
     end
-    __typist_key_press_update_impl(self, key, dt)
+    if key ~= "escape" then
+      __typist_key_press_update_impl(self, key, dt)
+    end
     require("typist")(self, key, dt)
   elseif
     self.text_input_hook

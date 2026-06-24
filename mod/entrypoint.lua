@@ -36,6 +36,18 @@ end
 return function(Controller, key) -- order defines precedence
   if G.CONTROLLER and G.CONTROLLER.text_input_hook then return end
 
+  if key == "escape" then
+    if G.OVERLAY_MENU then
+      G.FUNCS:exit_overlay_menu()
+    elseif G.STATE == G.STATES.SPLASH then
+      G:delete_run()
+      G:main_menu()
+    else
+      G.FUNCS:options()
+    end
+    return
+  end
+
   if layout.global_map[key] then
     layout.global_map[key]()
     return
