@@ -45,6 +45,7 @@ return function(Controller, key) -- order defines precedence
     else
       G.FUNCS:options()
     end
+    return
   end
 
   if (Controller.held_keys[layout.global_secondary_layer_right] or Controller.held_keys[layout.global_secondary_layer_left])
