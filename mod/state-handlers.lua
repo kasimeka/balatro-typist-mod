@@ -211,13 +211,20 @@ local function handle_overlay_menu(key)
     return
   end
 
-  if key == layout.escape or key == layout.dismiss then
+  if key == layout.escape then
     if game_end_screen then
       G.FUNCS.go_to_menu()
-    elseif not G.OVERLAY_MENU.config.no_esc then
+    else
       G.FUNCS:exit_overlay_menu()
-    elseif G.OVERLAY_MENU:get_UIE_by_ID("tab_but_" .. localize("b_new_run")) then
+    end
+    return
+  end
+
+  if key == layout.dismiss then
+    if game_end_screen then
       G.FUNCS.go_to_menu()
+      -- elseif not G.OVERLAY_MENU.config.no_esc then
+      --   G.FUNCS:exit_overlay_menu()
     end
     return
   end

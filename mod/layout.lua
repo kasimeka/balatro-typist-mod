@@ -104,25 +104,27 @@ local function stitch(keymap, impls, l)
   return res
 end
 
-local global = tu.enum { "RUN_INFO", "OPTIONS" }
+local global = tu.enum {
+  "RUN_INFO" --[[ , "OPTIONS" ]],
+}
 M.global_map = stitch({
   [global.RUN_INFO] = {
     dvorak = "q",
     qwerty = "x",
     workman = "x",
   },
-  [global.OPTIONS] = {
-    dvorak = M.escape,
-    qwerty = M.escape,
-    workman = M.escape,
-  },
+  -- [global.OPTIONS] = {
+  --   dvorak = M.escape,
+  --   qwerty = M.escape,
+  --   workman = M.escape,
+  -- },
 }, {
   [global.RUN_INFO] = function()
     if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
   end,
-  [global.OPTIONS] = function()
-    if not G.OVERLAY_MENU then G.FUNCS:options() end
-  end,
+  -- [global.OPTIONS] = function()
+  --   if not G.OVERLAY_MENU then G.FUNCS:options() end
+  -- end,
 }, layout)
 
 local cardarea = tu.enum { "HAND", "JOKERS", "CONSUMEABLES" }
