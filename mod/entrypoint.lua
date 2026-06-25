@@ -54,7 +54,7 @@ return function(Controller, key) -- order defines precedence
   end
 
   if G.SETTINGS.paused then
-    require("typist.mod.state-handlers")[G.STATES.MENU](key)
+    require("typist.mod.state-handlers")[G.STATES.MENU](key, Controller.held_keys)
     return
   end
 
