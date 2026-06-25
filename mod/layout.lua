@@ -113,18 +113,10 @@ M.global_map = stitch({
     qwerty = "x",
     workman = "x",
   },
-  -- [global.OPTIONS] = {
-  --   dvorak = M.escape,
-  --   qwerty = M.escape,
-  --   workman = M.escape,
-  -- },
 }, {
   [global.RUN_INFO] = function()
     if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
   end,
-  -- [global.OPTIONS] = function()
-  --   if not G.OVERLAY_MENU then G.FUNCS:options() end
-  -- end,
 }, layout)
 
 local cardarea = tu.enum { "HAND", "JOKERS", "CONSUMEABLES" }

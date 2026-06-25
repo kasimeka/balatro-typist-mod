@@ -221,11 +221,7 @@ local function handle_overlay_menu(key, held_keys)
   end
 
   if key == layout.dismiss then
-    if game_end_screen then
-      G.FUNCS.go_to_menu()
-      -- elseif not G.OVERLAY_MENU.config.no_esc then
-      --   G.FUNCS:exit_overlay_menu()
-    end
+    if game_end_screen then G.FUNCS.go_to_menu() end
     return
   end
 
@@ -235,6 +231,7 @@ local function handle_overlay_menu(key, held_keys)
     else
       require("typist.compat.taikomochi").zen_restart_ante()
     end
+    return
   end
 end
 

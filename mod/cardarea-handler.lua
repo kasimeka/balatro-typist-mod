@@ -133,6 +133,8 @@ return function(area, key, held_keys)
   -- or
   elseif target then
     local src_pos = tu.list_index_of(area.cards, highlighted_card)
+    src_pos = src_pos
+      or error("could not find the currently highlighted card in area.cards, impossible state")
 
     -- if it's also the target card, deselect it
     if src_pos == target then
