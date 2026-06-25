@@ -48,14 +48,8 @@ return function(Controller, key) -- order defines precedence
     return
   end
 
-  if (Controller.held_keys[layout.global_secondary_layer_right] or Controller.held_keys[layout.global_secondary_layer_left])
-    and layout.global_with_leader_map[key] then
-    layout.global_with_leader_map[key]()
-    return
-  end
-
   if layout.global_map[key] then
-    layout.global_map[key]()
+    layout.global_map[key](Controller.held_keys)
     return
   end
 

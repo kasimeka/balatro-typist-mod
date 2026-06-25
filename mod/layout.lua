@@ -105,7 +105,7 @@ local function stitch(keymap, impls, l)
 end
 
 local global = tu.enum {
-  "RUN_INFO" --[[ , "OPTIONS" ]],
+  "RUN_INFO", "DECK_INFO"
 }
 M.global_map = stitch({
   [global.RUN_INFO] = {
@@ -113,24 +113,19 @@ M.global_map = stitch({
     qwerty = "x",
     workman = "x",
   },
-}, {
-  [global.RUN_INFO] = function()
-    if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
-  end,
-}, layout)
-
-local global_with_leader = tu.enum { "DECK_INFO" }
-M.global_secondary_layer_right = "rshift"
-M.global_secondary_layer_left = "lshift"
-M.global_with_leader_map = stitch({
-  [global_with_leader.DECK_INFO] = {
+  [global.DECK_INFO] = {
     dvorak = ";",
     qwerty = "z",
     workman = "z",
   },
 }, {
-  [global_with_leader.DECK_INFO] = function()
-    if G.HUD then G.FUNCS.deck_info() end
+  [global.RUN_INFO] = function()
+    if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
+  end,
+  [global.DECK_INFO] = function(held_keys)
+    if G.HUD and (held_keys[M.modifier_right] or held_keys[M.modifier_left]) then
+      G.FUNCS.deck_info()
+    end
   end,
 }, layout)
 
