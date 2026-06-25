@@ -33,11 +33,12 @@ M.debug_leader_left = is_mac and "lgui" or "lctrl"
 M.debug_leader_right = is_mac and "rgui" or "rctrl"
 
 M.unacorn_card = "\\"
-M.preview_deck = ({
+local preview_deck = {
   dvorak = ";",
   qwerty = "z",
   workman = "z",
-})[layout]
+}
+M.preview_deck = preview_deck[layout]
 
 M.proceed = "space"
 M.dismiss = "tab"
@@ -105,7 +106,8 @@ local function stitch(keymap, impls, l)
 end
 
 local global = tu.enum {
-  "RUN_INFO", "DECK_INFO"
+  "RUN_INFO",
+  "DECK_INFO",
 }
 M.global_map = stitch({
   [global.RUN_INFO] = {
@@ -113,11 +115,7 @@ M.global_map = stitch({
     qwerty = "x",
     workman = "x",
   },
-  [global.DECK_INFO] = {
-    dvorak = ";",
-    qwerty = "z",
-    workman = "z",
-  },
+  [global.DECK_INFO] = preview_deck,
 }, {
   [global.RUN_INFO] = function()
     if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end

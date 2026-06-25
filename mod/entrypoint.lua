@@ -36,7 +36,7 @@ end
 return function(Controller, key) -- order defines precedence
   if G.CONTROLLER and G.CONTROLLER.text_input_hook then return end
 
-  if key == "escape" then
+  if key == layout.escape then
     if G.OVERLAY_MENU then
       G.FUNCS:exit_overlay_menu()
     elseif G.STATE == G.STATES.SPLASH then
