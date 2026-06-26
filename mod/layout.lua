@@ -118,11 +118,15 @@ M.global_map = stitch({
   [global.DECK_INFO] = preview_deck,
 }, {
   [global.RUN_INFO] = function()
-    if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then G.FUNCS.run_info() end
+    if G.HUD and G.HUD:get_UIE_by_ID("run_info_button").config.button then
+      G.FUNCS.run_info()
+      return true
+    end
   end,
   [global.DECK_INFO] = function(held_keys)
     if G.HUD and (held_keys[M.modifier_right] or held_keys[M.modifier_left]) then
       G.FUNCS.deck_info()
+      return true
     end
   end,
 }, layout)

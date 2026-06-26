@@ -48,10 +48,7 @@ return function(Controller, key) -- order defines precedence
     return
   end
 
-  if layout.global_map[key] then
-    layout.global_map[key](Controller.held_keys)
-    return
-  end
+  if layout.global_map[key] and layout.global_map[key](Controller.held_keys) then return end
 
   if G.SETTINGS.paused then
     require("typist.mod.state-handlers")[G.STATES.MENU](key, Controller.held_keys)
