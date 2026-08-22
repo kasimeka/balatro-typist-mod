@@ -126,8 +126,11 @@ M[G.STATES.SHOP] = function(key, held_keys)
   if
     key == layout.reroll
     and (
-      to_big(G.GAME.dollars) - to_big(G.GAME.current_round.reroll_cost)
-      >= to_big(G.GAME.bankrupt_at)
+      G.GAME.current_round.reroll_cost == 0
+      or (
+        to_big(G.GAME.dollars) - to_big(G.GAME.current_round.reroll_cost)
+        >= to_big(G.GAME.bankrupt_at)
+      )
     )
   then
     G.FUNCS.reroll_shop()
