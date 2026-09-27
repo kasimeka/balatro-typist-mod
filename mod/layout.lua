@@ -1,6 +1,6 @@
 --[[
   keymap for the mod: load order is (1) built-in per-layout tables below, (2) optional
-  `typist-layout` file selecting dvorak/qwerty/workman, (3) `typist-overrides.lua` merged at the end
+  `typist-layout` file selecting dvorak/qwerty/workman/colemak, (3) `typist-overrides.lua` merged at the end
   via `tu.deep_merge`. `stitch` and `subscript_fields` stitch one semantic action across
   layouts
 ]]
@@ -10,7 +10,7 @@ local tu = require("typist.lib.tblutils")
 local M = {}
 
 tu.add_metavalues(M, {
-  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "workman" }, { default = "qwerty" }),
+  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "workman", "colemak" }, { default = "qwerty" }),
   tostring = function()
     return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
   end,
@@ -37,29 +37,37 @@ local preview_deck = {
   dvorak = ";",
   qwerty = "z",
   workman = "z",
+  colemak = "z",
 }
 M.preview_deck = preview_deck[layout]
 
 M.proceed = "space"
 M.dismiss = "tab"
-M.reroll = "r"
+-- M.reroll = "r"
+M.reroll = ({
+  dvorak = "r",
+  qwerty = "r",
+  workman = "r",
+  colemak = "l",
+})[layout]
 M.skip = "s"
-M.menu_nav = {
-  left = "h",
-  down = "j",
-  up = "k",
-  right = "l",
-  seed = "s",
-}
+M.menu_nav = ({
+dvorak = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
+qwerty = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
+workman = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
+colemak = { left = "h", down = "n", up = "e", right = "i", seed = "s" },
+})[layout]
 M.buy = ({
   dvorak = "j",
   qwerty = "c",
   workman = "m",
+  colemak = "c",
 })[layout]
 M.buy_and_use = ({
   dvorak = "k",
   qwerty = "v",
   workman = "c",
+  colemak = "v",
 })[layout]
 
 M.enter = "return"
@@ -85,6 +93,12 @@ M.free_select_map = ({
     "j", "f", "u", "p", ";";
     "b", "w", "r", "d", "q";
   },
+  colemak = tu.enum {
+    "a", "r", "s", "t", "d";
+    "h", "n", "e", "i", "o";
+    "j", "l", "u", "y", ";";
+    "q", "w", "f", "p", "g";
+  },
 })[layout]
 -- stylua: ignore
 M.top_area_free_select_map = {
@@ -95,7 +109,7 @@ M.top_area_free_select_map = {
 ---the same meaning across layouts but binds to a different physical key per row in `keymap`
 ---@param keymap table<any, table<string, string>>
 ---@param impls table<any, function|any>
----@param l string layout name (`dvorak`|`qwerty`|`workman`)
+---@param l string layout name (`dvorak`|`qwerty`|`workman`|`colemak`)
 ---@return table<string, function|any>
 local function stitch(keymap, impls, l)
   local res = {}
@@ -114,6 +128,7 @@ M.global_map = stitch({
     dvorak = "q",
     qwerty = "x",
     workman = "x",
+    colemak = "x",
   },
   [global.DECK_INFO] = preview_deck,
 }, {
@@ -138,16 +153,19 @@ M.cardarea_map = stitch({
     dvorak = "z",
     qwerty = "/",
     workman = "/",
+    colemak = "/",
   },
   [cardarea.JOKERS] = {
     dvorak = "/",
     qwerty = "[",
     workman = "[",
+    colemak = "[",
   },
   [cardarea.CONSUMEABLES] = {
     dvorak = "-",
     qwerty = "'",
     workman = "'",
+    colemak = "'",
   },
 }, {
   [cardarea.HAND] = function() return G.hand end,
@@ -174,36 +192,43 @@ M.hand = subscript_fields({
     dvorak = "b",
     qwerty = "n",
     workman = "k",
+    colemak = "k",
   },
   invert_selection = {
     dvorak = "m",
     qwerty = "m",
     workman = "l",
+    colemak = "m",
   },
   left5 = {
     dvorak = "w",
     qwerty = ",",
     workman = "d",
+    colemak = ",",
   },
   right5 = {
     dvorak = "v",
     qwerty = ".",
     workman = ".",
+    colemak = ".",
   },
   reorder_by_enhancements = {
     dvorak = "x",
     qwerty = "b",
     workman = "v",
+    colemak = "b",
   },
   sort_by_rank = {
     dvorak = "k",
     qwerty = "v",
     workman = "c",
+    colemak = "v",
   },
   sort_by_suit = {
     dvorak = "j",
     qwerty = "c",
     workman = "m",
+    colemak = "c",
   },
 }, layout)
 
@@ -213,11 +238,13 @@ M.cheat = tu.override_merge(subscript_fields({
     dvorak = "l",
     qwerty = "p",
     workman = ";",
+    colemak = ";",
   },
   leader_left = {
     dvorak = "'",
     qwerty = "q",
     workman = "q",
+    colemak = "q",
   },
 }, layout), {
   best_hand = "b",
