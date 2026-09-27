@@ -43,7 +43,6 @@ M.preview_deck = preview_deck[layout]
 
 M.proceed = "space"
 M.dismiss = "tab"
--- M.reroll = "r"
 M.reroll = ({
   dvorak = "r",
   qwerty = "r",
