@@ -103,7 +103,7 @@ game versions:
 <!-- markdownlint-disable no-bare-urls -->
 https://github.com/user-attachments/assets/2272acc2-e0e3-469f-adf7-2c4b19b38c1b
 <!-- markdownlint-enable no-bare-urls -->
-- support for `qwerty`, `dvorak` and `workman` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
+- support for `qwerty`, `dvorak`,`workman`, and `colemak` keyboard layouts, where positional keys are kept consistent across both layouts and mnemonic keys aren't changed. (e.g. `asdf` to toggle the first four cards in qwerty translates to `aoeu` in dvorak, but `r` to reroll the shop or the boss blind stays `r` in both layouts)
 - support for keybind overrides, so you can change the default keybinds to your liking
 - any key to skip the splash screen and `space` to click any "play" or "continue" button, so a run can be started from game launch until the first blind with the `space` button only
 
