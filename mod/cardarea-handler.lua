@@ -122,12 +122,9 @@ return function(area, key, held_keys)
     G.FUNCS.buy_from_shop(e)
 
   -- use consumable or pick from a pack
-  elseif
-    not area.__typist_shop
-    and area ~= G.hand
-    and (key == layout.proceed or key == layout.buy_and_use) then
+  elseif not area.__typist_shop and (key == layout.proceed or key == layout.buy_and_use) then
     if
-      (highlighted_card.ability.consumeable and highlighted_card:can_use_consumeable())
+      (tu.dig(highlighted_card, "ability", "consumeable") and highlighted_card:can_use_consumeable())
       or (area == G.pack_cards and (G.FUNCS.can_select_card(e) or e.config.button))
     then
       G.FUNCS.use_card(e)
