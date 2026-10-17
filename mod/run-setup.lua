@@ -79,6 +79,7 @@ M.handle = function(key, held_keys)
 
   if key == layout.menu_nav.seed then
     local toggle = get_seed_toggle()
+    if not toggle then return false end
 
     if not G.run_setup_seed or not get_seed_input() then
       G.run_setup_seed = true
