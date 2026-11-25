@@ -260,12 +260,14 @@ M.cheat = tu.override_merge(subscript_fields({
     qwerty = "p",
     workman = ";",
     colemak = ";",
+    azerty = "p",
   },
   leader_left = {
     dvorak = "'",
     qwerty = "q",
     workman = "q",
     colemak = "q",
+    azerty = "a",
   },
 }, layout), {
   best_hand = "b",
