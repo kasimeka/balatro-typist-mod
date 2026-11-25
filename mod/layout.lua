@@ -10,7 +10,7 @@ local tu = require("typist.lib.tblutils")
 local M = {}
 
 tu.add_metavalues(M, {
-  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "workman", "colemak" }, { default = "qwerty" }),
+  builtin_layouts = tu.add_metavalues({ "dvorak", "qwerty", "azerty", "workman", "colemak" }, { default = "qwerty" }),
   tostring = function()
     return "keymap = " .. tu.dump_to_string(M) .. '\nlayout_name = "' .. M.current_layout .. '"'
   end,
@@ -38,6 +38,7 @@ local preview_deck = {
   qwerty = "z",
   workman = "z",
   colemak = "z",
+  azerty = "w",
 }
 M.preview_deck = preview_deck[layout]
 
@@ -48,6 +49,7 @@ M.reroll = ({
   qwerty = "r",
   workman = "r",
   colemak = "l",
+  azerty = "r",
 })[layout]
 M.skip = "s"
 M.menu_nav = ({
@@ -55,18 +57,21 @@ dvorak = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
 qwerty = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
 workman = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
 colemak = { left = "h", down = "n", up = "e", right = "i", seed = "s" },
+azerty = { left = "h", down = "j", up = "k", right = "l", seed = "s" },
 })[layout]
 M.buy = ({
   dvorak = "j",
   qwerty = "c",
   workman = "m",
   colemak = "c",
+  azerty = "c",
 })[layout]
 M.buy_and_use = ({
   dvorak = "k",
   qwerty = "v",
   workman = "c",
   colemak = "v",
+  azerty = "v",
 })[layout]
 
 M.enter = "return"
@@ -98,6 +103,12 @@ M.free_select_map = ({
     "j", "l", "u", "y", ";";
     "q", "w", "f", "p", "g";
   },
+  azerty = tu.enum {
+    "q", "s", "d", "f", "g";
+    "h", "j", "k", "l", "m";
+    "y", "u", "i", "o", "p";
+    "a", "z", "e", "r", "t";
+  },
 })[layout]
 -- stylua: ignore
 M.top_area_free_select_map = {
@@ -128,6 +139,7 @@ M.global_map = stitch({
     qwerty = "x",
     workman = "x",
     colemak = "x",
+    azerty = "x",
   },
   [global.DECK_INFO] = preview_deck,
 }, {
@@ -153,18 +165,21 @@ M.cardarea_map = stitch({
     qwerty = "/",
     workman = "/",
     colemak = "/",
+    azerty = "!",
   },
   [cardarea.JOKERS] = {
     dvorak = "/",
     qwerty = "[",
     workman = "[",
     colemak = "[",
+    azerty = "^",
   },
   [cardarea.CONSUMEABLES] = {
     dvorak = "-",
     qwerty = "'",
     workman = "'",
     colemak = "'",
+    azerty = "ù",
   },
 }, {
   [cardarea.HAND] = function() return G.hand end,
